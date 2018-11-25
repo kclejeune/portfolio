@@ -53,7 +53,7 @@ p {
     justify-content: center;
 }
 
-#home a {
+.button {
     margin-left: 20px;
     margin-right: 20px;
 }
