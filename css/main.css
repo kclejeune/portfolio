@@ -56,16 +56,18 @@ p {
 }
 
 #experience .card {
+    width: 100%;
     background-color: whitesmoke;
-    margin-top: 50px;
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-bottom: 50px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
 }
 
 #experience #items {
     display: -webkit-flex;
-    flex-direction: row;
+    flex-flow: row wrap;
+
     justify-content: center;
 }
 
