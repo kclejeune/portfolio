@@ -19,6 +19,10 @@ p {
     margin-right: 10%;
 }
 
+div {
+    clear: none;
+}
+
 #navbarNav li a {
     color: #c9e5ed;
 }
@@ -32,12 +36,12 @@ p {
 
 #experience {
     min-height: 100%;
-    background-color: whitesmoke;
+    background-color: white;
     color: #373737;
 }
 
 #contact {
-    max-height: 50%;
+    height: 100%;
     background-color: #c9e5ed;
     padding-bottom: 50px;
 }
@@ -63,4 +67,11 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Turn off parallax scrolling for all tablets and phones. Increase/decrease the pixels if needed */
+@media screen and (max-device-width: 1366px) {
+    #home {
+        background-attachment: scroll;
+    }
 }
