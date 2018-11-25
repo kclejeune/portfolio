@@ -13,7 +13,7 @@
     crossorigin="anonymous">
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="animate.css">
-  <script src="js/wow.min.js"></script>
+  <script src="wow.min.js"></script>
   <script>
     new WOW().init();
               </script>
@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+  <!--nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <button id="toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav.collapse"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -44,9 +44,17 @@
       </ul>
     </div>
   </nav>
+  <!-->
 
-  <div id="home" class="parallax">
-    <h1 style="color: lightblue; padding-top: 0px; padding-bottom: 0px">Hi, I'm Kennan.</h1>
+  <div id="home" >
+    <h1 class="wow fadeInUp" style="color: lightblue; padding-top: 0px; padding-bottom: 20px">Hi, I'm Kennan.</h1>
+    <div id="links">
+        <a href="https://github.com/kclejeune" class="button">
+          <i class="fa fa-github fa-4x fa-fw" aria-hidden="true"></i>
+        </a>
+    </div>
+
+    <i class="wow fadeInUp fas fa-chevron-circle-down" style="color: lightblue"></i>
   </div>
 
   <div id="about">
@@ -76,7 +84,8 @@
 
   <div id="contact">
     <h1>Find Me Online</h1>
-    <i href="github.com/kclejeune" class="fab fa-github"></i>
+    
+    
   </div>
 
 
