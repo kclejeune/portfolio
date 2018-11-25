@@ -1,0 +1,69 @@
+body, html {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 3rem;
+    padding-top: 60px;
+  }
+
+  p {
+    font-size: 2rem;
+    text-align: center;
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #navbarNav li a {
+      color: lightblue;
+  }
+
+  #about {
+    min-height: 100%;
+    width: 100%;
+    background-color: #c9e5ed;
+    color: #33393e;
+  }
+
+  #experience .card {
+    min-height: 100%;
+    background-color: rgb(189, 198, 210);
+    color: rgb(0, 77, 118);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-left:10rem;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+  }
+  #experience {
+    min-height: 100%;
+    background-color: light;
+    color: #81aecb;
+  }
+
+  #contact {
+    max-height: 100%;
+    background-color: light
+  }
+
+  .parallax {
+    /* The image used */
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%), url("assets/cube.jpg");
+    background-color: rgba(0,0,0,0.6);
+    /* Full height */
+    height: 100%;
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
