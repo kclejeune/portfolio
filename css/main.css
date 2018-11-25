@@ -6,13 +6,12 @@ body {
 
 h1 {
     text-align: center;
-    font-size: 36pt;
-    padding-top: 50px;
-    margin-bottom: 20px;
+    font-size: 36px;
+    padding-top: 30px;
 }
 
 p {
-    font-size: 20pt;
+    font-size: 20px;
     text-align: left;
     margin-top: 30px;
     margin-left: 10%;
@@ -32,6 +31,7 @@ p {
 }
 
 #experience {
+    margin-top: -16px;
     min-height: 100%;
     background-color: white;
     color: #373737;
@@ -56,7 +56,6 @@ p {
 }
 
 #experience .card {
-    width: 100%;
     background-color: whitesmoke;
     margin-top: 20px;
     margin-left: 20px;
@@ -67,7 +66,7 @@ p {
 #experience #items {
     display: -webkit-flex;
     flex-flow: row wrap;
-
+    flex-shrink: .5;
     justify-content: center;
 }
 
@@ -79,5 +78,8 @@ p {
 @media screen and (max-device-width: 1366px) {
     #home {
         background-attachment: scroll;
+    }
+    p {
+        font-size: 16px;
     }
 }
