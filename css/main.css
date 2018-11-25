@@ -11,7 +11,7 @@ h1 {
 }
 
 p {
-    font-size: 20px;
+    font-size: 3vmin;
     text-align: left;
     margin-top: 30px;
     margin-left: 10%;
@@ -20,22 +20,6 @@ p {
 
 #navbarNav li a {
     color: #c9e5ed;
-}
-
-#about {
-    min-height: 100%;
-    width: 100%;
-    background-color: #c9e5ed;
-    color: #373737;
-    margin-bottom: 10px;
-}
-
-#experience {
-    margin-top: -16px;
-    min-height: 100%;
-    background-color: white;
-    color: #373737;
-    padding-bottom: 10px;
 }
 
 #home {
@@ -55,6 +39,22 @@ p {
     justify-content: center;
 }
 
+#about {
+    min-height: 100%;
+    width: 100%;
+    background-color: #c9e5ed;
+    color: #373737;
+    margin-bottom: 30px;
+}
+
+#experience {
+    margin-top: -16px;
+    min-height: 100%;
+    background-color: white;
+    color: #373737;
+    padding-bottom: 30px;
+}
+
 #experience .card {
     background-color: whitesmoke;
     max-width: 20rem;
@@ -65,7 +65,7 @@ p {
 }
 
 #experience #items {
-    display: -webkit-flex;
+    display: flex;
     flex-flow: row wrap;
     justify-content: center;
 }
@@ -79,11 +79,11 @@ p {
     #home {
         background-attachment: scroll;
     }
-    p {
-        font-size: 16px;
-    }
 }
 
-@media screen and (min-device-width: 1366px) {
-    
+/* decrease font size on phones */
+@media screen and (max-device-width: 768px) {
+    p {
+        font-size: 1rem;
+    }
 }
