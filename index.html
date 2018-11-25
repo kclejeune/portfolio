@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+
+  <title>Kennan LeJeune - Student Developer</title>
+</head>
+
+<style>
+  body, html {
+      height: 100%;
+      background-size: cover;
+    }
+    #navbarNav li a {
+        color: lightblue;
+    }
+
+    #about {
+      min-height: 100%;
+      background-color: #c9e5ed;
+      color: #33393e;
+    }
+
+    #experience .card {
+      min-height: 100%;
+      background-color: rgb(189, 198, 210);
+      color: rgb(0, 77, 118);
+      margin-top: 2ex;
+      margin-bottom: 2ex;
+      margin-left:10ex;
+      display: flex;
+      align-items: center;
+      justify-content:center;
+    }
+    #experience {
+      min-height: 100%;
+      background-color: light;
+      color: #81aecb;
+    }
+
+    .parallax {
+      /* The image used */
+      background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%), url("assets/cube.jpg");
+      background-color: rgba(0,0,0,0.6);
+      /* Full height */
+      height: 100%;
+      /* Create the parallax scrolling effect */
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 5ex;
+      margin-top: 10%;
+    }
+
+    p {
+      font-size: 3ex;
+      text-align: center;
+      margin-left: 10%;
+      margin-right: 10%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+  @media only screen and (max-width: 768px) {
+    b {
+      font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+  b {
+    font-size: 10px;
+  }
+}
+
+</style>
+
+<body>
+  <nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <button id="toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav.collapse"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="#" onclick="$(document).on('click','.navbar-collapse.in',function(e) {
+            if( $(e.target).is('a:not('.dropdown-toggle')') ) {
+                $(this).collapse('hide');
+            }
+        });"
+            class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="#about" class="nav-link">The Essentials</a>
+        </li>
+        <li class="nav-item">
+          <a href="#experience" class="nav-link">Experience</a>
+        </li>
+        <li class="nav-item">
+          <a href="#contact" class="nav-link">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="home" class="parallax">
+    <h1 style="color: lightblue; font-size: 7ex; padding-top: 0px">Hi, I'm Kennan.</h1>
+  </div>
+
+  <div id="about">
+    <h1>The Essentials</h1>
+    <p>
+      I'm a 2nd year student pursuing a B.S in Computer Science at Case Western Reserve University.​ I
+      started programming on calculators with TI-BASIC back in high school, and I've been hopelessly addicted ever
+      since. I strive to automate my life, one tedious task at a time.
+      <br>
+      <br>
+      I'm currently completing an internship focused around web application development with Angular, Node, and
+      Express.
+    </p>
+  </div>
+
+  <div id="experience">
+    <h1>Technologies I've Used</h1>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h1 class="card-title">Java</h1>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem">
+      <div class="card-body">
+        <h1 class="card-title">Python</h1>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h1 class="card-title">Bash</h1>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h1 class="card-title">Angular</h1>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h1 class="card-title">Angular</h1>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h1 class="card-title">Angular</h1>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h1 class="card-title">Angular</h1>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
