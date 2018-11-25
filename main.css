@@ -34,19 +34,6 @@ p {
     min-height: 100%;
     background-color: white;
     color: #373737;
-    
-}
-
-#contact {
-    height: 100%;
-    background-color: #c9e5ed;
-}
-
-#contact :not(h1) {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
 }
 
 #home {
@@ -64,4 +51,15 @@ p {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+#home a {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+/* Turn off parallax scrolling for all tablets and phones. Increase/decrease the pixels if needed */
+@media screen and (max-device-width: 1366px) {
+    #home {
+        background-attachment: scroll;
+    }
 }
