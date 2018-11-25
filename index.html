@@ -1,37 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
 
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="main.css" />
-    <link rel="stylesheet" href="animate.css" />
-    <script src="wow.min.js"></script>
-    <script>
-      new WOW().init();
-    </script>
-    <title>Kennan LeJeune - Student Developer</title>
-  </head>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-  <body class="smoothscroll">
-    <!--
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+  <script>
+    new WOW().init();
+  </script>
+  <title>Kennan LeJeune - Student Developer</title>
+</head>
+
+<body class="smoothscroll">
+  <!--
       nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <button id="toggle" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav.collapse"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,85 +48,133 @@
       </nav>
       <!
     -->
+  <script>
+    $("#down").click(function () {
+      $('html, body').animate({
+        scrollTop: $("#about").offset().top
+      }, 2000);
+    });
+  </script>
+  <div id="home">
+    <h1 class="wow fadeInUp" style="color: lightblue; padding-top: 0px; padding-bottom: 5px">
+      Hi, I'm Kennan.
+    </h1>
+    <div style="padding-bottom: 50px;">
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/kclejeune" class="button">
+        <i class="wow fadeInUp fa-2x fab fa-github" style="color: lightblue"></i>
+      </a>
+      <a target="_blank" rel="noopener noreferrer" href="https://linkedin.com/in/kclejeune" class="button">
+        <i class="wow fadeInUp fa-2x fab fa-linkedin" style="color: lightblue"></i>
+      </a>
+      <a target="_blank" rel="noopener noreferrer" href="mailto:kc.lejeune@gmail.com" class="button">
+        <i class="wow fadeInUp fa-2x far fa-envelope" style="color: lightblue"></i>
+      </a>
+      <a target="_blank" rel="noopener noreferrer" href="https://drive.google.com/file/d/1ghzcmnCZ3rmgeVRnF37fUlIE1a8gYf7U/view?usp=sharing"
+        class="button">
+        <i class="wow fadeInUp fa-2x far fa-file" style="color: lightblue"></i>
+      </a>
+    </div>
 
-    <div id="home">
-      <h1
-        class="wow fadeInUp"
-        style="color: lightblue; padding-top: 0px; padding-bottom: 5px"
-      >
-        Hi, I'm Kennan.
-      </h1>
-      <div style="padding-bottom: 50px;">
-        <a target="_blank" rel="noopener noreferrer" href="https://github.com/kclejeune" class="button">
-          <i class="wow fadeInUp fa-2x fab fa-github" style="color: lightblue"></i>
-        </a>
-        <a target="_blank" rel="noopener noreferrer" href="https://linkedin.com/in/kclejeune" class="button">
-          <i class="wow fadeInUp fa-2x fab fa-linkedin" style="color: lightblue"></i>
-        </a>
-        <a target="_blank" rel="noopener noreferrer" href="mailto:kc.lejeune@gmail.com" class="button">
-          <i class="wow fadeInUp fa-2x far fa-envelope" style="color: lightblue"></i>
-        </a>
-        <a target="_blank" rel="noopener noreferrer" href="https://drive.google.com/file/d/1ghzcmnCZ3rmgeVRnF37fUlIE1a8gYf7U/view?usp=sharing" class="button">
-          <i class="wow fadeInUp fa-2x far fa-file" style="color: lightblue"></i>
-        </a>
+    <a id="down" class="button" href="javascript:;">
+      <i class=" wow fadeInUp fas fa-chevron-circle-down fa-2x" style="color: lightblue;"></i>
+    </a>
+
+
+  </div>
+
+  <div id="about">
+    <h1>The Essentials</h1>
+    <p>Hey, I'm Kennan LeJeune!</p>
+    <p>
+      I'm a 2nd year student pursuing a B.S in Computer Science at Case
+      Western Reserve University.​ I started programming on calculators with
+      TI-BASIC back in high school, and I've been hopelessly addicted ever
+      since. I strive to automate the tedious things in life so that I can
+      waste more time programming. I'm passionate about what I do, and I'm
+      thrilled to be in a field with endless opportunities for learning.
+    </p>
+    <p>
+      I'm currently completing an internship as a front end developer using
+      Angular, Node, and Express.<br />For the Summer of 2019, I'm seeking a
+      position in any sub-discipline of Software Engineering.
+    </p>
+    <p style="padding-bottom: 50px;">
+      In addition to my studies, I'm an avid musician, cyclist, and
+      <a href="https://www.youtube.com/watch?v=QWcFo27xs_4">speedcuber.</a>
+    </p>
+  </div>
+
+  <div id="experience">
+    <h1>Work Experience</h1>
+    <div class="wow fadeInUp" id="items">
+
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Agriplex Genomics</h5>
+          <h6 class="card-subtitle mb-2 text-muted">September 2018 - Present</h6>
+          <ul class="card-text">
+            <li>
+              Worked in Angular 6 to develop internal web apps to optimize job scheduling
+            </li>
+            <li>
+              Collaborated on a software revision team to increase data processing throughput by nearly 50%
+            </li>
+            <li>
+              Managed local server migration to Amazon AWS to allow for software licensing and increased computational
+              efficiency
+            </li>
+          </ul>
+        </div>
       </div>
-      <i
-        class="wow fadeInUp fas fa-chevron-circle-down fa-2x"
-        style="color: lightblue"
-      ></i>
-    </div>
 
-    <div id="about">
-      <h1>The Essentials</h1>
-      <p>Hey, I'm Kennan LeJeune!</p>
-      <p>
-        I'm a 2nd year student pursuing a B.S in Computer Science at Case
-        Western Reserve University.​ I started programming on calculators with
-        TI-BASIC back in high school, and I've been hopelessly addicted ever
-        since. I strive to automate the tedious things in life so that I can
-        waste more time programming. I'm passionate about what I do, and I'm
-        thrilled to be in a field with endless opportunities for learning.
-      </p>
-      <p>
-        I'm currently completing an internship as a front end developer using
-        Angular, Node, and Express.<br />For the Summer of 2019, I'm seeking a
-        position in any sub-discipline of Software Engineering.
-      </p>
-      <p style="padding-bottom: 50px;">
-        In addition to my studies, I'm an avid musician, cyclist, and
-        <a href="https://www.youtube.com/watch?v=QWcFo27xs_4">speedcuber.</a>
-      </p>
-    </div>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">[U]Tech, Case Western Reserve University</h5>
+          <h6 class="card-subtitle mb-2 text-muted">September 2017 - Present</h6>
+          <ul class="card-text">
+            <li>
+              Assisted faculty and staff members to diagnose and troubleshoot hardware and software faults
+            </li>
+            <li>
+              Managed ordering and distribution of new devices through a refresh program for several departments
+            </li>
+            <li>
+              Configured devices to integrate seamlessly with the Microsoft Active Directory system
+            </li>
+          </ul>
+        </div>
+      </div>
 
-    <div id="experience">
-      <h1>Work Experience</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
-    </div>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Academic Tutor</h5>
+          <h6 class="card-subtitle mb-2 text-muted">September 2015 - Present</h6>
+          <ul class="card-text">
+            <li>
+              Tutored 1000+ hours for students in Computer Science, Calculus, Physics, and standardized college entrance exams
+            </li>
+            <li>
+              Developed and applied strategies to help students overcome test anxiety and prepare for AP exams
+            </li>
+            <li>
+              Acquired the ability to clearly and concisely break down complex topics from a conceptual standpoint
+            </li>
+          </ul>
+        </div>
+      </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+
+
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>

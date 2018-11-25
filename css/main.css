@@ -40,7 +40,7 @@ p {
 
 #home {
     /* The image used */
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%), url("assets/cube.jpg");
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%), url("../assets/cube.jpg");
     background-color: rgba(0, 0, 0, 0.6);
     /* Full height */
     height: 100%;
@@ -52,6 +52,20 @@ p {
     display: -webkit-flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+#experience .card {
+    background-color: whitesmoke;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+}
+
+#experience #items {
+    display: -webkit-flex;
+    flex-direction: row;
     justify-content: center;
 }
 
