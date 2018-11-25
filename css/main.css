@@ -57,6 +57,7 @@ p {
 
 #experience .card {
     background-color: whitesmoke;
+    max-width: 20rem;
     margin-top: 20px;
     margin-left: 20px;
     margin-right: 20px;
@@ -66,7 +67,6 @@ p {
 #experience #items {
     display: -webkit-flex;
     flex-flow: row wrap;
-    flex-shrink: .5;
     justify-content: center;
 }
 
@@ -82,4 +82,8 @@ p {
     p {
         font-size: 16px;
     }
+}
+
+@media screen and (min-device-width: 1366px) {
+    
 }
