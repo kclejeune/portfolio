@@ -32,12 +32,14 @@ div {
     width: 100%;
     background-color: #c9e5ed;
     color: #373737;
+    padding-bottom: 30px;s
 }
 
 #experience {
     min-height: 100%;
     background-color: white;
     color: #373737;
+    
 }
 
 #contact {
