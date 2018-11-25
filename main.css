@@ -8,12 +8,13 @@ h1 {
     text-align: center;
     font-size: 36pt;
     padding-top: 50px;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 p {
     font-size: 20pt;
     text-align: left;
+    margin-top: 30px;
     margin-left: 10%;
     margin-right: 10%;
 }
@@ -27,13 +28,14 @@ p {
     width: 100%;
     background-color: #c9e5ed;
     color: #373737;
-    border-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 #experience {
     min-height: 100%;
     background-color: white;
     color: #373737;
+    padding-bottom: 10px;
 }
 
 #home {
