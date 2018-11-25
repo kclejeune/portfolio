@@ -1,61 +1,58 @@
-body, html {
+html,
+body {
     height: 100%;
     width: 100%;
-    background-size: cover;
-  }
-  
-  h1 {
-    text-align: center;
-    font-size: 3rem;
-    padding-top: 60px;
-  }
+    overflow: scroll;
+}
 
-  p {
-    font-size: 2rem;
+h1 {
     text-align: center;
+    font-size: 36pt;
+    padding-top: 70px;
+    padding-bottom: 20px;
+}
+
+p {
+    font-size: 20pt;
+    text-align: left;
     margin-left: 10%;
     margin-right: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #navbarNav li a {
-      color: lightblue;
-  }
+}
 
-  #about {
+#navbarNav li a {
+    color: #c9e5ed;
+}
+
+#about {
     min-height: 100%;
     width: 100%;
     background-color: #c9e5ed;
-    color: #33393e;
-  }
+    color: #373737;
+}
 
-  #experience .card {
+#experience {
     min-height: 100%;
-    background-color: rgb(189, 198, 210);
-    color: rgb(0, 77, 118);
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    margin-left:10rem;
+    background-color: whitesmoke;
+    color: #373737;
+}
+
+#contact {
+    max-height: 50%;
+    background-color: #c9e5ed;
+    padding-bottom: 50px;
+}
+
+#contact :not(h1) {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content:center;
-  }
-  #experience {
-    min-height: 100%;
-    background-color: light;
-    color: #81aecb;
-  }
+    justify-content: center;
+}
 
-  #contact {
-    max-height: 100%;
-    background-color: light
-  }
-
-  .parallax {
+#home {
     /* The image used */
-    background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%), url("assets/cube.jpg");
-    background-color: rgba(0,0,0,0.6);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%), url("assets/cube.jpg");
+    background-color: rgba(0, 0, 0, 0.6);
     /* Full height */
     height: 100%;
     /* Create the parallax scrolling effect */
@@ -66,4 +63,4 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+}
