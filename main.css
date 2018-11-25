@@ -2,7 +2,6 @@ html,
 body {
     height: 100%;
     width: 100%;
-    overflow: scroll;
 }
 
 h1 {
@@ -19,10 +18,6 @@ p {
     margin-right: 10%;
 }
 
-div {
-    clear: none;
-}
-
 #navbarNav li a {
     color: #c9e5ed;
 }
@@ -32,7 +27,7 @@ div {
     width: 100%;
     background-color: #c9e5ed;
     color: #373737;
-    padding-bottom: 30px;s
+    padding-bottom: 30px;
 }
 
 #experience {
@@ -66,7 +61,7 @@ div {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    display: flex;
+    display: -webkit-flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
