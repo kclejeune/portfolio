@@ -93,16 +93,12 @@ p {
     margin-right: 20px;
 }
 
-/* Turn off parallax scrolling for all tablets and phones. Increase/decrease the pixels if needed */
-@media screen and (max-device-width: 1366px) {
-    #home {
-        background-attachment: scroll;
-    }
-}
-
-/* decrease font size on phones */
+/* decrease font size and turn off parallax on phones */
 @media screen and (max-device-width: 768px) {
     p {
         font-size: 1rem;
+    }
+    #home {
+        background-attachment: scroll;
     }
 }
