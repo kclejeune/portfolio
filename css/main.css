@@ -44,36 +44,62 @@ p {
     width: 100%;
     background-color: #c9e5ed;
     color: #373737;
-    margin-bottom: 30px;
 }
 
-#experience {
-    margin-top: -16px;
+#experience,
+#technologies {
+    margin-top: -30px;
     min-height: 100%;
-    background-color: white;
-    color: #373737;
     padding-bottom: 30px;
 }
 
-#experience .card {
+#experience {
     background-color: whitesmoke;
-    max-width: 20rem;
+    color: #373737;
+}
+
+.card {
+    width: 100%;
     margin-top: 20px;
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 20px;
+    max-width: 20rem;
 }
 
-#experience #items {
+#experience .card {
+    background-color: whitesmoke;
+}
+
+#cards {
+    padding-top: 30px;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+}
+
+#technologies {
+    background-color: #697076;
+    color: lightblue;
+}
+
+#technologies .card {
+    max-width: 18rem;
+    background-color: #373737;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#technologies .card h1 {
+    margin-top: -20px;
 }
 
 .button {
     margin-left: 20px;
     margin-right: 20px;
 }
+
 /* Turn off parallax scrolling for all tablets and phones. Increase/decrease the pixels if needed */
 @media screen and (max-device-width: 1366px) {
     #home {
