@@ -5,10 +5,9 @@ body {
 }
 
 h1 {
+    padding-top: 20px;
     text-align: center;
     font-size: 36px;
-    padding-top: 30px;
-    padding-bottom: 30px;
 }
 
 p {
@@ -44,6 +43,7 @@ p {
     width: 100%;
     background-color: #c9e5ed;
     color: #373737;
+    margin-bottom: 30px;
 }
 
 #experience,
@@ -54,6 +54,7 @@ p {
 #experience {
     background-color: white;
     color: #373737;
+    margin-top: -30px;
 }
 
 .card {
@@ -63,6 +64,10 @@ p {
     margin-right: 20px;
     margin-bottom: 20px;
     max-width: 20rem;
+}
+
+.card h1 {
+    padding-bottom: 10px;
 }
 
 #experience .card {
