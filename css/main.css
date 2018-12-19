@@ -99,7 +99,7 @@ p {
 }
 
 /* decrease font size and turn off parallax on phones */
-@media screen and (max-device-width: 768px) {
+@media screen and (max-device-width: 1366px) {
     p {
         font-size: 1rem;
     }
