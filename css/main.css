@@ -1,123 +1,86 @@
 html,
 body {
-    height: 100%;
-    width: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
-        'Helvetica Neue', sans-serif;
-}
-
-h1 {
-    text-align: center;
-    font-size: 36px;
-}
-
-p {
-    font-size: 1.4em;
-    text-align: left;
-    max-width: 700px;
-    margin-right: 20px;
-    margin-left: 20px;
+  height: 100%;
+  width: 100%;
 }
 
 #home * {
-    color: lightskyblue;
+  color: skyblue;
 }
 
-.header {
-    width: 100%;
-    height: 7.5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#home *:hover {
+  color: skyblue;
 }
 
-.body {
-    width: 100%;
-    min-height: calc(100% - 7.5em);
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+h1 {
+  text-align: center;
 }
 
-.button {
-    outline: none;
-    border: none;
-    margin-left: 20px;
-    margin-right: 20px;
+@media (min-width: 980px) {
+  /* prevent navbar content overflow */
+  body {
+    padding-top: 50px;
+  }
+  .anchor {
+    display: block;
+    height: 50px;
+    margin-top: -50px;
+    visibility: hidden;
+  }
 }
-
-#home {
-    /* The image used */
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%),
-        url("../assets/cube.jpg");
-    background-color: rgba(0, 0, 0, 0.6);
-    /* Full height */
-    height: 100%;
-    /* Create the parallax scrolling effect */
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: -webkit-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+@media (max-width: 979px) {
+  body {
+    padding-top: 0px;
+  }
+  .anchor {
+    margin-top: 0px;
+    height: 0px;
+  }
 }
-
-#about,
-#experience,
-#technologies {
-    min-height: 100%;
+.page {
+  min-height: 100%;
+  width: 100%;
 }
-
-#about {
-    background-color: rgb(166, 206, 249);
-    color: #212121;
-}
-
-#experience {
-    background-color: white;
-    color: #212121;
-}
-
-#technologies {
-    background-color: #586579;
-    color: rgb(166, 206, 249);
-}
-
-.card {
-    background-color: whitesmoke;
-    width: 100%;
-    max-width: 25rem;
-    margin: 20px;
-}
-
-.card h1 {
-    padding-top: 20px;
-}
-
 #cards {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
-#technologies .card {
-    max-width: 18em;
-    background-color: #373737;
-    display: -webkit-flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 10px;
+.experience #cards * {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+/* hero page parallax */
+#home {
+  /* The image used */
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.6) 100%
+    ),
+    url("../assets/cube.jpg");
+  background-color: rgba(0, 0, 0, 0.6);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* decrease font size and turn off parallax on phones and tablets*/
 @media screen and (max-device-width: 1366px) {
-    p {
-        font-size: 1rem;
-    }
-    #home {
-        background-attachment: scroll;
-    }
+  p {
+    font-size: 1rem;
+  }
+  #home {
+    background-attachment: scroll;
+  }
 }
