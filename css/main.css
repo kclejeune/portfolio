@@ -4,11 +4,11 @@ body {
   width: 100%;
 }
 
-#home * {
+.home * {
   color: skyblue;
 }
 
-#home *:hover {
+.home *:hover {
   color: skyblue;
 }
 
@@ -21,21 +21,18 @@ h1 {
   margin-top: -50px;
   visibility: hidden;
 }
-@media (min-width: 980px) {
-  /* prevent navbar content overflow */
-  body {
-    padding-top: 50px;
-  }
+
+/* prevent navbar content overflow */
+body {
+  padding-top: 50px;
 }
-/* @media (max-width: 979px) {
-  body {
-    padding-top: 0px;
-  }
-} */
+
+/* all pages fill screen */
 .page {
   min-height: 100%;
   width: 100%;
 }
+
 #cards {
   display: flex;
   flex-direction: row;
@@ -46,12 +43,10 @@ h1 {
 
 .experience #cards * {
   flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: auto;
 }
 
 /* hero page parallax */
-#home {
+.home {
   /* The image used */
   background-image: linear-gradient(
       to bottom,
@@ -71,11 +66,11 @@ h1 {
 }
 
 /* decrease font size and turn off parallax on phones and tablets*/
-@media screen and (max-device-width: 1366px) {
+/* @media screen and (max-device-width: 1366px) {
   p {
     font-size: 1rem;
   }
   #home {
     background-attachment: scroll;
   }
-}
+} */
