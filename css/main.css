@@ -4,22 +4,27 @@ body {
   width: 100%;
 }
 
+/* set homescreen theme */
 .home * {
   color: lightskyblue;
 }
 
-p {
+/* Center headers where they are used */
+.header {
+  text-align: center;
+}
+
+/* handle margins on header/body with bootstrap classes to avoid uneven whitespace */
+.header,
+.body {
   margin: 0px;
 }
 
+/* pretty colors on hover if we aren't using a touchscreen */
 @media (hover: hover) {
   i:hover {
     color: steelblue;
   }
-}
-
-h1 {
-  text-align: center;
 }
 
 /* all pages fill screen */
@@ -28,6 +33,7 @@ h1 {
   width: 100%;
 }
 
+/* containers of cards should wrap around nicely */
 .cards {
   display: flex;
   flex-direction: row;
@@ -36,12 +42,14 @@ h1 {
   justify-content: center;
 }
 
+/* make the cards take up all the space */
 .cards * {
   flex-grow: 1;
 }
 
+/* squish the tech cards a little bit */
 .technologies .cards * {
-  max-width: 25rem;
+  max-width: 20rem;
   text-align: center;
 }
 
@@ -68,14 +76,14 @@ h1 {
 /* scroll to proper section anchor locations by providing a dummy "anchor" with a negative margin */
 .anchor {
   display: block;
-  height: 50px;
-  margin-top: -50px;
+  height: 55px;
+  margin-top: -55px;
   visibility: hidden;
 }
 
 /* prevent navbar content overflow */
 body {
-  padding-top: 50px;
+  padding-top: 55px;
 }
 
 /* decrease font size and turn off parallax on phones and tablets*/
