@@ -8,8 +8,14 @@ body {
   color: lightskyblue;
 }
 
-i:hover {
-  color: steelblue;
+p {
+  margin: 0px;
+}
+
+@media (hover: hover) {
+  i:hover {
+    color: steelblue;
+  }
 }
 
 h1 {
