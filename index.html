@@ -21,6 +21,11 @@
     />
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script> -->
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -36,6 +41,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.0/css/mdb.min.css"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="css/main.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
     <script>
@@ -75,7 +81,11 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+          >
             <a
               class="nav-link"
               href="#home"
@@ -84,16 +94,24 @@
               >Home</a
             >
           </li>
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+          >
             <a
               class="nav-link button"
               href="#about"
               onclick="$('html, body').animate(
                 {scrollTop: $('#about').offset().top}, 300);"
-              >About</a
+              >About Me</a
             >
           </li>
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+          >
             <a
               class="nav-link button"
               href="#experience"
@@ -102,7 +120,11 @@
               >Experience</a
             >
           </li>
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+          >
             <a
               class="nav-link button"
               href="#technologies"
@@ -174,13 +196,13 @@
     </div>
 
     <!--About me/bio-->
-    <span class="anchor" id="about"></span>
+    <span class="anchor bg-light" id="about"></span>
     <div class="about page bg-light">
       <div class="container">
-        <h1 class="header py-4">
+        <h1 class="header pt-3">
           The Essentials
         </h1>
-        <p class="py-2">
+        <p class="py-3">
           Hey, I'm Kennan LeJeune! <br /><br />
           I'm a 4th year student pursuing B.S. and M.S. degrees in Computer
           Science at Case Western Reserve University.​ I started programming on
@@ -206,14 +228,14 @@
     </div>
 
     <!--Work Experience-->
-    <span class="anchor" id="experience"></span>
+    <span class="anchor bg-primary" id="experience"></span>
     <div class="experience page bg-primary">
       <div class="container">
-        <h1 class="header py-4">
+        <h1 class="header pt-3">
           Work Experience
         </h1>
 
-        <div class="wow fadeIn pb-4 text-dark" id="cards">
+        <div class="wow fadeIn py-3 text-dark cards">
           <!-- <div class="card wow zoomIn">
                     <div class="card-body">
                         <h5 class="card-title">Where'd I do it</h5>
@@ -372,21 +394,14 @@
     </div>
 
     <!--Technologies I've worked with-->
-    <span class="anchor" id="technologies"></span>
+    <span class="anchor bg-dark" id="technologies"></span>
     <div class="technologies page bg-dark">
       <div class="container">
-        <h1 class="header py-4 text-light">
+        <h1 class="header pt-3 text-light">
           Technologies I've Used
         </h1>
 
-        <div class="m-3 wow fadeIn text-dark" id="cards">
-          <!-- 
-          <div class="m-3 card wow zoomIn">
-            <div class="card-body">
-              <h1>which thing</h1>
-            </div>
-          </div>
-            -->
+        <div class="pb-3 wow fadeIn text-dark cards">
           <div class="m-3 card wow zoomIn">
             <div class="card-body">
               <h2>Python</h2>
@@ -402,12 +417,6 @@
           <div class="m-3 card wow zoomIn">
             <div class="card-body">
               <h2>Bash</h2>
-            </div>
-          </div>
-
-          <div class="m-3 card wow zoomIn">
-            <div class="card-body">
-              <h2>Awk</h2>
             </div>
           </div>
 
@@ -440,7 +449,6 @@
               <h2>HTML</h2>
             </div>
           </div>
-
           <div class="m-3 card wow zoomIn">
             <div class="card-body">
               <h2>CSS</h2>
@@ -467,38 +475,4 @@
       </div>
     </div>
   </body>
-  <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-  />
-  <!-- CSS only -->
-  <link
-    rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-    crossorigin="anonymous"
-  />
-  <!-- JS, Popper.js, and jQuery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"
-  ></script>
-  <script
-    src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-    crossorigin="anonymous"
-  ></script>
-  <!-- Material Design Bootstrap -->
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.0/css/mdb.min.css"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="css/main.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-  <script>
-    new WOW().init();
-  </script>
 </html>

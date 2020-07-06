@@ -15,17 +15,6 @@ body {
 h1 {
   text-align: center;
 }
-.anchor {
-  display: block;
-  height: 50px;
-  margin-top: -50px;
-  visibility: hidden;
-}
-
-/* prevent navbar content overflow */
-body {
-  padding-top: 50px;
-}
 
 /* all pages fill screen */
 .page {
@@ -33,7 +22,7 @@ body {
   width: 100%;
 }
 
-#cards {
+.cards {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -41,8 +30,13 @@ body {
   justify-content: center;
 }
 
-.experience #cards * {
+.cards * {
   flex-grow: 1;
+}
+
+.technologies .cards * {
+  max-width: 25rem;
+  text-align: center;
 }
 
 /* hero page parallax */
@@ -65,12 +59,25 @@ body {
   justify-content: center;
 }
 
+/* scroll to proper section anchor locations by providing a dummy "anchor" with a negative margin */
+.anchor {
+  display: block;
+  height: 50px;
+  margin-top: -50px;
+  visibility: hidden;
+}
+
+/* prevent navbar content overflow */
+body {
+  padding-top: 50px;
+}
+
 /* decrease font size and turn off parallax on phones and tablets*/
-/* @media screen and (max-device-width: 1366px) {
-  p {
+@media screen and (max-device-width: 1366px) {
+  /* p {
     font-size: 1rem;
-  }
-  #home {
+  } */
+  .home {
     background-attachment: scroll;
   }
-} */
+}
