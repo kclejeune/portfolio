@@ -5,11 +5,11 @@ body {
 }
 
 .home * {
-  color: skyblue;
+  color: lightskyblue;
 }
 
-.home *:hover {
-  color: skyblue;
+i:hover {
+  color: steelblue;
 }
 
 h1 {
