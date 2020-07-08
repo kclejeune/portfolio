@@ -52,7 +52,7 @@ body {
 
 /* squish the tech cards a little bit */
 .technologies .cards * {
-  max-width: 20rem;
+  max-width: 25rem;
   text-align: center;
 }
 
