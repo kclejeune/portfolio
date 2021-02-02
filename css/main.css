@@ -5,6 +5,12 @@ body {
 }
 body {
   position: relative;
+  /* prevent navbar content overflow */
+  padding-top: 55px;
+}
+
+p {
+  line-height: 150%;
 }
 
 /* set homescreen theme */
@@ -50,12 +56,6 @@ body {
   flex-grow: 1;
 }
 
-/* squish the tech cards a little bit */
-.technologies .cards * {
-  max-width: 25rem;
-  text-align: center;
-}
-
 /* hero page parallax */
 .home {
   /* The image used */
@@ -64,7 +64,7 @@ body {
       rgba(0, 0, 0, 0.6) 0%,
       rgba(0, 0, 0, 0.6) 100%
     ),
-    url("../assets/cube.jpg");
+    url('/assets/cube.jpg');
   background-color: rgba(0, 0, 0, 0.6);
   background-attachment: fixed;
   background-position: center;
@@ -84,16 +84,8 @@ body {
   visibility: hidden;
 }
 
-/* prevent navbar content overflow */
-body {
-  padding-top: 55px;
-}
-
 /* decrease font size and turn off parallax on phones and tablets*/
 @media screen and (max-device-width: 1366px) {
-  /* p {
-    font-size: 1rem;
-  } */
   .home {
     background-attachment: scroll;
   }
