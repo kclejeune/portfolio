@@ -13,9 +13,9 @@
   fetch(`https://gh-pinned-repos-5l2i19um3.vercel.app/?username=${username}`)
     .then((res) => res.json())
     .then((json: Array<Project>) => {
-      repos = json;
-      repos.sort((a: Project, b: Project) => b.stars - a.stars);
-    });
+      repos = json.sort((a: Project, b: Project) => b.stars - a.stars);
+    })
+    .finally(() => console.log('projects fetched'));
   export function titleCase(str: string) {
     return str.replace(/\w\S*/g, (txt) => {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
