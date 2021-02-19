@@ -12,6 +12,7 @@
     'Javascript',
     'Angular',
     'Vue',
+    'Svelte',
     'HTML',
     'CSS',
     'Java',
@@ -27,7 +28,7 @@
     <h1 class="header pt-3 text-light">{title}</h1>
     <div class="py-3 wow fadeIn text-dark cards">
       {#each skills as skill}
-        <div class="m-2 card wow zoomIn bg-light">
+        <div class="m-2 card wow zoomIn">
           <div class="card-body">
             <h2 class="header">{skill}</h2>
           </div>

@@ -1,6 +1,6 @@
-p.svelte-1jhmt9n{line-height:150%}.svelte-1hf3i2s{color:lightskyblue}.page.svelte-1hf3i2s{background-image:linear-gradient(
+.svelte-1hf3i2s{color:lightskyblue}.page.svelte-1hf3i2s{background-image:linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0.6) 0%,
         rgba(0, 0, 0, 0.6) 100%
       ),
-      url('/assets/cube.jpg');background-color:rgba(0, 0, 0, 0.6);background-attachment:fixed;background-position:center;background-repeat:no-repeat;background-size:cover;display:flex;flex-direction:column;align-items:center;justify-content:center}@media screen and (max-device-width: 1366px){.page.svelte-1hf3i2s{background-attachment:scroll}}@media(hover: hover){i.svelte-1hf3i2s:hover{color:steelblue}}
+      url('/assets/cube.jpg');background-color:rgba(0, 0, 0, 0.6);background-attachment:fixed;background-position:center;background-repeat:no-repeat;background-size:cover;display:flex;flex-direction:column;align-items:center;justify-content:center}@media screen and (max-device-width: 1366px){.page.svelte-1hf3i2s{background-attachment:scroll}}@media(hover: hover){i.svelte-1hf3i2s:hover{color:steelblue}}p.svelte-1jhmt9n{line-height:150%}

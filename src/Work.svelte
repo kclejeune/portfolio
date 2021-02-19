@@ -82,7 +82,7 @@
     <h1 class="header pt-3">{title}</h1>
     <div class="wow fadeIn py-3 my-auto text-dark cards">
       {#each jobs as job}
-        <div class="card m-2 wow zoomIn bg-light">
+        <div class="card m-2 wow zoomIn">
           <div class="card-body">
             <h5 class="card-title text-dark">{job.employer}</h5>
             <h6 class="card-subtitle mb-2 text-muted">

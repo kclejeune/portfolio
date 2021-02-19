@@ -13,6 +13,10 @@
       title: 'Experience',
     },
     {
+      page: 'projects',
+      title: 'Projects',
+    },
+    {
       page: 'technologies',
       title: 'Skills',
     },
