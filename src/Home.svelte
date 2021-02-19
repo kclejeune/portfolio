@@ -63,7 +63,7 @@
         rgba(0, 0, 0, 0.6) 0%,
         rgba(0, 0, 0, 0.6) 100%
       ),
-      url('/assets/cube.jpg');
+      url('../assets/cube.jpg');
     background-color: rgba(0, 0, 0, 0.6);
     background-attachment: fixed;
     background-position: center;
