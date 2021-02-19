@@ -4,6 +4,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
+    "deploy": "git subtree push --prefix public origin gh-pages",
     "start": "sirv public",
     "validate": "svelte-check"
   },
