@@ -9,15 +9,6 @@ body {
   padding-top: 55px;
 }
 
-p {
-  line-height: 150%;
-}
-
-/* set homescreen theme */
-.home * {
-  color: lightskyblue;
-}
-
 /* Center headers where they are used */
 .header {
   text-align: center;
@@ -27,13 +18,6 @@ p {
 .header,
 .body {
   margin: 0px;
-}
-
-/* pretty colors on hover if we aren't using a touchscreen */
-@media (hover: hover) {
-  i:hover {
-    color: steelblue;
-  }
 }
 
 /* all pages fill screen */
@@ -56,26 +40,6 @@ p {
   flex-grow: 1;
 }
 
-/* hero page parallax */
-.home {
-  /* The image used */
-  background-image: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.6) 0%,
-      rgba(0, 0, 0, 0.6) 100%
-    ),
-    url('/assets/cube.jpg');
-  background-color: rgba(0, 0, 0, 0.6);
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 /* scroll to proper section anchor locations by providing a dummy "anchor" with a negative margin */
 .anchor {
   display: block;
@@ -84,9 +48,4 @@ p {
   visibility: hidden;
 }
 
-/* decrease font size and turn off parallax on phones and tablets*/
-@media screen and (max-device-width: 1366px) {
-  .home {
-    background-attachment: scroll;
-  }
-}
+
