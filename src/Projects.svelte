@@ -9,14 +9,24 @@
     forks: number;
   };
   const username = 'kclejeune';
+  const API_URL = 'https://gh-pinned-repos-5l2i19um3.vercel.app';
+
+  // load pinned github repositories
   let repos = Array<Project>();
-  fetch(`https://gh-pinned-repos-5l2i19um3.vercel.app/?username=${username}`)
+  fetch(`${API_URL}/?username=${username}`)
     .then((res) => res.json())
     .then((json: Array<Project>) => {
       repos = json.sort((a: Project, b: Project) => b.stars - a.stars);
     })
     .finally(() => console.log('projects fetched'));
-  export function titleCase(str: string) {
+
+  // convert repo names into titles
+  function titleCase(str: string): string {
+    // don't apply this to things that are named using my username
+    if (str.includes(username)) {
+      return str;
+    }
+
     return str.replace(/\w\S*/g, (txt) => {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
@@ -27,31 +37,36 @@
 <div class="projects page bg-light">
   <div class="container">
     <h1 class="header pt-3">Projects</h1>
-    <div class="wow fadeIn py-3 my-auto text-dark cards">
+    <div class="wow fadeIn py-3 my-auto text-dark row">
       {#each repos as repo}
-        <div class="card m-2 wow zoomIn">
-          <div class="card-body">
-            <h5 class="card-title text-dark">
-              {titleCase(repo.repo.replaceAll('-', ' '))}
-            </h5>
-            <h6 class="card-subtitle mb-2 text-muted">
-              <a href={repo.link}>{repo.link}</a>
-            </h6>
-            <ul>
-              <li>
-                Language: {repo.language}
-              </li>
+        <div class="col-sm-12">
+          <div class="card m-2 wow zoomIn">
+            <div class="card-body">
+              <h5 class="card-title text-dark">
+                {titleCase(repo.repo.replaceAll('-', ' '))}
+              </h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                <a href={repo.link}>{repo.link}</a>
+              </h6>
               {#if repo?.description}
-                <li>
-                  Description: {repo.description}
-                </li>
+                {repo.description}
               {/if}
-              {#if repo.stars > 0}
+              <ul>
                 <li>
-                  Stars: {repo.stars}
+                  Language: {repo.language}
                 </li>
-              {/if}
-            </ul>
+                {#if repo.stars > 0}
+                  <li>
+                    Stars: {repo.stars}
+                  </li>
+                {/if}
+                {#if repo.forks > 0}
+                  <li>
+                    Forks: {repo.forks}
+                  </li>
+                {/if}
+              </ul>
+            </div>
           </div>
         </div>
       {/each}

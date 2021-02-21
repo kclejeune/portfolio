@@ -26,20 +26,6 @@ body {
   width: 100%;
 }
 
-/* containers of cards should wrap around nicely */
-.cards {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-}
-
-/* make the cards take up all the space */
-.cards * {
-  flex-grow: 1;
-}
-
 /* scroll to proper section anchor locations by providing a dummy "anchor" with a negative margin */
 .anchor {
   display: block;

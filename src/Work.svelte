@@ -80,22 +80,24 @@
 <div class="experience page bg-primary">
   <div class="container">
     <h1 class="header pt-3">{title}</h1>
-    <div class="wow fadeIn py-3 my-auto text-dark cards">
+    <div class="wow fadeIn py-3 my-auto text-dark row">
       {#each jobs as job}
-        <div class="card m-2 wow zoomIn">
-          <div class="card-body">
-            <h5 class="card-title text-dark">{job.employer}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">
-              {job.title}, {dateToString(job.startDate)} - {dateToString(
-                job.endDate,
-              )}
-            </h6>
-            {job.description ?? ''}
-            <ul class="card-text text-dark">
-              {#each job.tasks as task}
-                <li>{task}</li>
-              {/each}
-            </ul>
+        <div class="col-sm-12">
+          <div class="card m-2 wow zoomIn">
+            <div class="card-body">
+              <h5 class="card-title text-dark">{job.employer}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                {job.title}, {dateToString(job.startDate)} - {dateToString(
+                  job.endDate,
+                )}
+              </h6>
+              {job.description ?? ''}
+              <ul class="card-text text-dark">
+                {#each job.tasks as task}
+                  <li>{task}</li>
+                {/each}
+              </ul>
+            </div>
           </div>
         </div>
       {/each}
