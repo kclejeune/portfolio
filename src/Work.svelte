@@ -21,12 +21,12 @@
     'November',
     'December',
   ];
-  export const title = 'Work Experience';
-  export const currentDate = new Date();
-  export function dateToString(date: Date) {
+  const title = 'Work Experience';
+  const currentDate = new Date();
+  function dateToString(date: Date) {
     return `${months[date.getMonth()]} ${date.getFullYear()}`;
   }
-  export const jobs: Array<Job> = [
+  const jobs: Array<Job> = [
     {
       employer: 'CWRU Department of Computer and Data Sciences',
       title: 'Teaching Assistant',

@@ -51,7 +51,7 @@
               {#if repo?.description}
                 {repo.description}
               {/if}
-              <ul>
+              <ul class="card-text text-dark">
                 <li>
                   Language: {repo.language}
                 </li>
