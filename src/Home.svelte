@@ -6,27 +6,33 @@
     type Icon = {
         link: string;
         iconClass: string;
+        name: string;
     };
     const icons: Array<Icon> = [
         {
             link: "https://github.com/kclejeune",
             iconClass: "fa-2x fab fa-github",
+            name: "GitHub",
         },
         {
             link: "https://linkedin.com/in/kclejeune",
             iconClass: "fa-2x fab fa-linkedin",
+            name: "LinkedIn",
         },
         {
             link: "https://keybase.io/kclejeune",
             iconClass: "fa-2x fab fa-keybase",
+            name: "Keybase",
         },
         {
             link: "mailto:contact@kclj.io",
             iconClass: "fa-2x far fa-envelope",
+            name: "Email",
         },
         {
             link: "https://kclejeune.keybase.pub/resume.pdf",
             iconClass: "fa-2x far fa-file-alt",
+            name: "Resume",
         },
     ];
 </script>
@@ -38,13 +44,15 @@
     <div class="w-0 h-0" />
     <div>
         <h1 class="text-5xl m-6 text-center {color}  font-light">
-            Hi, I'm Kennan
+            Hi, I'm Kennan.
         </h1>
         <span>
             {#each icons as icon}
                 <a
                     target="_blank"
                     rel="noopener noreferrer"
+                    alt={icon.name}
+                    aria-label={icon.name}
                     href={icon.link}
                     class="m-5 {color} md:hover:{hoverColor}"
                 >
@@ -56,6 +64,7 @@
     <a
         id="down"
         use:scrollto={"#about"}
+        aria-label="scroll down"
         class="py-20 {color} hover:{hoverColor}"
         href="#about"
     >
@@ -71,7 +80,7 @@
                 rgba(0, 0, 0, 0.6) 0%,
                 rgba(0, 0, 0, 0.6) 100%
             ),
-            url("/assets/cube.jpg");
+            url("/assets/cube.webp");
         background-color: rgba(0, 0, 0, 0.6);
     }
 </style>
