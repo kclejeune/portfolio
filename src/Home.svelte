@@ -54,7 +54,7 @@
                     alt={icon.name}
                     aria-label={icon.name}
                     href={icon.link}
-                    class="m-5 {color} md:hover:{hoverColor}"
+                    class="m-5 {color} hover:{hoverColor}"
                 >
                     <i class={icon.iconClass} />
                 </a>
