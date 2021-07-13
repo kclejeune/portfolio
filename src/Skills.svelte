@@ -34,9 +34,9 @@
     >
         {#each skills as skill}
             <div
-                class="overflow-hidden bg-gray-200 shadow-xl rounded-xl dark:bg-gray-800"
+                class="overflow-hidden shadow-xl bg-gray-50 rounded-xl dark:bg-gray-800"
             >
-                <div class="px-6 py-4 mb-2 text-2xl font-medium text-center">
+                <div class="px-6 py-4 text-2xl font-medium text-center">
                     {skill}
                 </div>
             </div>

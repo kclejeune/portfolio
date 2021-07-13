@@ -101,7 +101,7 @@
 >
     <Header header={title} />
     <div
-        class="container grid max-w-screen-xl gap-4 py-8 mx-auto md:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4"
+        class="container grid max-w-screen-xl gap-4 py-8 mx-auto md:grid-cols-1 xl:grid-cols-2 3xl:grid-cols-4"
     >
         {#each jobs as job}
             <Card
