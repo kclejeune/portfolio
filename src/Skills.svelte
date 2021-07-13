@@ -1,41 +1,45 @@
 <script lang="ts">
-  const title: string = 'Technologies I Use';
-  const skills: Array<string> = [
-    'Python',
-    'Scikit-Learn',
-    'Tensorflow',
-    'Keras',
-    'NixOS',
-    'Bash',
-    'Awk',
-    'TypeScript',
-    'Javascript',
-    'Angular',
-    'Vue',
-    'Svelte',
-    'HTML',
-    'CSS',
-    'Java',
-    'Kotlin',
-    'SQL',
-    'Scheme',
-  ];
+    import Header from "./components/Header.svelte";
+
+    const title: string = "Technologies I Use";
+    const skills: Array<string> = [
+        "Python",
+        "Scikit-Learn",
+        "Tensorflow",
+        "Keras",
+        "NixOS",
+        "Bash",
+        "Awk",
+        "TypeScript",
+        "Javascript",
+        "Angular",
+        "Vue",
+        "Svelte",
+        "HTML",
+        "CSS",
+        "Java",
+        "Kotlin",
+        "SQL",
+        "Scheme",
+    ];
 </script>
 
-<span class="anchor bg-dark" id="technologies" />
-<div class="technologies page bg-dark">
-  <div class="container">
-    <h1 class="header pt-3 text-light">{title}</h1>
-    <div class="py-3 wow fadeIn text-dark row justify-content-center">
-      {#each skills as skill}
-        <div class="col-xl-3 col-lg-4 col-sm-6">
-          <div class="m-2 card wow zoomIn">
-            <div class="card-body">
-              <h2 class="header">{skill}</h2>
+<div
+    id="technologies"
+    class="min-w-full min-h-screen bg-gray-200 dark:bg-gray-600"
+>
+    <Header header={title} />
+    <div
+        class="container grid grid-cols-1 gap-4 px-4 py-8 mx-auto sm:container md:grid-cols-3 sm:grid-cols-2"
+    >
+        {#each skills as skill}
+            <div
+                class="overflow-hidden bg-gray-200 shadow-xl rounded-xl dark:bg-gray-800"
+            >
+                <div class="px-6 py-4 mb-2 text-2xl font-medium text-center">
+                    {skill}
+                </div>
             </div>
-          </div>
-        </div>
-      {/each}
+        {/each}
     </div>
-  </div>
 </div>

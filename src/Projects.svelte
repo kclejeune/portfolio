@@ -1,78 +1,68 @@
 <script lang="ts">
-  type Project = {
-    owner: string;
-    repo: string;
-    link: string;
-    description: string;
-    language: string;
-    stars: number;
-    forks: number;
-  };
-  const username = 'kclejeune';
-  const API_URL = 'https://gh-pinned-repos-5l2i19um3.vercel.app';
+    import Header from "./components/Header.svelte";
+    import Card from "./components/Card.svelte";
+    import { destroy_component } from "svelte/internal";
 
-  // load pinned github repositories
-  let repos = Array<Project>();
-  fetch(`${API_URL}/?username=${username}`)
-    .then((res) => res.json())
-    .then((json: Array<Project>) => {
-      repos = json.sort((a: Project, b: Project) => b.stars - a.stars);
-    })
-    .finally(() => console.log('projects fetched'));
+    type Project = {
+        owner: string;
+        repo: string;
+        link: string;
+        description: string;
+        language: string;
+        stars: number;
+        forks: number;
+    };
+    const username = "kclejeune";
+    const API_URL = "https://gh-pinned-repos-5l2i19um3.vercel.app";
 
-  // convert repo names into titles
-  function titleCase(str: string): string {
-    // don't apply this to things that are named using my username
-    if (str.includes(username)) {
-      return str;
+    // load pinned github repositories
+    async function getProjects(): Promise<Project[]> {
+        return fetch(`${API_URL}/?username=${username}`)
+            .then((res) => res.json())
+            .then((json: Project[]) =>
+                json.sort((a: Project, b: Project) => b.stars - a.stars)
+            );
     }
 
-    return str.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  }
+    let projectPromise: Promise<Project[]> = getProjects();
+
+    // convert repo names into titles
+    function titleCase(str: string): string {
+        // don't apply this to things that are named using my username
+        if (str.includes(username)) {
+            return str;
+        }
+
+        return str.replace(/\w\S*/g, (txt) => {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+    }
 </script>
 
-<span class="anchor bg-primary" id="projects" />
-<div class="projects page bg-light">
-  <div class="container">
-    <h1 class="header pt-3">Projects</h1>
-    <div class="wow fadeIn py-3 my-auto text-dark row">
-      {#each repos as repo}
-        <div class="col-sm-12">
-          <div class="card m-2 wow zoomIn">
-            <div class="card-body">
-              <h5 class="card-title text-dark">
-                {titleCase(repo.repo.replaceAll('-', ' '))}
-              </h5>
-              <h6 class="card-subtitle mb-2 text-muted">
-                <a href={repo.link}>{repo.link}</a>
-              </h6>
-              {#if repo?.description}
-                {repo.description}
-              {/if}
-              <ul class="card-text text-dark">
-                <li>
-                  Language: {repo.language}
-                </li>
-                {#if repo.stars > 0}
-                  <li>
-                    Stars: {repo.stars}
-                  </li>
-                {/if}
-                {#if repo.forks > 0}
-                  <li>
-                    Forks: {repo.forks}
-                  </li>
-                {/if}
-              </ul>
+<div
+    id="projects"
+    class="min-w-full min-h-screen bg-blue-200 dark:bg-blue-900 "
+>
+    <Header header="Projects" />
+    <div class="container grid max-w-screen-xl gap-4 px-4 py-8 mx-auto md:grid-cols-1 xl:grid-cols-2">
+        {#await projectPromise}
+            <div class="animate-pulse">
+                <Card title={"Loading..."} />
             </div>
-          </div>
-        </div>
-      {/each}
+        {:then repos}
+            {#each repos as repo}
+                <!-- <div class="flex justify-center"> -->
+                    <Card
+                        title={titleCase(repo.repo.replaceAll("-", " "))}
+                        url={repo.link}
+                        description={repo.stars > 0
+                            ? `Stars: ${repo.stars}`
+                            : undefined}
+                        content={repo.description}
+                        tags={[repo.language]}
+                    />
+                <!-- </div> -->
+            {/each}
+        {/await}
     </div>
-  </div>
 </div>
-
-<style>
-</style>
