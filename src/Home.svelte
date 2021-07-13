@@ -54,9 +54,9 @@
                     alt={icon.name}
                     aria-label={icon.name}
                     href={icon.link}
-                    class="m-5 {color} hover:{hoverColor}"
+                    class="m-5 "
                 >
-                    <i class={icon.iconClass} />
+                    <i class="{icon.iconClass} {color} hover:{hoverColor}" />
                 </a>
             {/each}
         </span>
@@ -65,10 +65,12 @@
         id="down"
         use:scrollto={"#about"}
         aria-label="scroll down"
-        class="py-20 {color} hover:{hoverColor}"
+        class="py-20"
         href="#about"
     >
-        <i class="fas fa-chevron-circle-down fa-2x" />
+        <i
+            class="fas fa-chevron-circle-down fa-2x {color} hover:{hoverColor}"
+        />
     </a>
 </div>
 
