@@ -9,7 +9,7 @@
 </script>
 
 <div
-    class="flex flex-col justify-between overflow-hidden bg-gray-200 shadow-lg dark:bg-gray-800 rounded-xl"
+    class="flex flex-col justify-between overflow-hidden shadow-lg bg-gray-50 dark:bg-gray-800 rounded-xl"
 >
     <div class="px-6 py-4">
         {#if title}

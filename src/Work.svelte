@@ -97,7 +97,7 @@
 
 <div
     id="experience"
-    class="min-w-full min-h-screen px-4 dark:bg-gray-600 bg-gray-50 dark:text-gray-300"
+    class="min-w-full min-h-screen px-4 bg-gray-200 dark:bg-gray-600 dark:text-gray-300"
 >
     <Header header={title} />
     <div
