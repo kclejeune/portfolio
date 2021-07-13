@@ -43,7 +43,7 @@
 >
     <div class="w-0 h-0" />
     <div>
-        <h1 class="text-5xl m-6 text-center {color}  font-light">
+        <h1 class="text-5xl m-6 text-center {color} font-light">
             Hi, I'm Kennan.
         </h1>
         <span>
@@ -80,7 +80,7 @@
                 rgba(0, 0, 0, 0.6) 0%,
                 rgba(0, 0, 0, 0.6) 100%
             ),
-            url("/assets/cube.webp");
+            url("/assets/images/cube.webp");
         background-color: rgba(0, 0, 0, 0.6);
     }
 </style>
