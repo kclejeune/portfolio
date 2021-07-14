@@ -1,9 +1,9 @@
 <script lang="ts">
-    import Header from "./components/Header.svelte";
-    import Card from "./components/Card.svelte";
-    import Page from "./components/Page.svelte";
-    import LoadingCard from "./components/LoadingCard.svelte";
-    import Content from "./components/Content.svelte";
+    import Header from "../components/Header.svelte";
+    import Card from "../components/Card.svelte";
+    import Page from "../components/Page.svelte";
+    import LoadingCard from "../components/LoadingCard.svelte";
+    import Content from "../components/Content.svelte";
 
     type Project = {
         owner: string;

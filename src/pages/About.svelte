@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Link from "./components/Link.svelte";
-    import Page from "./components/Page.svelte";
-    import Text from "./components/Text.svelte";
+    import Link from "../components/Link.svelte";
+    import Page from "../components/Page.svelte";
+    import Text from "../components/Text.svelte";
 </script>
 
 <Page

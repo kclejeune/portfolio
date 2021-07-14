@@ -1,8 +1,6 @@
 <script lang="ts">
-    import { destroy_component } from "svelte/internal";
-    import Card from "./components/Card.svelte";
-    import Header from "./components/Header.svelte";
-    import Page from "./components/Page.svelte";
+    import Card from "../components/Card.svelte";
+    import Page from "../components/Page.svelte";
 
     type Job = {
         employer: string;

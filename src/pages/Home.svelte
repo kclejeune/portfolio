@@ -1,7 +1,7 @@
 <script lang="ts">
     let color: string = "text-blue-300";
     let hoverColor: string = "text-blue-500";
-    import IconButton from "./components/IconButton.svelte";
+    import IconButton from "../components/IconButton.svelte";
 
     type Icon = {
         link: string;

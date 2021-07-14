@@ -1,7 +1,5 @@
 <script lang="ts">
-    import Content from "./components/Content.svelte";
-    import Header from "./components/Header.svelte";
-    import Page from "./components/Page.svelte";
+    import Page from "../components/Page.svelte";
 
     const title: string = "Technologies I Use";
     const skills: Array<string> = [
