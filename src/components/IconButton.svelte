@@ -15,7 +15,7 @@
     alt={name}
     aria-label={name}
     href={link}
-    class="{colorClass} {customClass}"
+    class={customClass}
 >
-    <i class={iconClass} />
+    <i class="{colorClass} {iconClass}" />
 </a>
