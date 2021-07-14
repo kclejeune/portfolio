@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let header: string = undefined;
+    export let customClass = "text-4xl text-center";
 </script>
 
-<h1 class="pt-4 text-4xl text-center">{header}</h1>
+<h1 class={customClass}><slot /></h1>

@@ -1,10 +1,8 @@
 <script lang="ts">
+    import Link from "./Link.svelte";
     export let title: string = undefined;
     export let subtitle: string = undefined;
     export let url: string = undefined;
-    export let description: string = undefined;
-    export let tasks: string[] = undefined;
-    export let content: string = undefined;
     export let tags: string[] = undefined;
 </script>
 
@@ -13,40 +11,22 @@
 >
     <div class="px-6 py-4">
         {#if title}
-            <div class="mb-2 text-2xl font-medium">{title}</div>
+            <div class="mb-1 text-2xl font-medium">{title}</div>
         {/if}
         {#if subtitle}
             <div
-                class="mb-2 font-light text-gray-600 text-md dark:text-gray-400"
+                class="mb-1 font-light text-gray-600 text-md dark:text-gray-400"
             >
                 {subtitle}
             </div>
         {:else if url}
-            <div
-                class="mb-2 font-light text-blue-500 underline text-md hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600"
-            >
-                <a href={url}>{url}</a>
+            <div class="mb-1">
+                <Link {url}>{url}</Link>
             </div>
         {/if}
-        {#if description}
-            <div>
-                {description}
-            </div>
-        {/if}
-        {#if content}
-            <div>
-                {content}
-            </div>
-        {/if}
-        {#if tasks && tasks.length > 0}
-            <ul class="m-3 list-disc">
-                {#each tasks as task}
-                    <li>
-                        {task}
-                    </li>
-                {/each}
-            </ul>
-        {/if}
+        <div>
+            <slot />
+        </div>
     </div>
     <div>
         {#if tags}

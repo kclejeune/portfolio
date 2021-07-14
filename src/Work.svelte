@@ -1,6 +1,8 @@
 <script lang="ts">
+    import { destroy_component } from "svelte/internal";
     import Card from "./components/Card.svelte";
     import Header from "./components/Header.svelte";
+    import Page from "./components/Page.svelte";
 
     type Job = {
         employer: string;
@@ -95,13 +97,14 @@
     ];
 </script>
 
-<div
+<Page
     id="experience"
-    class="min-w-full min-h-screen px-4 bg-gray-200 dark:bg-gray-600 dark:text-gray-300"
+    title="Work Experience"
+    lightBackground="bg-gray-200"
+    darkBackground="bg-gray-600"
 >
-    <Header header={title} />
     <div
-        class="container grid max-w-screen-xl gap-4 py-8 mx-auto md:grid-cols-1 xl:grid-cols-2 3xl:grid-cols-4"
+        class="container grid max-w-screen-xl gap-4 p-4 mx-auto md:grid-cols-1 xl:grid-cols-2 3xl:grid-cols-4"
     >
         {#each jobs as job}
             <Card
@@ -110,10 +113,19 @@
                     job.startDate,
                     job.endDate
                 )}`}
-                description={job.description}
-                tasks={job.tasks}
                 tags={job.tags}
-            />
+            >
+                {#if job.description}
+                    <div class="mb-1">
+                        {job.description ?? ""}
+                    </div>
+                {/if}
+                <ul class="m-2 list-disc">
+                    {#each job.tasks as task}
+                        <li>{task}</li>
+                    {/each}
+                </ul>
+            </Card>
         {/each}
     </div>
-</div>
+</Page>

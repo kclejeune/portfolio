@@ -1,7 +1,9 @@
 <script lang="ts">
     import Header from "./components/Header.svelte";
     import Card from "./components/Card.svelte";
-    import { destroy_component } from "svelte/internal";
+    import Page from "./components/Page.svelte";
+    import LoadingCard from "./components/LoadingCard.svelte";
+    import Content from "./components/Content.svelte";
 
     type Project = {
         owner: string;
@@ -39,30 +41,27 @@
     }
 </script>
 
-<div
+<Page
     id="projects"
-    class="min-w-full min-h-screen bg-blue-200 dark:bg-blue-900 "
+    title="Projects"
+    lightBackground="bg-blue-200"
+    darkBackground="bg-blue-900"
 >
-    <Header header="Projects" />
-    <div class="container grid max-w-screen-xl gap-4 px-4 py-8 mx-auto md:grid-cols-1 xl:grid-cols-2">
+    <div
+        class="container grid max-w-screen-xl gap-4 p-4 mx-auto md:grid-cols-1 xl:grid-cols-2"
+    >
         {#await projectPromise}
-            <div class="animate-pulse">
-                <Card title={"Loading..."} />
-            </div>
+            <LoadingCard />
         {:then repos}
             {#each repos as repo}
-                <!-- <div class="flex justify-center"> -->
-                    <Card
-                        title={titleCase(repo.repo.replaceAll("-", " "))}
-                        url={repo.link}
-                        description={repo.stars > 0
-                            ? `Stars: ${repo.stars}`
-                            : undefined}
-                        content={repo.description}
-                        tags={[repo.language]}
-                    />
-                <!-- </div> -->
+                <Card
+                    title={titleCase(repo.repo.replaceAll("-", " "))}
+                    url={repo.link}
+                    tags={[repo.language]}
+                >
+                    {repo.description}
+                </Card>
             {/each}
         {/await}
     </div>
-</div>
+</Page>

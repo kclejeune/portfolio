@@ -1,7 +1,7 @@
 <script lang="ts">
     let color: string = "text-blue-300";
     let hoverColor: string = "text-blue-500";
-    import { scrollto } from "svelte-scrollto";
+    import IconButton from "./components/IconButton.svelte";
 
     type Icon = {
         link: string;
@@ -48,30 +48,22 @@
         </h1>
         <span>
             {#each icons as icon}
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    alt={icon.name}
-                    aria-label={icon.name}
-                    href={icon.link}
-                    class="m-5"
-                >
-                    <i class="{icon.iconClass} {color} hover:{hoverColor}" />
-                </a>
+                <IconButton
+                    {...icon}
+                    customClass="m-5"
+                    colorClass="{color} hover:{hoverColor}"
+                />
             {/each}
         </span>
     </div>
-    <a
-        id="down"
-        use:scrollto={"#about"}
-        aria-label="scroll down"
-        class="py-20"
-        href="#about"
-    >
-        <i
-            class="fas fa-chevron-circle-down fa-2x {color} hover:{hoverColor}"
-        />
-    </a>
+    <IconButton
+        link="#about"
+        scrollId="#about"
+        name="scroll down"
+        customClass="py-20"
+        colorClass="{color} hover:{hoverColor}"
+        iconClass="fas fa-chevron-circle-down fa-2x"
+    />
 </div>
 
 <style>

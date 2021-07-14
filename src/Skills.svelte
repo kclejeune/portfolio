@@ -1,5 +1,7 @@
 <script lang="ts">
+    import Content from "./components/Content.svelte";
     import Header from "./components/Header.svelte";
+    import Page from "./components/Page.svelte";
 
     const title: string = "Technologies I Use";
     const skills: Array<string> = [
@@ -24,13 +26,14 @@
     ];
 </script>
 
-<div
+<Page
     id="technologies"
-    class="min-w-full min-h-screen bg-gray-200 dark:bg-gray-600"
+    title="Technologies I Use"
+    lightBackground="bg-gray-200"
+    darkBackground="bg-gray-600"
 >
-    <Header header={title} />
     <div
-        class="container grid grid-cols-1 gap-4 px-4 py-8 mx-auto sm:container md:grid-cols-3 sm:grid-cols-2"
+        class="container grid grid-cols-1 gap-4 p-4 mx-auto sm:container md:grid-cols-3 sm:grid-cols-2"
     >
         {#each skills as skill}
             <div
@@ -42,4 +45,4 @@
             </div>
         {/each}
     </div>
-</div>
+</Page>
