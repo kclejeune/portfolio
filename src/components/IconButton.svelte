@@ -8,14 +8,15 @@
     import { scrollto } from "svelte-scrollto";
 </script>
 
-<a
-    target="_blank"
-    rel="noopener noreferrer"
-    use:scrollto={scrollId}
-    alt={name}
-    aria-label={name}
-    href={link}
-    class={customClass}
->
-    <i class="{colorClass} {iconClass}" />
-</a>
+<div class={customClass}>
+    <a
+        target="_blank"
+        rel="noopener noreferrer"
+        use:scrollto={scrollId}
+        alt={name}
+        aria-label={name}
+        href={link}
+    >
+        <i class="{colorClass} {iconClass}" />
+    </a>
+</div>
