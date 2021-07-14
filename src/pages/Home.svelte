@@ -1,6 +1,6 @@
 <script lang="ts">
     let color = "text-blue-300";
-    let hover = "hover:text-blue-500";
+    let hover = "sm:hover:text-blue-500";
     let colorClass = `${color} ${hover}`;
     import IconButton from "../components/IconButton.svelte";
 
