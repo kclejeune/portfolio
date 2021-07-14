@@ -9,7 +9,7 @@
 <div
     class="flex flex-col justify-between overflow-hidden shadow-lg bg-gray-50 dark:bg-gray-800 rounded-xl"
 >
-    <div class="px-6 py-4">
+    <div class="px-6 py-4 break-words">
         {#if title}
             <div class="mb-1 text-2xl font-medium">{title}</div>
         {/if}
