@@ -1,19 +1,32 @@
 <script lang="ts">
     export let link: string;
     export let iconClass: string;
+    export let customClass: string = "";
     export let name: string;
     export let colorClass = "text-blue-300 hover:text-blue-500";
-    export let scrollId = "";
+    export let scrollId = undefined;
     import { scrollto } from "svelte-scrollto";
 </script>
 
-<a
-    target="_blank"
-    rel="noopener noreferrer"
-    use:scrollto={scrollId}
-    alt={name}
-    aria-label={name}
-    href={link}
->
-    <i class="{colorClass} {iconClass}" />
-</a>
+{#if scrollId}
+    <a
+        target="_blank"
+        rel="noopener noreferrer"
+        alt={name}
+        aria-label={name}
+        href={scrollId}
+        use:scrollto={scrollId}
+    >
+        <i class="{colorClass} {iconClass} {customClass}" />
+    </a>
+{:else}
+    <a
+        target="_blank"
+        rel="noopener noreferrer"
+        alt={name}
+        aria-label={name}
+        href={link}
+    >
+        <i class="{colorClass} {iconClass} {customClass}" />
+    </a>
+{/if}

@@ -1,6 +1,7 @@
 <script lang="ts">
-    let color: string = "text-blue-300";
-    let hoverColor: string = "text-blue-500";
+    let color = "text-blue-300";
+    let hover = "hover:text-blue-500";
+    let colorClass = `${color} ${hover}`;
     import IconButton from "../components/IconButton.svelte";
 
     type Icon = {
@@ -42,30 +43,19 @@
     id="bg"
 >
     <div class="w-0 h-0" />
-    <div>
-        <h1 class="text-5xl m-6 text-center {color} font-light">
-            Hi, I'm Kennan.
-        </h1>
-        <span>
-            {#each icons as icon}
-                <span class="m-5">
-                    <IconButton
-                        {...icon}
-                        colorClass="{color} hover:{hoverColor}"
-                    />
-                </span>
-            {/each}
-        </span>
+    <div class="text-center">
+        <h1 class="text-5xl m-6 {color} font-light">Hi, I'm Kennan.</h1>
+        {#each icons as icon}
+            <IconButton {...icon} {colorClass} customClass="mx-5" />
+        {/each}
     </div>
-    <div class="py-20">
-        <IconButton
-            link="#about"
-            scrollId="#about"
-            name="scroll down"
-            colorClass="{color} hover:{hoverColor}"
-            iconClass="fas fa-chevron-circle-down fa-2x"
-        />
-    </div>
+    <IconButton
+        link="#about"
+        scrollId="#about"
+        name="scroll down"
+        {colorClass}
+        iconClass="fas fa-chevron-circle-down fa-2x"
+    />
 </div>
 
 <style>
