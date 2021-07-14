@@ -1,9 +1,7 @@
 <script lang="ts">
-    import Header from "../components/Header.svelte";
     import Card from "../components/Card.svelte";
     import Page from "../components/Page.svelte";
     import LoadingCard from "../components/LoadingCard.svelte";
-    import Content from "../components/Content.svelte";
 
     type Project = {
         owner: string;
@@ -44,8 +42,8 @@
 <Page
     id="projects"
     title="Projects"
-    lightBackground="bg-blue-200"
-    darkBackground="bg-blue-900"
+    lightBackgroundClass="bg-blue-200"
+    darkBackgroundClass="bg-blue-900"
 >
     <div
         class="container grid max-w-screen-xl gap-4 p-4 mx-auto md:grid-cols-1 xl:grid-cols-2"
@@ -59,6 +57,11 @@
                     url={repo.link}
                     tags={[repo.language]}
                 >
+                    {#if repo.stars > 0}
+                        <div>
+                            Stars: {repo.stars}
+                        </div>
+                    {/if}
                     {repo.description}
                 </Card>
             {/each}

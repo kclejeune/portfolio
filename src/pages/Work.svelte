@@ -98,8 +98,8 @@
 <Page
     id="experience"
     title="Work Experience"
-    lightBackground="bg-gray-200"
-    darkBackground="bg-gray-600"
+    lightBackgroundClass="bg-gray-200"
+    darkBackgroundClass="bg-gray-600"
 >
     <div
         class="container grid max-w-screen-xl gap-4 p-4 mx-auto md:grid-cols-1 xl:grid-cols-2 3xl:grid-cols-4"

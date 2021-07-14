@@ -48,22 +48,24 @@
         </h1>
         <span>
             {#each icons as icon}
-                <IconButton
-                    {...icon}
-                    customClass="m-5"
-                    colorClass="{color} hover:{hoverColor}"
-                />
+                <span class="m-5">
+                    <IconButton
+                        {...icon}
+                        colorClass="{color} hover:{hoverColor}"
+                    />
+                </span>
             {/each}
         </span>
     </div>
-    <IconButton
-        link="#about"
-        scrollId="#about"
-        name="scroll down"
-        customClass="py-20"
-        colorClass="{color} hover:{hoverColor}"
-        iconClass="fas fa-chevron-circle-down fa-2x"
-    />
+    <div class="py-20">
+        <IconButton
+            link="#about"
+            scrollId="#about"
+            name="scroll down"
+            colorClass="{color} hover:{hoverColor}"
+            iconClass="fas fa-chevron-circle-down fa-2x"
+        />
+    </div>
 </div>
 
 <style>
