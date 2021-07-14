@@ -7,8 +7,7 @@
 <Page
     id="about"
     title="The Essentials"
-    lightBackgroundClass="bg-blue-200"
-    darkBackgroundClass="bg-blue-900"
+    backgroundClass="bg-blue-200 dark:bg-blue-900"
 >
     <Text>
         <p>Hey, I'm Kennan!</p>

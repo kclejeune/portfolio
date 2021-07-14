@@ -42,8 +42,7 @@
 <Page
     id="projects"
     title="Projects"
-    lightBackgroundClass="bg-blue-200"
-    darkBackgroundClass="bg-blue-900"
+    backgroundClass="bg-blue-200 dark:bg-blue-900"
 >
     <div
         class="container grid max-w-screen-xl gap-4 p-4 mx-auto md:grid-cols-1 xl:grid-cols-2"

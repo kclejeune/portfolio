@@ -27,8 +27,7 @@
 <Page
     id="technologies"
     title="Technologies I Use"
-    lightBackgroundClass="bg-gray-200"
-    darkBackgroundClass="bg-gray-600"
+    backgroundClass="bg-gray-200 dark:bg-gray-600"
 >
     <div
         class="container grid grid-cols-1 gap-4 p-4 mx-auto sm:container md:grid-cols-3 sm:grid-cols-2"
