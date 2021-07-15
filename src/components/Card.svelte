@@ -33,7 +33,7 @@
             <div class="px-6 pt-4 pb-2 align-bottom">
                 {#each tags as tag}
                     <span
-                        class="inline-block px-4 py-1 mb-2 mr-2 text-sm font-semibold bg-blue-300 rounded-full dark:bg-blue-800"
+                        class="inline-block px-4 py-1 mb-2 mr-2 text-sm font-semibold bg-blue-300 rounded-full dark:bg-blue-700"
                     >
                         {tag}
                     </span>
