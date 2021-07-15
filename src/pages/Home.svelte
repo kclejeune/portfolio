@@ -42,7 +42,7 @@
     class="flex flex-col items-center justify-around min-w-full min-h-screen bg-center bg-no-repeat bg-cover lg:bg-fixed"
     id="bg"
 >
-    <div class="w-0 h-0" />
+    <div class="w-0 h-0 bg-none" />
     <div class="text-center">
         <h1 class="text-5xl m-6 {color} font-light">Hi, I'm Kennan.</h1>
         {#each icons as icon}

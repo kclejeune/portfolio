@@ -4,7 +4,9 @@
     export let backgroundClass: string;
 </script>
 
-<div {id} class="w-screen min-h-screen {backgroundClass}">
-    <h1 class="py-4 text-4xl text-center">{title}</h1>
-    <slot />
+<div {id} class="min-w-full min-h-screen {backgroundClass}">
+    <div class="pt-4 pb-2 text-4xl text-center">{title}</div>
+    <div class="p-4">
+        <slot />
+    </div>
 </div>

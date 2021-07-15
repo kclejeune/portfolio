@@ -1,7 +1,6 @@
 <script lang="ts">
-    import Page from "../components/Page.svelte";
+    import Card from "../components/Card.svelte";
 
-    const title: string = "Technologies I Use";
     const skills: Array<string> = [
         "Python",
         "Scikit-Learn",
@@ -24,22 +23,14 @@
     ];
 </script>
 
-<Page
-    id="technologies"
-    title="Technologies I Use"
-    backgroundClass="bg-neutral-200 dark:bg-neutral-600"
+<div
+    class="container grid grid-cols-1 gap-4 mx-auto md:grid-cols-3 sm:grid-cols-2"
 >
-    <div
-        class="container grid grid-cols-1 gap-4 p-4 mx-auto sm:container md:grid-cols-3 sm:grid-cols-2"
-    >
-        {#each skills as skill}
-            <div
-                class="overflow-hidden shadow-xl bg-neutral-50 rounded-xl dark:bg-neutral-800"
-            >
-                <div class="px-6 py-4 text-2xl font-medium text-center">
-                    {skill}
-                </div>
+    {#each skills as skill}
+        <Card>
+            <div class="text-2xl font-medium text-center">
+                {skill}
             </div>
-        {/each}
-    </div>
-</Page>
+        </Card>
+    {/each}
+</div>

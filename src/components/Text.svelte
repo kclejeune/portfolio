@@ -1,3 +1,3 @@
-<div class="container p-4 mx-auto text-lg font-light md:max-w-prose">
+<div class="container mx-auto text-lg font-light leading-relaxed md:max-w-prose">
     <slot />
 </div>
