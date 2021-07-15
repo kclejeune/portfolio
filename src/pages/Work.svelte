@@ -98,7 +98,7 @@
 <Page
     id="experience"
     title="Work Experience"
-    backgroundClass="bg-gray-200 dark:bg-gray-600"
+    backgroundClass="bg-neutral-200 dark:bg-neutral-600"
 >
     <div
         class="container grid max-w-screen-xl gap-4 p-4 mx-auto md:grid-cols-1 xl:grid-cols-2 3xl:grid-cols-4"

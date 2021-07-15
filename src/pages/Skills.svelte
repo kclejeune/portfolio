@@ -27,14 +27,14 @@
 <Page
     id="technologies"
     title="Technologies I Use"
-    backgroundClass="bg-gray-200 dark:bg-gray-600"
+    backgroundClass="bg-neutral-200 dark:bg-neutral-600"
 >
     <div
         class="container grid grid-cols-1 gap-4 p-4 mx-auto sm:container md:grid-cols-3 sm:grid-cols-2"
     >
         {#each skills as skill}
             <div
-                class="overflow-hidden shadow-xl bg-gray-50 rounded-xl dark:bg-gray-800"
+                class="overflow-hidden shadow-xl bg-neutral-50 rounded-xl dark:bg-neutral-800"
             >
                 <div class="px-6 py-4 text-2xl font-medium text-center">
                     {skill}
