@@ -56,7 +56,7 @@ export function getPinnedRepoQuery(
     maxNumLanguages: number = 15
 ) {
     return `
-{
+query {
   repositoryOwner(login: "${username}") {
     ... on ProfileOwner {
       login

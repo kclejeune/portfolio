@@ -1,4 +1,4 @@
-{
+query {
     repositoryOwner(login: "kclejeune") {
         ... on ProfileOwner {
             login
