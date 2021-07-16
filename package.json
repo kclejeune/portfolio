@@ -1,36 +1,36 @@
 {
-  "name": "svelte-app",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "deploy": "git subtree push --prefix public origin gh-pages",
-    "start": "sirv public --host",
-    "validate": "svelte-check"
-  },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.0.0",
-    "@rollup/plugin-node-resolve": "^11.0.0",
-    "@rollup/plugin-typescript": "^6.0.0",
-    "@tsconfig/svelte": "^1.0.0",
-    "@types/node": "^16.3.2",
-    "autoprefixer": "^10.3.0",
-    "postcss": "^8.3.5",
-    "postcss-load-config": "^3.1.0",
-    "rollup": "^2.42.1",
-    "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-svelte": "^7.0.0",
-    "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.35.0",
-    "svelte-check": "^1.2.6",
-    "svelte-preprocess": "^4.7.4",
-    "svelte-scrollto": "^0.2.0",
-    "tailwindcss": "^2.2.4",
-    "tslib": "^2.0.0",
-    "typescript": "^3.9.3"
-  },
-  "dependencies": {
-    "sirv-cli": "^1.0.0"
-  }
+	"name": "kclejeune.github.io",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "svelte-kit dev --host",
+		"build": "svelte-kit build",
+		"preview": "svelte-kit preview",
+		"check": "svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
+		"format": "prettier --write --plugin-search-dir=. ."
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-node": "^1.0.0-next.33",
+		"@sveltejs/kit": "next",
+		"@tailwindcss/jit": "^0.1.18",
+		"@typescript-eslint/eslint-plugin": "^4.19.0",
+		"@typescript-eslint/parser": "^4.19.0",
+		"autoprefixer": "^10.3.1",
+		"cssnano": "^5.0.6",
+		"eslint": "^7.22.0",
+		"eslint-config-prettier": "^8.1.0",
+		"eslint-plugin-svelte3": "^3.2.0",
+		"postcss": "^8.3.5",
+		"postcss-load-config": "^3.1.0",
+		"prettier": "~2.2.1",
+		"prettier-plugin-svelte": "^2.2.0",
+		"svelte": "^3.34.0",
+		"svelte-check": "^2.0.0",
+		"svelte-preprocess": "^4.7.3",
+		"tailwindcss": "^2.2.4",
+		"tslib": "^2.0.0",
+		"typescript": "^4.0.0"
+	},
+	"type": "module"
 }

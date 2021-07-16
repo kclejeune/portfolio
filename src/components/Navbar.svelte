@@ -1,49 +1,52 @@
 <script lang="ts">
+    import { page } from "$app/stores";
     export const pages = [
         {
-            page: "#home",
+            route: "/",
             title: "Home",
         },
         {
-            page: "#about",
+            route: "/about",
             title: "About Me",
         },
         {
-            page: "#experience",
+            route: "/experience",
             title: "Experience",
         },
         {
-            page: "#projects",
+            route: "/projects",
             title: "Projects",
         },
         {
-            page: "#technologies",
+            route: "/skills",
             title: "Skills",
         },
     ];
 
-    import { scrollto } from "svelte-scrollto";
-    import * as animateScroll from "svelte-scrollto";
-    // animateScroll.setGlobalOptions({
-    //     offset: -64,
-    // });
-
     let open = false;
+    let colors = {
+        nav: "bg-neutral-700",
+        button: {
+            active: "bg-primary-800 hover:bg-primary-700",
+            inactive: "bg-neutral-900 hover:bg-neutral-800",
+        },
+        buttonText: "text-neutral-200",
+    };
+
     $: visible = open ? "visible" : "hidden";
     $: hidden = open ? "hidden" : "visible";
 </script>
 
 <!-- This example requires Tailwind CSS v2.0+ -->
-<nav class="text-neutral-800 bg-neutral-400 shadow-lg dark:bg-neutral-900 dark:text-neutral-200">
+<nav class="fixed top-0 min-w-full {colors.buttonText} shadow-xl  {colors.nav}">
     <div class="px-2 max-w-7xl sm:px-6 lg:px-8">
         <div class="relative flex items-center justify-between h-16">
-            <span class="my-2 sm:visible sm:text-xl">Kennan LeJeune</span>
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 <!-- Mobile menu button-->
                 <button
                     on:click={() => (open = !open)}
                     type="button"
-                    class="inline-flex items-center justify-center p-2 bg-neutral-200 rounded-md dark:bg-neutral-700 dark:hover:bg-neutral-600 hover:bg-neutral-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    class="inline-flex items-center justify-center p-2 rounded-lg shadow-lg {colors.button.inactive}"
                     aria-controls="mobile-menu"
                     aria-expanded={open}
                 >
@@ -81,19 +84,25 @@
                         />
                     </svg>
                 </button>
+                <span class="mx-4 sm:hidden text-lg {colors.buttonText}">
+                    Kennan LeJeune
+                </span>
             </div>
+            <!-- expanded nav page -->
             <div
                 class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start"
             >
-                <div class="hidden sm:block sm:ml-6">
+                <div class="hidden sm:block">
                     <div class="flex space-x-4">
                         <!-- Current: "bg-neutral-900 text-white", Default: "text-neutral-300 hover:bg-neutral-700 hover:text-white" -->
-                        {#each pages as page}
+                        {#each pages as route}
                             <a
-                                href={page.page}
-                                use:scrollto={page.page}
-                                class="px-4 py-2 text-sm font-medium bg-neutral-200 rounded-md hover:bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600"
-                                aria-current="page">{page.title}</a
+                                href={route.route}
+                                class="px-4 py-2 text-sm font-medium rounded-md shadow-lg {route.route ===
+                                $page.path
+                                    ? colors.button.active
+                                    : colors.button.inactive}"
+                                aria-current="page">{route.title}</a
                             >
                         {/each}
                     </div>
@@ -104,15 +113,19 @@
 
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="{visible} sm:hidden" id="mobile-menu">
-        <div class="px-2 pt-2 pb-3 space-y-1">
-            <!-- Current: "bg-neutral-900 text-white", Default: "text-neutral-300 hover:bg-neutral-700 hover:text-white" -->
-            {#each pages as page}
+        <div class="p-2 space-y-1">
+            {#each pages as route}
                 <a
-                    href={page.page}
-                    on:click={() => (open = false)}
-                    use:scrollto={page.page}
-                    class="block px-4 py-2 font-medium bg-neutral-200 rounded-md hover:bg-neutral-300"
-                    aria-current="page">{page.title}</a
+                    type="button"
+                    href={route.route}
+                    on:click={() => {
+                        open = false;
+                    }}
+                    class="block px-4 py-2 font-medium {route.route ===
+                    $page.path
+                        ? colors.button.active
+                        : colors.button.inactive} rounded-lg"
+                    aria-current="page">{route.title}</a
                 >
             {/each}
         </div>

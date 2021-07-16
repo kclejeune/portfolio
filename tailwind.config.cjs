@@ -1,22 +1,20 @@
 const colors = require("tailwindcss/colors");
 
-module.exports = {
-  mode: 'jit',
-  purge: {
-    enabled: !process.env.ROLLUP_WATCH,
-    content: ['./public/index.html', './src/**/*.{svelte,ts,js}'],
-  },
-  darkMode: 'media', // or 'media' or 'class'
-  theme: {
-    extend: {},
-    colors: {
-      ...colors,
-      primary: colors.blue,
-      neutral: colors.coolGray,
-    },
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-}
+const config = {
+	mode: "jit",
+	purge: [
+		"./src/**/*.{html,js,svelte,ts}",
+	],
+	darkMode: "media",
+	theme: {
+		extend: {},
+		colors: {
+			...colors,
+			primary: colors.blue,
+			neutral: colors.coolGray,
+		},
+	},
+	plugins: [],
+};
+
+module.exports = config;
