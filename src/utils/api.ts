@@ -24,27 +24,96 @@ export const API_URL =
 
 /**
  * flattens a graphQL response to only include relevant structure
- *
+ * 
+ * for example, the raw graphQL response
+```
+{
+  "data": {
+    "repositoryOwner": {
+      "login": "kclejeune",
+      "itemShowcase": {
+        "items": {
+          "totalCount": 6,
+          "edges": [
+            {
+              "node": {
+                "name": "system",
+                "stargazerCount": 59,
+                "forkCount": 7,
+                "url": "https://github.com/kclejeune/system",
+                "description": "Declarative system configurations using nixOS, nix-darwin, and home-manager",
+                "repositoryTopics": {
+                  "nodes": [
+                    {
+                      "topic": {
+                        "name": "nix"
+                      }
+                    }
+                  ]
+                },
+                "languages": {
+                  "edges": [
+                    {
+                      "node": {
+                        "name": "Nix"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+becomes the following after running flatten():
+```
+{
+  "login": "kclejeune",
+  "itemShowcase": {
+    "totalCount": 6,
+    "edges": [
+      {
+        "name": "system",
+        "stargazerCount": 59,
+        "forkCount": 7,
+        "url": "https://github.com/kclejeune/system",
+        "description": "Declarative system configurations using nixOS, nix-darwin, and home-manager",
+        "repositoryTopics": [
+          "nix"
+        ],
+        "languages": [
+          "Nix"
+        ]
+      }
+    ]
+  }
+}
+```
  * @param {node} any - an element inside of a graphQL response
  *
  */
 export function flatten(node: any) {
-    if (!node) {
-        return node;
-    } else if (Array.isArray(node)) {
+    if (Array.isArray(node)) {
+        // if the node is an array, flatten all of its elements
         return node.map(flatten);
-    } else if (typeof node === "object") {
-        let props = Object.getOwnPropertyNames(node);
+    } else if (node && typeof node === "object") {
+        let props = Object.keys(node);
         if (props.length === 1) {
+            // if there's a single property, get rid of the outer layer
             return flatten(node[props[0]]);
         } else if (props.length > 1) {
-            const flattened = {};
-            for (let prop of props) {
-                flattened[prop] = flatten(node[prop]);
-            }
-            return flattened;
+            // if there are multiple props, return the same object with each property flattened
+            return props.reduce((result, key) => {
+                result[key] = flatten(node[key]);
+                return result;
+            }, {});
         }
     } else {
+        // when in doubt do nothing
         return node;
     }
 }

@@ -5,51 +5,6 @@
     import Card from "../components/Card.svelte";
     import LoadingCard from "../components/LoadingCard.svelte";
 
-    export const username = "kclejeune";
-    const query = getPinnedRepoQuery(username);
-
-    /**
-     * query github graphql
-     */
-    async function getPinnedRepos(): Promise<Repository[]> {
-        const compare = (a: Repository, b: Repository) => {
-            let starDiff = b.stargazerCount - a.stargazerCount;
-            let forkDiff = b.forkCount - a.forkCount;
-            let tagDiff =
-                b.repositoryTopics.length -
-                a.repositoryTopics.length +
-                b.languages.length -
-                a.languages.length;
-            let nameDiff = a.name.localeCompare(b.name);
-
-            if (starDiff !== 0) {
-                return starDiff;
-            } else if (forkDiff !== 0) {
-                return forkDiff;
-            } else if (tagDiff !== 0) {
-                return tagDiff;
-            } else if (nameDiff !== 0) {
-                return nameDiff;
-            }
-        };
-        return fetch(API_URL, {
-            method: "POST",
-            body: JSON.stringify({
-                query: query,
-            }),
-        })
-            .then((res) => res.json())
-            .then((res) => flatten(res))
-            .then(
-                (res: PinnedRepoResponse) =>
-                    res.itemShowcase.edges ?? res.itemShowcase.nodes ?? []
-            )
-            .then((repos: Repository[]) => repos.sort(compare));
-    }
-
-    let repositories: Repository[] = [];
-    const projectPromise = getPinnedRepos();
-
     /**
      * convert repository name slugs into titles (with some exceptions)
      * @param str
@@ -91,6 +46,49 @@
         }
         return arr.join(", ");
     }
+
+    /**
+     * query github graphql
+     */
+    async function getPinnedRepos(query: string): Promise<Repository[]> {
+        const compare = (a: Repository, b: Repository) => {
+            let starDiff = b.stargazerCount - a.stargazerCount;
+            let forkDiff = b.forkCount - a.forkCount;
+            let tagDiff =
+                b.repositoryTopics.length -
+                a.repositoryTopics.length +
+                b.languages.length -
+                a.languages.length;
+            let nameDiff = a.name.localeCompare(b.name);
+
+            if (starDiff !== 0) {
+                return starDiff;
+            } else if (forkDiff !== 0) {
+                return forkDiff;
+            } else if (tagDiff !== 0) {
+                return tagDiff;
+            } else if (nameDiff !== 0) {
+                return nameDiff;
+            }
+        };
+        return fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                query: query,
+            }),
+        })
+            .then((res) => res.json())
+            .then((res) => flatten(res))
+            .then(
+                (res: PinnedRepoResponse) =>
+                    res.itemShowcase.edges ?? res.itemShowcase.nodes ?? []
+            )
+            .then((repos: Repository[]) => repos.sort(compare));
+    }
+
+    const username = "kclejeune";
+    const query = getPinnedRepoQuery(username);
+    const projectPromise = getPinnedRepos(query);
 </script>
 
 {#await projectPromise}
