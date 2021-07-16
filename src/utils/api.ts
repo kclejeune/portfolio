@@ -49,7 +49,12 @@ export function flatten(node: any) {
     }
 }
 
-export function getPinnedRepoQuery(username: string = "kclejeune") {
+export function getPinnedRepoQuery(
+    username: string = "kclejeune",
+    maxNumRepos: number = 15,
+    maxNumTopics: number = 15,
+    maxNumLanguages: number = 15
+) {
     return `
 {
   repositoryOwner(login: "${username}") {
@@ -57,7 +62,7 @@ export function getPinnedRepoQuery(username: string = "kclejeune") {
       login
       itemShowcase {
         ... on ProfileItemShowcase {
-          items(first: 10) {
+          items(first: ${maxNumRepos}) {
             totalCount
             nodes {
               ... on Repository {
@@ -66,7 +71,7 @@ export function getPinnedRepoQuery(username: string = "kclejeune") {
                 forkCount
                 url
                 description
-                repositoryTopics(first: 15) {
+                repositoryTopics(first: ${maxNumTopics}) {
                   nodes {
                     ... on RepositoryTopic {
                       topic {
@@ -75,7 +80,7 @@ export function getPinnedRepoQuery(username: string = "kclejeune") {
                     }
                   }
                 }
-                languages(first: 10) {
+                languages(first: ${maxNumLanguages}) {
                   nodes {
                     ... on Language {
                       name
