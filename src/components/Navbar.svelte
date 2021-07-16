@@ -46,7 +46,8 @@
                 <button
                     on:click={() => (open = !open)}
                     type="button"
-                    class="inline-flex items-center justify-center p-2 rounded-lg shadow-lg {colors.button.inactive}"
+                    class="inline-flex items-center justify-center p-2 rounded-lg shadow-lg {colors
+                        .button.inactive}"
                     aria-controls="mobile-menu"
                     aria-expanded={open}
                 >
@@ -84,9 +85,6 @@
                         />
                     </svg>
                 </button>
-                <span class="mx-4 sm:hidden text-lg {colors.buttonText}">
-                    Kennan LeJeune
-                </span>
             </div>
             <!-- expanded nav page -->
             <div
