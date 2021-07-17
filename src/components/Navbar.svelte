@@ -1,23 +1,29 @@
 <script lang="ts">
     import { page } from "$app/stores";
+
     export const pages = [
         {
-            route: "/",
+            id: "#home",
+            route: "/home",
             title: "Home",
         },
         {
+            id: "#about",
             route: "/about",
             title: "About Me",
         },
         {
-            route: "/experience",
-            title: "Experience",
+            id: "#work",
+            route: "/work",
+            title: "Work Experience",
         },
         {
+            id: "#projects",
             route: "/projects",
             title: "Projects",
         },
         {
+            id: "#skills",
             route: "/skills",
             title: "Skills",
         },
@@ -25,14 +31,15 @@
 
     let open = false;
     let colors = {
-        nav: "bg-neutral-700",
+        nav: "bg-neutral-800",
         button: {
             active: "bg-primary-800 hover:bg-primary-700",
-            inactive: "bg-neutral-900 hover:bg-neutral-800",
+            inactive: "bg-neutral-700 hover:bg-neutral-600",
         },
         buttonText: "text-neutral-200",
     };
 
+    $: active = $page.path;
     $: visible = open ? "visible" : "hidden";
     $: hidden = open ? "hidden" : "visible";
 </script>
@@ -95,11 +102,12 @@
                         <!-- Current: "bg-neutral-900 text-white", Default: "text-neutral-300 hover:bg-neutral-700 hover:text-white" -->
                         {#each pages as route}
                             <a
-                                href={route.route}
-                                class="px-4 py-2 text-sm font-medium rounded-md shadow-lg {route.route ===
-                                $page.path
-                                    ? colors.button.active
-                                    : colors.button.inactive}"
+                                href={route.id}
+                                on:click={() => {
+                                    active = route.route;
+                                }}
+                                class="px-4 py-2 text-sm font-medium rounded-md shadow-lg {colors
+                                    .button.inactive}"
                                 aria-current="page">{route.title}</a
                             >
                         {/each}
@@ -111,18 +119,16 @@
 
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="{visible} sm:hidden" id="mobile-menu">
-        <div class="p-2 space-y-1">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             {#each pages as route}
                 <a
-                    type="button"
-                    href={route.route}
+                    href={route.id}
                     on:click={() => {
                         open = false;
                     }}
-                    class="block px-4 py-2 font-medium {route.route ===
-                    $page.path
-                        ? colors.button.active
-                        : colors.button.inactive} rounded-lg"
+                    class="{colors.button
+                        .inactive} text-white block px-3 py-2 rounded-md text-base font-medium"
                     aria-current="page">{route.title}</a
                 >
             {/each}

@@ -5,6 +5,7 @@
         "dev": "svelte-kit dev --host",
         "build": "svelte-kit build",
         "start": "node build",
+        "deploy": "git subtree push --prefix build origin gh-pages",
         "preview": "svelte-kit preview",
         "check": "svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
