@@ -28,7 +28,7 @@
 
 <Page id="skills" title="Technologies I Use" {backgroundClass}>
     <div
-        class="container mx-auto grid grid-cols-1 gap-4 md:grid-cols-3 sm:grid-cols-2"
+        class="container mx-auto grid max-w-screen-xl grid-cols-1 gap-4 md:grid-cols-3 sm:grid-cols-2"
     >
         {#each skills as skill}
             <Card>

@@ -2,6 +2,7 @@
     let color = "text-primary-300";
     let hover = "sm:hover:text-primary-500";
     let colorClass = `${color} ${hover}`;
+    import Anchor from "../components/Anchor.svelte";
     import IconButton from "../components/IconButton.svelte";
 
     type Icon = {
@@ -38,38 +39,31 @@
     ];
 </script>
 
-<!-- <span class="anchor" id="home" /> -->
+<Anchor id="home" />
 <div
-    class="flex flex-col items-center justify-between min-w-full min-h-screen bg-center bg-no-repeat bg-cover lg:bg-fixed"
+    class="flex flex-col items-center justify-center bg-center bg-no-repeat bg-cover page lg:bg-fixed"
     id="bg"
 >
-    <div class="w-0 h-0" />
+    <div class="text-center">
+        <h1 class="text-5xl m-6 {color} font-light">Hi, I'm Kennan.</h1>
+    </div>
     <div>
         <!-- <div class="pt-16" /> -->
-        <div class="text-center">
-            <h1 class="text-5xl m-6 {color} font-light">Hi, I'm Kennan.</h1>
-            {#each icons as icon}
-                <IconButton {...icon} {colorClass} customClass="mx-5" />
-            {/each}
-        </div>
+        {#each icons as icon}
+            <IconButton {...icon} {colorClass} customClass="mx-5" />
+        {/each}
     </div>
     <IconButton
         link="#about"
         name="scroll down"
         {colorClass}
+        customClass="my-20"
         newTab={false}
         iconClass="fas fa-chevron-circle-down fa-2x"
     />
-    <div class="w-0 h-0" />
 </div>
 
 <style>
-    .anchor {
-        display: block;
-        height: 55px;
-        margin-top: -55px;
-        visibility: hidden;
-    }
     #bg {
         /* The image used */
         background-image: linear-gradient(

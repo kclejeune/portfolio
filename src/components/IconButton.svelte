@@ -5,6 +5,7 @@
     export let name: string;
     export let colorClass = "text-primary-300 sm:hover:text-primary-500";
     export let newTab: boolean = true;
+    import { scrollto } from "svelte-scrollto";
 </script>
 
 {#if newTab}
@@ -18,7 +19,7 @@
         <i class="{colorClass} {iconClass} {customClass}" />
     </a>
 {:else}
-    <a alt={name} aria-label={name} href={link}>
+    <a alt={name} aria-label={name} href={link} use:scrollto={link}>
         <i class="{colorClass} {iconClass} {customClass}" />
     </a>
 {/if}

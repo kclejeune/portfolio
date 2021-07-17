@@ -1,5 +1,13 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { scrollto } from "svelte-scrollto";
+    import * as animateScroll from "svelte-scrollto";
+
+    animateScroll.setGlobalOptions({
+        onStart: (element, offset) => {
+            open = false;
+        },
+    });
 
     export const pages = [
         {
@@ -45,7 +53,7 @@
 </script>
 
 <!-- This example requires Tailwind CSS v2.0+ -->
-<nav class="fixed top-0 min-w-full {colors.buttonText} shadow-xl  {colors.nav}">
+<nav class="fixed top-0 w-full {colors.buttonText} shadow-xl  {colors.nav}">
     <div class="px-2 max-w-7xl sm:px-6 lg:px-8">
         <div class="relative flex items-center justify-between h-16">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -103,6 +111,7 @@
                         {#each pages as route}
                             <a
                                 href={route.id}
+                                use:scrollto={route.id}
                                 on:click={() => {
                                     active = route.route;
                                 }}
@@ -124,6 +133,7 @@
             {#each pages as route}
                 <a
                     href={route.id}
+                    use:scrollto={route.id}
                     on:click={() => {
                         open = false;
                     }}
