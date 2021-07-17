@@ -1,5 +1,7 @@
 <script lang="ts">
     import Card from "../components/Card.svelte";
+    import Page from "../components/Page.svelte";
+    import { neutralBackground } from "../utils/constants";
 
     type Job = {
         employer: string;
@@ -91,30 +93,34 @@
             tags: ["Angular", "Typescript", "Postgres", "AWS"],
         },
     ];
+
+    export let backgroundClass = neutralBackground;
 </script>
 
-<div
-    class="container grid max-w-screen-xl gap-4 mx-auto md:grid-cols-1 xl:grid-cols-2 3xl:grid-cols-4"
->
-    {#each jobs as job}
-        <Card
-            title={job.employer}
-            subtitle={`${job.title}, ${formatDateString(
-                job.startDate,
-                job.endDate
-            )}`}
-            tags={job.tags}
-        >
-            {#if job.description}
-                <div class="mb-1">
-                    {job.description ?? ""}
-                </div>
-            {/if}
-            <ul class="m-2 list-disc">
-                {#each job.tasks as task}
-                    <li>{task}</li>
-                {/each}
-            </ul>
-        </Card>
-    {/each}
-</div>
+<Page id="work" title="Work Experience" {backgroundClass}>
+    <div
+        class="container mx-auto grid max-w-screen-xl gap-4 md:grid-cols-1 xl:grid-cols-2 3xl:grid-cols-4"
+    >
+        {#each jobs as job}
+            <Card
+                title={job.employer}
+                subtitle={`${job.title}, ${formatDateString(
+                    job.startDate,
+                    job.endDate
+                )}`}
+                tags={job.tags}
+            >
+                {#if job.description}
+                    <div class="mb-1">
+                        {job.description ?? ""}
+                    </div>
+                {/if}
+                <ul class="m-2 list-disc">
+                    {#each job.tasks as task}
+                        <li>{task}</li>
+                    {/each}
+                </ul>
+            </Card>
+        {/each}
+    </div>
+</Page>

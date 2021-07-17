@@ -38,27 +38,38 @@
     ];
 </script>
 
+<!-- <span class="anchor" id="home" /> -->
 <div
-    class="flex flex-col items-center justify-around min-w-full min-h-screen bg-center bg-no-repeat bg-cover lg:bg-fixed"
+    class="flex flex-col items-center justify-between min-w-full min-h-screen bg-center bg-no-repeat bg-cover lg:bg-fixed"
     id="bg"
 >
-    <div class="w-0 h-0 bg-none" />
-    <div class="text-center">
-        <h1 class="text-5xl m-6 {color} font-light">Hi, I'm Kennan.</h1>
-        {#each icons as icon}
-            <IconButton {...icon} {colorClass} customClass="mx-5" />
-        {/each}
+    <div class="w-0 h-0" />
+    <div>
+        <!-- <div class="pt-16" /> -->
+        <div class="text-center">
+            <h1 class="text-5xl m-6 {color} font-light">Hi, I'm Kennan.</h1>
+            {#each icons as icon}
+                <IconButton {...icon} {colorClass} customClass="mx-5" />
+            {/each}
+        </div>
     </div>
     <IconButton
         link="#about"
-        scrollId="#about"
         name="scroll down"
         {colorClass}
+        newTab={false}
         iconClass="fas fa-chevron-circle-down fa-2x"
     />
+    <div class="w-0 h-0" />
 </div>
 
 <style>
+    .anchor {
+        display: block;
+        height: 55px;
+        margin-top: -55px;
+        visibility: hidden;
+    }
     #bg {
         /* The image used */
         background-image: linear-gradient(
