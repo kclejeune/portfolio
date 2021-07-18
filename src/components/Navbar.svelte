@@ -1,7 +1,9 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { afterUpdate, onMount } from "svelte";
     import * as animateScroll from "svelte-scrollto";
     import { scrollToElement } from "../utils";
+    import IconButton from "./IconButton.svelte";
 
     animateScroll.setGlobalOptions({
         onStart: (element, offset) => {
@@ -9,7 +11,15 @@
         },
     });
 
-    export const pages = [
+    interface Route {
+        id: string;
+        route: string;
+        name: string;
+        title: string;
+        color?: string;
+    }
+
+    export let pages: Route[] = [
         {
             id: "#home",
             route: "/home",
@@ -52,9 +62,44 @@
         buttonText: "text-neutral-200",
     };
 
-    let active = $page.path;
+    $: active = $page.path;
     $: visible = open ? "visible" : "hidden";
     $: hidden = open ? "hidden" : "visible";
+
+    let activeHash = "";
+    $: {
+        pages.forEach((route) => {
+            route.color =
+                activeHash === route.id
+                    ? colors.button.active
+                    : colors.button.inactive;
+        });
+    }
+
+    function scrollSpy() {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                for (let entry of entries.filter((e) => e.isIntersecting)) {
+                    activeHash = "#" + entry.target.id;
+                    break;
+                }
+            },
+            {
+                rootMargin: `64px 0px -${
+                    window.innerHeight ??
+                    document.documentElement.clientHeight - 64
+                }px 0px`,
+            }
+        );
+
+        pages.forEach((route) =>
+            observer.observe(document.getElementById(route.name))
+        );
+    }
+    onMount(() => {
+        activeHash = window.location.hash ?? "";
+        scrollSpy();
+    });
 </script>
 
 <!-- This example requires Tailwind CSS v2.0+ -->
@@ -117,11 +162,13 @@
                             <a
                                 href={route.id}
                                 on:click={() => {
-                                    active = route.route;
                                     scrollToElement(route.id);
                                 }}
-                                class="px-4 py-2 text-sm font-medium rounded-md shadow-lg {colors
-                                    .button.inactive}"
+                                class="px-4 py-2 text-sm font-medium rounded-md shadow-lg 
+                                {activeHash === route.id
+                                    ? colors.button.active
+                                    : colors.button.inactive ??
+                                      colors.button.inactive}"
                                 aria-current="page">{route.title}</a
                             >
                         {/each}
@@ -142,8 +189,10 @@
                         open = false;
                         scrollToElement(route.id);
                     }}
-                    class="{colors.button
-                        .inactive} text-white block px-3 py-2 rounded-md text-base font-medium"
+                    class="text-white block px-3 py-2 rounded-md text-base font-medium 
+                    {activeHash === route.id
+                        ? colors.button.active
+                        : colors.button.inactive ?? colors.button.inactive}"
                     aria-current="page">{route.title}</a
                 >
             {/each}
