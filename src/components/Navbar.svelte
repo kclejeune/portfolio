@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { scrollto } from "svelte-scrollto";
     import * as animateScroll from "svelte-scrollto";
+    import { scrollToElement } from "../utils";
 
     animateScroll.setGlobalOptions({
         onStart: (element, offset) => {
@@ -13,26 +13,31 @@
         {
             id: "#home",
             route: "/home",
+            name: "home",
             title: "Home",
         },
         {
             id: "#about",
             route: "/about",
+            name: "about",
             title: "About Me",
         },
         {
             id: "#work",
             route: "/work",
+            name: "work",
             title: "Work Experience",
         },
         {
             id: "#projects",
             route: "/projects",
+            name: "projects",
             title: "Projects",
         },
         {
             id: "#skills",
             route: "/skills",
+            name: "skills",
             title: "Skills",
         },
     ];
@@ -47,7 +52,7 @@
         buttonText: "text-neutral-200",
     };
 
-    $: active = $page.path;
+    let active = $page.path;
     $: visible = open ? "visible" : "hidden";
     $: hidden = open ? "hidden" : "visible";
 </script>
@@ -111,9 +116,9 @@
                         {#each pages as route}
                             <a
                                 href={route.id}
-                                use:scrollto={route.id}
                                 on:click={() => {
                                     active = route.route;
+                                    scrollToElement(route.id);
                                 }}
                                 class="px-4 py-2 text-sm font-medium rounded-md shadow-lg {colors
                                     .button.inactive}"
@@ -133,9 +138,9 @@
             {#each pages as route}
                 <a
                     href={route.id}
-                    use:scrollto={route.id}
                     on:click={() => {
                         open = false;
+                        scrollToElement(route.id);
                     }}
                     class="{colors.button
                         .inactive} text-white block px-3 py-2 rounded-md text-base font-medium"

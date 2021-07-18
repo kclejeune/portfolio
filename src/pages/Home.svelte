@@ -4,6 +4,7 @@
     let colorClass = `${color} ${hover}`;
     import Anchor from "../components/Anchor.svelte";
     import IconButton from "../components/IconButton.svelte";
+    import { scrollToElement } from "../utils";
 
     type Icon = {
         link: string;
@@ -55,6 +56,9 @@
     </div>
     <IconButton
         link="#about"
+        on:click={() => {
+            scrollToElement("#about");
+        }}
         name="scroll down"
         {colorClass}
         customClass="my-20"
