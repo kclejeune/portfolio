@@ -67,16 +67,12 @@
     $: hidden = open ? "hidden" : "visible";
 
     let activeHash = "";
-    $: {
-        pages.forEach((route) => {
-            route.color =
-                activeHash === route.id
-                    ? colors.button.active
-                    : colors.button.inactive;
-        });
-    }
-
     function scrollSpy() {
+        const height =
+            window.innerHeight ??
+            document.documentElement.clientHeight ??
+            document.body.clientHeight;
+        const navHeight = 64;
         const observer = new IntersectionObserver(
             (entries) => {
                 for (let entry of entries.filter((e) => e.isIntersecting)) {
@@ -85,10 +81,7 @@
                 }
             },
             {
-                rootMargin: `64px 0px -${
-                    window.innerHeight ??
-                    document.documentElement.clientHeight - 64
-                }px 0px`,
+                rootMargin: `${navHeight}px 0px -${height - navHeight}px 0px`,
             }
         );
 
