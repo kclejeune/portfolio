@@ -1,6 +1,8 @@
 # Portfolio
 
-Basic personal site, powered by SvelteKit and adapter-static to function as an overpowered static site generator.
+[![CI](https://github.com/kclejeune/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/kclejeune/portfolio/actions/workflows/ci.yml)
+
+Basic personal site written with SvelteKit as an overpowered static site generator.
 SvelteKit allows for development and page rendering in JavaScript, but remains compatible with non-js browsers.
 
 ## Developing
