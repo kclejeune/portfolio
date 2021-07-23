@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { primaryBackground, neutralBackground } from "../utils/constants";
+    import { primaryBackground } from "../utils/constants";
     import Page from "../components/Page.svelte";
     import Card from "../components/Card.svelte";
-    import LoadingCard from "../components/LoadingCard.svelte";
     import type { Repository } from "src/utils/api";
 
     /**
@@ -45,37 +44,27 @@
     }
 
     export let username = "kclejeune";
-    export let projectPromise: Promise<Repository[]>;
+    export let repos: Repository[];
     export let backgroundClass = primaryBackground;
 </script>
 
 <Page id="projects" title="Projects" {backgroundClass}>
-    {#await projectPromise}
-        <div class="container mx-auto grid max-w-screen-xl grid-cols-1 gap-4">
-            <LoadingCard />
-        </div>
-    {:then repos}
-        <div
-            class="container mx-auto grid max-w-screen-xl gap-4 md:grid-cols-1 lg:grid-cols-2"
-        >
-            {#each repos as repo}
-                <Card
-                    title={titleCase(repo.name.replaceAll("-", " "))}
-                    url={repo.url}
-                    tags={getRepoTags(repo)}
-                >
-                    <span>
-                        {getRepoStats(repo)}
-                    </span>
-                    <div>
-                        {repo.description}
-                    </div>
-                </Card>
-            {/each}
-        </div>
-    {:catch error}
-        <div class="container mx-auto grid max-w-screen-xl grid-cols-1 gap-4">
-            <Card title="Error">{error}</Card>
-        </div>
-    {/await}
+    <div
+        class="container mx-auto grid max-w-screen-xl gap-4 md:grid-cols-1 lg:grid-cols-2"
+    >
+        {#each repos as repo}
+            <Card
+                title={titleCase(repo.name.replaceAll("-", " "))}
+                url={repo.url}
+                tags={getRepoTags(repo)}
+            >
+                <span>
+                    {getRepoStats(repo)}
+                </span>
+                <div>
+                    {repo.description}
+                </div>
+            </Card>
+        {/each}
+    </div>
 </Page>
