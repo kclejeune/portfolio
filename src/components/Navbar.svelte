@@ -1,9 +1,8 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { afterUpdate, onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import * as animateScroll from "svelte-scrollto";
     import { scrollToElement } from "../utils";
-    import IconButton from "./IconButton.svelte";
 
     animateScroll.setGlobalOptions({
         onStart: (element, offset) => {
@@ -67,13 +66,14 @@
     $: hidden = open ? "hidden" : "visible";
 
     let activeHash = "";
+    let observer: IntersectionObserver;
     function scrollSpy() {
         const height =
             window.innerHeight ??
             document.documentElement.clientHeight ??
             document.body.clientHeight;
         const navHeight = 64;
-        const observer = new IntersectionObserver(
+        observer = new IntersectionObserver(
             (entries) => {
                 for (let entry of entries.filter((e) => e.isIntersecting)) {
                     activeHash = "#" + entry.target.id;
@@ -89,9 +89,17 @@
             observer.observe(document.getElementById(route.name))
         );
     }
+
     onMount(() => {
         activeHash = window.location.hash ?? "";
         scrollSpy();
+    });
+
+    onDestroy(() => {
+        pages.forEach((route) =>
+            observer.unobserve(document.getElementById(route.name))
+        );
+        observer.disconnect();
     });
 </script>
 
