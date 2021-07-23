@@ -2,7 +2,8 @@
     import { primaryBackground } from "../utils/constants";
     import Page from "../components/Page.svelte";
     import Card from "../components/Card.svelte";
-    import type { Repository } from "src/utils/api";
+    import { Repository, getPinnedRepos } from "../utils/api";
+    import { onMount } from "svelte";
 
     /**
      * convert repository name slugs into titles (with some exceptions)
@@ -17,6 +18,7 @@
             return txt.charAt(0).toUpperCase() + txt.substr(1);
         });
     }
+
     /**
      * get a set of unique, normalized tags from repository topics and detected languages
      * @param repo
@@ -32,6 +34,7 @@
         );
         return tags.sort();
     }
+
     function getRepoStats(repo: Repository) {
         const arr = [];
         if (repo.stargazerCount > 0) {
@@ -46,6 +49,10 @@
     export let username = "kclejeune";
     export let repos: Repository[];
     export let backgroundClass = primaryBackground;
+
+    onMount(async () => {
+        repos = await getPinnedRepos(username, fetch);
+    });
 </script>
 
 <Page id="projects" title="Projects" {backgroundClass}>

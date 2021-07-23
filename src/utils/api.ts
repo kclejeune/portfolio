@@ -22,6 +22,47 @@ export interface PinnedRepoResponse {
 export const API_URL =
     "https://rh50nu19ni.execute-api.us-east-2.amazonaws.com/beta/graphql";
 
+export async function getPinnedRepos(
+    username: string,
+    fetch: CallableFunction
+): Promise<Repository[]> {
+    const query = getPinnedRepoQuery(username);
+
+    return await fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({
+            query: query,
+        }),
+    })
+        .then((res) => res.json())
+        .then((res) => flatten(res))
+        .then(
+            (res: PinnedRepoResponse) =>
+                res.itemShowcase.edges ?? res.itemShowcase.nodes ?? []
+        )
+        .then((repos: Repository[]) => repos.sort(compare));
+}
+
+export function compare(a: Repository, b: Repository) {
+    let starDiff = b.stargazerCount - a.stargazerCount;
+    let forkDiff = b.forkCount - a.forkCount;
+    let tagDiff =
+        b.repositoryTopics.length -
+        a.repositoryTopics.length +
+        b.languages.length -
+        a.languages.length;
+    let nameDiff = a.name.localeCompare(b.name);
+    if (starDiff !== 0) {
+        return starDiff;
+    } else if (forkDiff !== 0) {
+        return forkDiff;
+    } else if (tagDiff !== 0) {
+        return tagDiff;
+    } else if (nameDiff !== 0) {
+        return nameDiff;
+    }
+}
+
 /**
  * flattens a graphQL response to only include relevant structure
  * 
