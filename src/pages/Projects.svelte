@@ -2,7 +2,8 @@
     import { primaryBackground } from "../utils/constants";
     import Page from "../components/Page.svelte";
     import Card from "../components/Card.svelte";
-    import { Repository, getPinnedRepos } from "../utils/api";
+    import { getPinnedRepos } from "../utils/api";
+    import type { Repository } from "../utils/api";
     import { onMount } from "svelte";
 
     /**
@@ -50,9 +51,7 @@
     export let repos: Repository[];
     export let backgroundClass = primaryBackground;
 
-    onMount(async () => {
-        repos = await getPinnedRepos(username, fetch);
-    });
+    onMount(() => getPinnedRepos(username, fetch).then((res) => (repos = res)));
 </script>
 
 <Page id="projects" title="Projects" {backgroundClass}>

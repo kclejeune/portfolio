@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { page } from "$app/stores";
     import { onDestroy, onMount } from "svelte";
     import * as animateScroll from "svelte-scrollto";
     import { scrollToElement } from "../utils";
@@ -61,7 +60,6 @@
         buttonText: "text-neutral-200",
     };
 
-    $: active = $page.path;
     $: visible = open ? "visible" : "hidden";
     $: hidden = open ? "hidden" : "visible";
 
@@ -96,10 +94,7 @@
     });
 
     onDestroy(() => {
-        pages.forEach((route) =>
-            observer.unobserve(document.getElementById(route.name))
-        );
-        observer.disconnect();
+        observer?.disconnect();
     });
 </script>
 
