@@ -2,9 +2,9 @@
     let color = "text-primary-300";
     let hover = "sm:hover:text-primary-500";
     let colorClass = `${color} ${hover}`;
-    import Anchor from "../components/Anchor.svelte";
-    import IconButton from "../components/IconButton.svelte";
-    import { scrollToElement } from "../utils";
+    import Anchor from "$lib/components/Anchor.svelte";
+    import IconButton from "$lib/components/IconButton.svelte";
+    import { scrollToElement } from "$lib/utils";
 
     type Icon = {
         link: string;

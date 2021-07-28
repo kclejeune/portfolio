@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Card from "../components/Card.svelte";
-    import Page from "../components/Page.svelte";
-    import { neutralBackground } from "../utils/constants";
+    import Card from "$lib/components/Card.svelte";
+    import Page from "$lib/components/Page.svelte";
+    import { neutralBackground } from "$lib/utils/constants";
 
     type Job = {
         employer: string;

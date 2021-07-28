@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Card from "../components/Card.svelte";
-    import Page from "../components/Page.svelte";
-    import { primaryBackground, neutralBackground } from "../utils/constants";
+    import Card from "$lib/components/Card.svelte";
+    import Page from "$lib/components/Page.svelte";
+    import { primaryBackground, neutralBackground } from "$lib/utils/constants";
     const skills: Array<string> = [
         "Python",
         "Scikit-Learn",

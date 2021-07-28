@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { primaryBackground } from "../utils/constants";
-    import Page from "../components/Page.svelte";
-    import Card from "../components/Card.svelte";
-    import { getPinnedRepos } from "../utils/api";
-    import type { Repository } from "../utils/api";
+    import { primaryBackground } from "$lib/utils/constants";
+    import Page from "$lib/components/Page.svelte";
+    import Card from "$lib/components/Card.svelte";
+    import { getPinnedRepos } from "$lib/utils/api";
+    import type { Repository } from "$lib/utils/api";
     import { onMount } from "svelte";
 
     /**
