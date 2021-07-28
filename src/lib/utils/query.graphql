@@ -1,0 +1,39 @@
+query {
+  repositoryOwner(login: "kclejeune") {
+    ... on ProfileOwner {
+      login
+      itemShowcase {
+        ... on ProfileItemShowcase {
+          items(first: 10) {
+            totalCount
+            nodes {
+              ... on Repository {
+                name
+                stargazerCount
+                forkCount
+                url
+                description
+                repositoryTopics(first: 15) {
+                  nodes {
+                    ... on RepositoryTopic {
+                      topic {
+                        name
+                      }
+                    }
+                  }
+                }
+                languages(first: 10) {
+                  nodes {
+                    ... on Language {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
