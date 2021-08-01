@@ -42,7 +42,7 @@
 
 <Anchor id="home" />
 <div
-    class="flex flex-col items-center justify-center bg-center bg-no-repeat bg-cover page lg:bg-fixed bg-neutral-600 bg-blend-soft-light dark:bg-blend-overlay dark:bg-neutral-700"
+    class="flex flex-col items-center justify-center bg-center bg-no-repeat bg-cover page lg:bg-fixed bg-neutral-600 bg-blend-soft-light dark:bg-blend-soft-light dark:bg-neutral-700"
     id="bg"
 >
     <div class="text-center">
