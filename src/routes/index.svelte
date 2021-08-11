@@ -15,7 +15,6 @@
 </script>
 
 <script lang="ts">
-    import "/static/assets/fontawesome/css/all.min.css";
     import Skills from "$lib/pages/Skills.svelte";
     import Work from "$lib/pages/Work.svelte";
     import About from "$lib/pages/About.svelte";
