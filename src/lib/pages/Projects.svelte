@@ -56,11 +56,11 @@
 
 <Page id="projects" title="Projects" {backgroundClass}>
     <div
-        class="container mx-auto grid max-w-screen-xl gap-4 md:grid-cols-1 lg:grid-cols-2"
+        class="container grid max-w-screen-xl gap-4 mx-auto md:grid-cols-1 lg:grid-cols-2"
     >
         {#each repos as repo}
             <Card
-                title={titleCase(repo.name.replaceAll("-", " "))}
+                title={titleCase(repo.name.replace(/-/g, " "))}
                 url={repo.url}
                 tags={getRepoTags(repo)}
             >
