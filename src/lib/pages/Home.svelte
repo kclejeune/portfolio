@@ -54,17 +54,19 @@
             <IconButton {...icon} {colorClass} customClass="mx-5" />
         {/each}
     </div>
-    <IconButton
-        link="#about"
-        on:click={() => {
-            scrollToElement("#about");
-        }}
-        name="scroll down"
-        {colorClass}
-        customClass="my-20"
-        newTab={false}
-        iconClass="fas fa-chevron-circle-down fa-2x"
-    />
+    <div>
+        <IconButton
+            link="#about"
+            on:click={() => {
+                scrollToElement("#about");
+            }}
+            name="scroll down"
+            {colorClass}
+            customClass="my-20"
+            newTab={false}
+            iconClass="fas fa-chevron-circle-down fa-2x"
+        />
+    </div>
 </div>
 
 <style>

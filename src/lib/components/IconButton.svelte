@@ -14,11 +14,12 @@
         alt={name}
         aria-label={name}
         href={link}
+        on:click
     >
         <i class="{colorClass} {iconClass} {customClass}" />
     </a>
 {:else}
-    <a alt={name} aria-label={name} href={link} on:click>
+    <a on:click alt={name} aria-label={name} href={link}>
         <i class="{colorClass} {iconClass} {customClass}" />
     </a>
 {/if}
