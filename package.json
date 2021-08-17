@@ -1,5 +1,10 @@
 {
     "name": "kclejeune.github.io",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kclejeune/portfolio.git"
+    },
+    "license": "MIT",
     "version": "0.0.1",
     "scripts": {
         "dev": "svelte-kit dev --host",
