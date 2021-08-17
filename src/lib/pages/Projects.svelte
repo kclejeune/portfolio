@@ -2,9 +2,7 @@
     import { primaryBackground } from "$lib/utils/constants";
     import Page from "$lib/components/Page.svelte";
     import Card from "$lib/components/Card.svelte";
-    import { getPinnedRepos } from "$lib/utils/api";
     import type { Repository } from "$lib/utils/api";
-    import { onMount } from "svelte";
 
     /**
      * convert repository name slugs into titles (with some exceptions)
@@ -50,8 +48,6 @@
     export let username = "kclejeune";
     export let repos: Repository[];
     export let backgroundClass = primaryBackground;
-
-    onMount(() => getPinnedRepos(username, fetch).then((res) => (repos = res)));
 </script>
 
 <Page id="projects" title="Projects" {backgroundClass}>
