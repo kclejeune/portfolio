@@ -9,5 +9,6 @@ FROM node:lts-alpine AS deploy
 WORKDIR /app
 COPY --from=build /app .
 
-EXPOSE 3000
+ENV PORT=3000
+EXPOSE $PORT
 CMD [ "node", "./build" ]
