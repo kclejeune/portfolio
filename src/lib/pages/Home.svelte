@@ -139,15 +139,11 @@
         </IconButton>
     </div>
     <div>
-        <IconButton
-            link="#about"
-            on:click={() => {
-                scrollToElement("#about");
-            }}
-            name="scroll down"
-            newTab={false}
-        >
+        <IconButton link="#about" name="scroll down" newTab={false}>
             <svg
+                on:click={() => {
+                    scrollToElement("#about");
+                }}
                 aria-hidden="true"
                 focusable="false"
                 data-prefix="fas"
