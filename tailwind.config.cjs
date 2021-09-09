@@ -1,18 +1,18 @@
 const colors = require("tailwindcss/colors");
 
 const config = {
-    mode: "jit",
-    purge: ["./src/**/*.{html,js,svelte,ts}"],
-    darkMode: "media",
-    theme: {
-        extend: {},
-        colors: {
-            ...colors,
-            primary: colors.blue,
-            neutral: colors.coolGray,
-        },
+  mode: "jit",
+  purge: ["./src/**/*.{html,js,svelte,ts}"],
+  darkMode: "media",
+  theme: {
+    extend: {},
+    colors: {
+      ...colors,
+      primary: colors.blue,
+      neutral: colors.coolGray,
     },
-    plugins: [],
+  },
+  plugins: [],
 };
 
 module.exports = config;
