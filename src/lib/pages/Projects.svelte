@@ -4,6 +4,7 @@
   import Card from "$lib/components/Card.svelte";
   import type { Repository } from "$lib/utils/api";
   import { getPinnedRepos } from "$lib/utils/api";
+  import { onMount } from "svelte";
 
   /**
    * convert repository name slugs into titles (with some exceptions)
@@ -50,7 +51,9 @@
   export let repos: Repository[];
   export let backgroundClass = primaryBackground;
 
-  getPinnedRepos(username, fetch).then((res) => (repos = res));
+  onMount(async () => {
+    repos = await getPinnedRepos(username, fetch);
+  });
 </script>
 
 <Page id="projects" title="Projects" {backgroundClass}>
