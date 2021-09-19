@@ -112,7 +112,7 @@
             {job.description ?? ""}
           </div>
         {/if}
-        <ul class="m-2 list-disc">
+        <ul class="list-disc list-inside">
           {#each job.tasks as task}
             <li>{task}</li>
           {/each}
