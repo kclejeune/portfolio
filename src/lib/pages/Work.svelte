@@ -40,7 +40,7 @@
       startDate: new Date(2020, 8),
       endDate: new Date(currentDate.getFullYear(), currentDate.getMonth()),
       description:
-        "Classes: CSDS 391: Introduction to Artificial Intelligence, CSDS 343: Theoretical Computer Science",
+        "Classes: CSDS 440: Machine Learning, CSDS 391: Introduction to Artificial Intelligence, CSDS 343: Theoretical Computer Science",
       tasks: [
         "Designed and graded course assignments and exams",
         "Taught supplementary lectures to reinforce course material",
