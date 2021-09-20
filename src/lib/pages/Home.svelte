@@ -31,7 +31,7 @@
       name: "Keybase",
     },
     email: {
-      link: "mailto:contact@kclj.io",
+      link: "mailto:contact@kennanlejeune.com",
       iconClass: "fa-2x far fa-envelope",
       name: "Email",
     },
