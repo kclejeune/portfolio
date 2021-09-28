@@ -3,6 +3,7 @@
   import * as animateScroll from "svelte-scrollto";
   import { scrollToElement } from "$lib/utils";
   import { shadow } from "$lib/utils/constants";
+  import { fade, slide } from "svelte/transition";
 
   animateScroll.setGlobalOptions({
     onStart: (element, offset) => {
@@ -50,7 +51,7 @@
       title: "Skills",
     },
   ];
-
+  const menuDuration = 200;
   let open = false;
   let colors = {
     nav: "bg-neutral-100 dark:bg-neutral-800 ",
@@ -62,9 +63,6 @@
     },
     buttonText: "text-neutral-800 dark:text-neutral-200",
   };
-
-  $: visible = open ? "visible" : "hidden";
-  $: hidden = open ? "hidden" : "visible";
 
   let activeHash = "";
   let observer: IntersectionObserver;
@@ -115,39 +113,43 @@
           aria-controls="mobile-menu"
           aria-expanded={open}
         >
-          <span class="sr-only">Open main menu</span>
-
-          <svg
-            class="{hidden} w-6 h-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-
-          <svg
-            class="{visible} w-6 h-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden={!open}
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          {#if !open}
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+              in:fade={{ duration: menuDuration }}
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          {:else}
+            <span class="sr-only">Close main menu</span>
+            <svg
+              class="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden={!open}
+              in:fade={{ duration: menuDuration }}
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          {/if}
         </button>
       </div>
       <!-- expanded nav page -->
@@ -177,22 +179,30 @@
   </div>
 
   <!-- Mobile menu, show/hide based on menu state. -->
-  <div class="{visible} sm:hidden" id="mobile-menu">
-    <div class="px-2 pt-2 pb-3 space-y-1">
-      {#each pages as route}
-        <a
-          href={route.id}
-          on:click={() => {
-            open = false;
-            scrollToElement(route.id);
-          }}
-          class="{colors.buttonText} block px-3 py-2 rounded-md text-base font-medium
+  {#if open}
+    <div
+      class="sm:hidden"
+      id="mobile-menu"
+      transition:slide={{ duration: menuDuration }}
+    >
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        {#each pages as route}
+          <a
+            href={route.id}
+            on:click={() => {
+              open = false;
+              scrollToElement(route.id);
+            }}
+            class="{colors.buttonText} block px-3 py-2 rounded-md text-base font-medium
                     {activeHash === route.id
-            ? colors.button.active
-            : colors.button.inactive ?? colors.button.inactive}"
-          aria-current="page">{route.title}</a
-        >
-      {/each}
+              ? colors.button.active
+              : colors.button.inactive ?? colors.button.inactive}"
+            aria-current="page"
+          >
+            {route.title}
+          </a>
+        {/each}
+      </div>
     </div>
-  </div>
+  {/if}
 </nav>
