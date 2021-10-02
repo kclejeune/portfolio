@@ -66,12 +66,10 @@
 
   let activeHash = "";
   let observer: IntersectionObserver;
-  function scrollSpy() {
-    const height =
-      window.innerHeight ??
-      document.documentElement.clientHeight ??
-      document.body.clientHeight;
-    const navHeight = 64;
+  let innerHeight: number;
+
+  function scrollSpy(height: number, navHeight: number = 64) {
+    observer?.disconnect();
     observer = new IntersectionObserver(
       (entries) => {
         for (let entry of entries.filter((e) => e.isIntersecting)) {
@@ -89,16 +87,16 @@
     );
   }
 
-  onMount(() => {
-    activeHash = window.location.hash ?? "";
-    scrollSpy();
-  });
+  $: if (innerHeight) {
+    scrollSpy(innerHeight);
+  }
 
   onDestroy(() => {
     observer?.disconnect();
   });
 </script>
 
+<svelte:window bind:innerHeight />
 <!-- This example requires Tailwind CSS v2.0+ -->
 <nav class="fixed top-0 w-full {shadow} {colors.buttonText} {colors.nav}">
   <div class="px-2 max-w-7xl sm:px-6 lg:px-8">
