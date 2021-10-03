@@ -22,14 +22,14 @@
     </p>
     <br />
     <p>
-      I work on graduate research in the <Link
+      Currently, I work on graduate research in the <Link
         url="https://engineering.case.edu/computer-and-data-sciences/academics/computer-science/bachelor-science"
       >
         CWRU Department of Computer and Data Sciences
       </Link>
       under Dr. Soumya Ray. My work investigates knowledge propogation through networks
       in multi-agent learning systems, and aims to develop dynamic optimization methods
-      to improve overall network performance with fixed allocation of expert resources.
+      to improve overall network performance with limited resource allocation.
     </p>
     <br />
     <p>
