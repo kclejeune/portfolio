@@ -12,11 +12,13 @@
     <p>Hey, I'm Kennan!</p>
     <br />
     <p>
-      I recently graduated with honors in Computer Science from Case Western
-      Reserve University, where I'm continuing my studies as a graduate
-      student.​ I started programming on calculators with TI-BASIC back in high
-      school, and I've been addicted ever since. Outside of my studies, I'm an
-      avid cyclist, musician, linux enthusiast, and speedcuber.
+      I started programming on calculators with TI-BASIC back in high school,
+      and I've been addicted ever since. Outside of my studies, I'm an avid
+      cyclist, musician, linux enthusiast. Prior to college, I was an active
+      competitor in the Rubik's Cube speedsolving community. During the years
+      when I was actively competing, my highlights included a North American
+      Record, 90 top 3 finishes (35 gold, 32 silver, 23 bronze), and a top rank
+      of 12th in the world for the 3x3 Rubik's Cube.
     </p>
     <br />
     <p>
@@ -27,17 +29,15 @@
       </Link>
       under Dr. Soumya Ray. My work investigates knowledge propogation through networks
       in multi-agent learning systems, and aims to develop dynamic optimization methods
-      to improve overall network performance.
+      to improve overall network performance with fixed allocation of expert resources.
     </p>
     <br />
     <p>
       After graduation, I'm transitioning to full time work on Software
       Engineering and Data Science at the
-      <Link url="https://www.jhuapl.edu/"
-        >Johns Hopkins University Applied Physics Laboratory</Link
-      >, where I do work on machine learning research for DNA threat
-      classification and full stack software engineering with Angular and
-      Spring.
+      <Link url="https://www.jhuapl.edu/">
+        Johns Hopkins University Applied Physics Laboratory</Link
+      >, where I do work on automated biological threat assessment and full stack software engineering with Angular and Java Spring.
     </p>
   </Text>
 </Page>
