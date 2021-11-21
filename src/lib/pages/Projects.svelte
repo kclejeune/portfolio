@@ -50,10 +50,6 @@
   export let username = "kclejeune";
   export let repos: Repository[];
   export let backgroundClass = primaryBackground;
-
-  onMount(async () => {
-    repos = await getPinnedRepos(username, fetch);
-  });
 </script>
 
 <Page id="projects" title="Projects" {backgroundClass}>
