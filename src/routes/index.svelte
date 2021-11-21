@@ -15,6 +15,7 @@
 </script>
 
 <script lang="ts">
+  import SEO from "svelte-seo";
   import Skills from "$lib/pages/Skills.svelte";
   import Work from "$lib/pages/Work.svelte";
   import About from "$lib/pages/About.svelte";
@@ -25,6 +26,12 @@
   let neutralBackground = "bg-neutral-200 dark:bg-neutral-900";
   export let repos: Repository[];
 </script>
+
+<SEO
+  title="Kennan LeJeune - ML Researcher & Software Engineer"
+  description="Kennan LeJeune - ML Researcher & Software Engineer"
+  canonical="https://kennanlejeune.com"
+/>
 
 <Home />
 <!--About me/bio-->
