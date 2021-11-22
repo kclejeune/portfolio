@@ -3,8 +3,6 @@
   import Page from "$lib/components/Page.svelte";
   import Card from "$lib/components/Card.svelte";
   import type { Repository } from "$lib/utils/api";
-  import { getPinnedRepos } from "$lib/utils/api";
-  import { onMount } from "svelte";
 
   /**
    * convert repository name slugs into titles (with some exceptions)
@@ -54,7 +52,7 @@
 
 <Page id="projects" title="Projects" {backgroundClass}>
   <div
-    class="container mx-auto grid max-w-screen-xl gap-4 md:grid-cols-1 lg:grid-cols-2"
+    class="container grid max-w-screen-xl gap-4 mx-auto md:grid-cols-1 lg:grid-cols-2"
   >
     {#each repos as repo}
       <Card
