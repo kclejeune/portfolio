@@ -26,6 +26,22 @@ resource "cloudflare_zone" "zones" {
   plan     = "free"
 }
 
+resource "cloudflare_record" "kennanlejeune-keybase" {
+  name    = "@"
+  zone_id = cloudflare_zone.zones["kennanlejeune.com"].id
+  type    = "TXT"
+  value   = "keybase-site-verification=jGapzb8uL8tkrFxg8-PoyOej2YgDNnk-RY4Fgz5pIyM"
+  proxied = false
+}
+
+resource "cloudflare_record" "kclj-io-keybase" {
+  name    = "@"
+  zone_id = cloudflare_zone.zones["kclj.io"].id
+  type    = "TXT"
+  value   = "keybase-site-verification=fF5XX_ZJwDAojwina42g7Zc71IR6_vDhSZztkranxKI"
+  proxied = false
+}
+
 resource "cloudflare_record" "root_record" {
   for_each = toset(local.domains)
   name     = "@"
