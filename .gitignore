@@ -3,3 +3,8 @@ node_modules/
 package/
 build/
 .DS_Store
+import.sh
+.envrc
+*.tfstate
+*.tfstate.backup
+.terraform/
