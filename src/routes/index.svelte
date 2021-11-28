@@ -30,7 +30,7 @@
 <SEO
   title="Kennan LeJeune - ML Researcher & Software Engineer"
   description="Kennan LeJeune - ML Researcher & Software Engineer"
-  canonical="https://kclj.io"
+  canonical="https://www.kclj.io"
 />
 
 <Home />

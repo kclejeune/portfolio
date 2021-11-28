@@ -66,27 +66,27 @@ resource "cloudflare_record" "www_record" {
 }
 
 resource "cloudflare_page_rule" "redirect_root" {
-  priority = 2
-  for_each = setsubtract(local.domains, [local.canonical])
-  target   = "https://*${each.key}/*"
+  priority = 1
+  for_each = toset(local.domains)
+  target   = "https://${each.key}/*"
   zone_id  = cloudflare_zone.zones[each.key].id
 
   actions {
     forwarding_url {
-      url         = "https://$1${local.canonical}/$2"
+      url         = "https://www.${local.canonical}/$1"
       status_code = 302
     }
   }
 }
 
-resource "cloudflare_page_rule" "redirect_www" {
-  priority = 1
-  for_each = toset(local.domains)
-  target   = "https://www.${each.key}/*"
+resource "cloudflare_page_rule" "redirect_subdomain" {
+  priority = 2
+  for_each = setsubtract(local.domains, [local.canonical])
+  target   = "https://*.${each.key}/*"
   zone_id  = cloudflare_zone.zones[each.key].id
   actions {
     forwarding_url {
-      url         = "https://${local.canonical}/$1"
+      url         = "https://$1.${local.canonical}/$2"
       status_code = 302
     }
   }
