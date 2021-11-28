@@ -2,7 +2,7 @@
   import { primaryBackground } from "$lib/utils/constants";
   import Page from "$lib/components/Page.svelte";
   import Card from "$lib/components/Card.svelte";
-  import type { Repository } from "$lib/utils/api";
+  import type { Repository } from "$lib/utils";
 
   /**
    * convert repository name slugs into titles (with some exceptions)

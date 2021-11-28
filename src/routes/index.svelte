@@ -1,14 +1,13 @@
 <script lang="ts" context="module">
   // SSR for Projects component
-  import { getPinnedRepos } from "$lib/utils/api";
-  import type { Repository } from "$lib/utils/api";
-
-  const username = "kclejeune";
+  import type { Repository } from "$lib/utils";
 
   export async function load({ fetch }) {
     return {
       props: {
-        repos: await getPinnedRepos(username, fetch),
+        repos: await fetch("/api/repos")
+          .then((res) => res.json())
+          .catch(() => []),
       },
     };
   }

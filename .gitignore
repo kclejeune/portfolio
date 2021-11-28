@@ -4,7 +4,9 @@ package/
 build/
 .DS_Store
 import.sh
-.envrc
 *.tfstate
 *.tfstate.backup
 .terraform/
+# env files
+.envrc
+.env
