@@ -1,18 +1,17 @@
 const colors = require("tailwindcss/colors");
+const typography = require("@tailwindcss/typography");
 
 const config = {
-  mode: "jit",
-  purge: ["./src/**/*.{html,js,svelte,ts}"],
-  darkMode: "media",
+  content: ["./src/**/*.{html,js,svelte,ts}"],
   theme: {
-    extend: {},
-    colors: {
-      ...colors,
-      primary: colors.blue,
-      neutral: colors.coolGray,
+    extend: {
+      colors: {
+        primary: colors.blue,
+        neutral: colors.gray,
+      },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
 
 module.exports = config;

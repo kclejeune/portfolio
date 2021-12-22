@@ -1,5 +1,5 @@
 import preprocess from "svelte-preprocess";
-import cloudflare from "@sveltejs/adapter-cloudflare";
+import adapter from "@sveltejs/adapter-auto";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -14,7 +14,7 @@ const config = {
   kit: {
     // hydrate the <div id="svelte"> element in src/app.html
     target: "#svelte",
-    adapter: cloudflare(),
+    adapter: adapter(),
   },
 };
 
