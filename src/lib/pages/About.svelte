@@ -10,7 +10,6 @@
 <Page id="about" title="The Essentials" {backgroundClass}>
   <Text>
     <p>Hey, I'm Kennan!</p>
-    <br />
     <p>
       I started programming on calculators with TI-BASIC back in high school,
       and I've been addicted ever since. Outside of my studies, I'm an avid
@@ -22,7 +21,6 @@
       </Link> included a North American Record, 90 podium finishes, and a top global
       rank of of 7th and 12th for the 2x2 and 3x3 Rubik's Cubes, respectively.
     </p>
-    <br />
     <p>
       Currently, I work on graduate machine learning research in the <Link
         url="https://engineering.case.edu/computer-and-data-sciences/academics/computer-science/bachelor-science"
