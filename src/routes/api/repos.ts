@@ -6,10 +6,12 @@ export async function get() {
   const GITHUB_API = import.meta.env.VITE_GITHUB_API.toString();
   const API_KEY = import.meta.env.VITE_GITHUB_API_KEY;
   const query = getPinnedRepoQuery(GITHUB_USERNAME);
-  const headers = API_KEY ? { Authorization: `bearer ${API_KEY}` } : {};
   const res = await fetch(GITHUB_API, {
     method: "POST",
-    headers: headers,
+    headers: {
+      Authorization: `bearer ${API_KEY}`,
+      "User-Agent": GITHUB_USERNAME,
+    },
     body: JSON.stringify({
       query: query,
     }),
