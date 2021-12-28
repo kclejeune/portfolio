@@ -9,4 +9,4 @@ import.sh
 .terraform/
 # env files
 .envrc
-.env
+*.local

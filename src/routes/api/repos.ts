@@ -1,14 +1,15 @@
 import type { PinnedRepoResponse, Repository } from "$lib/utils";
 import { compare, flatten, getPinnedRepoQuery } from "$lib/utils";
-import { GITHUB_API, USERNAME } from "$lib/utils/constants";
 
 export async function get() {
-  const query = getPinnedRepoQuery(USERNAME);
+  const GITHUB_USERNAME = import.meta.env.VITE_GITHUB_USERNAME.toString();
+  const GITHUB_API = import.meta.env.VITE_GITHUB_API.toString();
+  const API_KEY = import.meta.env.VITE_GITHUB_API_KEY;
+  const query = getPinnedRepoQuery(GITHUB_USERNAME);
+  const headers = API_KEY ? { Authorization: `bearer ${API_KEY}` } : {};
   const res = await fetch(GITHUB_API, {
     method: "POST",
-    headers: {
-      Authorization: `bearer ${import.meta.env.VITE_GITHUB_API_KEY}`,
-    },
+    headers: headers,
     body: JSON.stringify({
       query: query,
     }),
