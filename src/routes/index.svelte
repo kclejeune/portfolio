@@ -5,9 +5,7 @@
   export async function load({ fetch }) {
     return {
       props: {
-        repos: await fetch("/api/repos")
-          .then((res) => res.json())
-          .catch(() => []),
+        repos: await fetch("/api/repos").then((res) => res.json()),
       },
     };
   }
