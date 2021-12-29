@@ -29,12 +29,9 @@ export async function get() {
     return {
       body: data,
     };
-  } else {
-    return {
-      status: res.status,
-      body: {
-        error: res.statusText,
-      },
-    };
   }
+  return {
+    status: res.status,
+    error: new Error(res.statusText),
+  };
 }
