@@ -11,7 +11,7 @@
   <Text>
     <p>Hey, I'm Kennan!</p>
     <p>
-      I started programming on calculators with TI-BASIC back in high school,
+      I first started programming on calculators with TI-BASIC back in high school,
       and I've been addicted ever since. Outside of my studies, I'm an avid
       cyclist, musician, linux enthusiast. Prior to college, I was an active
       competitor in the Rubik's Cube speedsolving community. During the years
@@ -22,19 +22,15 @@
       rank of of 7th and 12th for the 2x2 and 3x3 Rubik's Cubes, respectively.
     </p>
     <p>
-      Currently, I work on graduate machine learning research in the <Link
-        url="https://engineering.case.edu/computer-and-data-sciences/academics/computer-science/bachelor-science"
-      >
-        CWRU Department of Computer and Data Sciences
-      </Link>
-      under Dr. Soumya Ray. My thesis is focused on accelerated training in communicative
-      learning networks using dynamic structure adaptation. After graduation, I'm
-      transitioning to full time work on Software Engineering and Data Science at
-      the
+      I recently completed my BS and MS in Computer Science at
+      <Link url="https://case.edu/">Case Western Reserve University</Link>
+      under Dr. Soumya Ray, with research focused on accelerated training in networked
+      learning systems. Now, I work on Software Engineering and Data Science at the
       <Link url="https://www.jhuapl.edu/">
-        Johns Hopkins University Applied Physics Laboratory</Link
-      >, where I work on automated systems for biological threat assessment and
-      full stack software engineering with Angular, Kotlin, and Java Spring.
+        Johns Hopkins University Applied Physics Laboratory
+      </Link>. My current work involves developing automated systems for
+      biological threat assessment, full stack software engineering with
+      Angular and Java, and DevOps using Ansible and NixOS.
     </p>
   </Text>
 </Page>
