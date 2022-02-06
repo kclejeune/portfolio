@@ -16,7 +16,7 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --write --plugin-search-dir=. .",
-    "upgrade": "npm-check-updates -u && npm install"
+    "upgrade": "npm upgrade && npm-check-updates -u && npm install"
   },
   "devDependencies": {
     "@sveltejs/adapter-cloudflare": "^1.0.0-next.9",
@@ -34,8 +34,8 @@
     "postcss-load-config": "^3.1.1",
     "prettier": "~2.5.1",
     "prettier-plugin-svelte": "^2.6.0",
-    "svelte": "^3.46.3",
-    "svelte-check": "^2.4.1",
+    "svelte": "^3.46.4",
+    "svelte-check": "^2.4.2",
     "svelte-preprocess": "^4.10.2",
     "svelte-scrollto": "^0.2.0",
     "svelte-seo": "^1.4.0",
