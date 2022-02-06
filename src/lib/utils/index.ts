@@ -1,8 +1,3 @@
-import { scrollTo } from "svelte-scrollto";
-
-export function scrollToElement(selector: string) {
-  scrollTo({ element: selector });
-}
 export interface Repository {
   name: string;
   stargazerCount: number;

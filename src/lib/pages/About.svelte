@@ -11,11 +11,11 @@
   <Text>
     <p>Hey, I'm Kennan!</p>
     <p>
-      I first started programming on calculators with TI-BASIC back in high school,
-      and I've been addicted ever since. Outside of my studies, I'm an avid
-      cyclist, musician, linux enthusiast. Prior to college, I was an active
-      competitor in the Rubik's Cube speedsolving community. During the years
-      when I was actively competing,
+      I first started programming on calculators with TI-BASIC back in high
+      school, and I've been addicted ever since. Outside of my studies, I'm an
+      avid cyclist, musician, linux enthusiast. Prior to college, I was an
+      active competitor in the Rubik's Cube speedsolving community. During the
+      years when I was actively competing,
       <Link url="https://www.worldcubeassociation.org/persons/2013LEJE03">
         my highlights
       </Link> included a North American Record, 90 podium finishes, and a top global
@@ -29,8 +29,8 @@
       <Link url="https://www.jhuapl.edu/">
         Johns Hopkins University Applied Physics Laboratory
       </Link>. My current work involves developing automated systems for
-      biological threat assessment, full stack software engineering with
-      Angular and Java, and DevOps using Ansible and NixOS.
+      biological threat assessment, full stack software engineering with Angular
+      and Java, and DevOps using Ansible and NixOS.
     </p>
   </Text>
 </Page>

@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { onDestroy, onMount } from "svelte";
-  import * as animateScroll from "svelte-scrollto";
-  import { scrollToElement } from "$lib/utils";
+  import { onDestroy } from "svelte";
+  import { animateScroll } from "svelte-scrollto-element";
   import { shadow } from "$lib/utils/constants";
   import { fade, slide } from "svelte/transition";
 
@@ -161,7 +160,9 @@
               <a
                 href={route.id}
                 on:click={() => {
-                  scrollToElement(route.id);
+                  animateScroll.scrollTo({
+                    element: document.querySelector(route.id),
+                  });
                 }}
                 class="px-4 py-2 text-sm font-medium rounded-md
                                 {activeHash === route.id
@@ -189,7 +190,9 @@
             href={route.id}
             on:click={() => {
               open = false;
-              scrollToElement(route.id);
+              animateScroll.scrollTo({
+                element: document.querySelector(route.id),
+              });
             }}
             class="{colors.buttonText} block px-3 py-2 rounded-md text-base font-medium
                     {activeHash === route.id
