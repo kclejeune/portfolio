@@ -24,13 +24,15 @@
     <p>
       I recently completed my BS and MS in Computer Science at
       <Link url="https://case.edu/">Case Western Reserve University</Link>
-      under Dr. Soumya Ray, with research focused on accelerated training in networked
-      learning systems. Now, I work on Software Engineering and Data Science at the
+      under Dr. Soumya Ray, with my thesis "Dynamic Structure Adaptation
+      for Communities of Learning Machines." Now, I work on Software
+      Engineering and Data Science at the
       <Link url="https://www.jhuapl.edu/">
         Johns Hopkins University Applied Physics Laboratory
       </Link>. My current work involves developing automated systems for
-      biological threat assessment, full stack software engineering with Angular
-      and Java, and DevOps using Ansible and NixOS.
+      biological threat classification, full stack software engineering
+      with Angular, Java, and Kotlin, and DevOps using Kubernetes,
+      Ansible, and NixOS.
     </p>
   </Text>
 </Page>
