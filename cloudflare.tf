@@ -5,10 +5,11 @@ terraform {
       version = "~> 3.0"
     }
   }
-  backend "remote" {
-    hostname     = "app.terraform.io"
+  cloud {
     organization = "kclejeune"
-    workspaces { name = "portfolio" }
+    workspaces {
+      name = "portfolio"
+    }
   }
 }
 
@@ -17,7 +18,7 @@ provider "cloudflare" {}
 locals {
   deploy_target = "portfolio-kte.pages.dev"
   canonical     = "kclj.io"
-  domains       = ["kclj.io", "kennanlejeune.com", "kclejeune.com"]
+  domains       = ["kclj.io", "kennanlejeune.com", "kclejeune.com", "kennan.me"]
 }
 
 resource "cloudflare_zone" "zones" {
@@ -106,6 +107,7 @@ resource "cloudflare_zone_settings_override" "settings" {
     always_use_https         = "on"
     automatic_https_rewrites = "on"
     email_obfuscation        = "on"
+    brotli                   = "on"
     cname_flattening         = "flatten_at_root"
   }
 }
