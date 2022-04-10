@@ -108,6 +108,5 @@ resource "cloudflare_zone_settings_override" "settings" {
     automatic_https_rewrites = "on"
     email_obfuscation        = "on"
     brotli                   = "on"
-    cname_flattening         = "flatten_at_root"
   }
 }
