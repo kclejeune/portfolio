@@ -52,7 +52,7 @@
 
 <Page id="projects" title="Projects" {backgroundClass}>
   <div
-    class="container grid max-w-screen-xl gap-4 mx-auto md:grid-cols-1 lg:grid-cols-2"
+    class="container mx-auto grid max-w-screen-xl gap-4 md:grid-cols-1 lg:grid-cols-2"
   >
     {#each repos as repo}
       <Card
