@@ -70,12 +70,13 @@
   function scrollSpy(height: number, navHeight: number = 64) {
     observer?.disconnect();
     observer = new IntersectionObserver(
-      (entries) => {
-        for (let entry of entries.filter((e) => e.isIntersecting)) {
-          activeHash = "#" + entry.target.id;
-          break;
-        }
-      },
+      (entries) =>
+        entries
+          .filter((e) => e.isIntersecting)
+          .reverse()
+          .forEach((entry) => {
+            activeHash = "#" + entry.target.id;
+          }),
       {
         rootMargin: `${navHeight}px 0px -${height - navHeight}px 0px`,
       }
