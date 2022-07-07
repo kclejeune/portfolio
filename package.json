@@ -7,11 +7,10 @@
   "license": "MIT",
   "version": "0.0.1",
   "scripts": {
-    "dev": "svelte-kit dev --host",
-    "build": "svelte-kit build",
-    "start": "node build",
+    "dev": "vite dev --host",
+    "build": "vite build",
+    "preview": "vite preview",
     "deploy": "git subtree push --prefix build origin gh-pages",
-    "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
@@ -22,14 +21,14 @@
     "@sveltejs/adapter-cloudflare": "next",
     "@sveltejs/kit": "next",
     "@tailwindcss/typography": "^0.5.2",
-    "@typescript-eslint/eslint-plugin": "^5.30.3",
-    "@typescript-eslint/parser": "^5.30.3",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "autoprefixer": "^10.4.7",
     "cssnano": "^5.1.12",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-svelte3": "^4.0.0",
-    "npm-check-updates": "^15.0.1",
+    "npm-check-updates": "^15.2.0",
     "postcss": "^8.4.14",
     "postcss-load-config": "^4.0.1",
     "prettier": "~2.7.1",
@@ -41,7 +40,8 @@
     "svelte-seo": "^1.4.1",
     "tailwindcss": "^3.1.4",
     "tslib": "^2.4.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "vite": "^2.9.13"
   },
   "type": "module"
 }
