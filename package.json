@@ -9,16 +9,18 @@
   "scripts": {
     "dev": "vite dev --host",
     "build": "vite build",
+    "package": "svelte-kit package",
     "preview": "vite preview",
-    "deploy": "git subtree push --prefix build origin gh-pages",
+    "prepare": "svelte-kit sync",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
+    "lint": "prettier --check --plugin-search-dir=. . && eslint .",
     "format": "prettier --write --plugin-search-dir=. .",
+    "deploy": "git subtree push --prefix build origin gh-pages",
     "upgrade": "npm-check-updates -u && npm install"
   },
   "devDependencies": {
-    "@sveltejs/adapter-cloudflare": "next",
+    "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@tailwindcss/typography": "^0.5.2",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
