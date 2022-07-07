@@ -1,8 +1,11 @@
 <script lang="ts" context="module">
-  // SSR for Projects component
+  import type { LoadEvent, LoadOutput } from "@sveltejs/kit";
   import type { Repository } from "$lib/utils";
 
-  export async function load({ fetch }) {
+  // SSR for Projects component
+  export async function load({
+    fetch,
+  }: LoadEvent): Promise<LoadOutput<Record<string, any>>> {
     return {
       props: {
         repos: await fetch("/api/repos").then((res) => res.json()),

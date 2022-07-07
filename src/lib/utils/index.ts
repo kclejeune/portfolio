@@ -10,8 +10,7 @@ export interface Repository {
 
 export interface ItemShowcase {
   totalCount: number;
-  nodes?: Repository[];
-  edges?: Repository[];
+  items?: Repository[];
 }
 
 export interface PinnedRepoResponse {
@@ -20,23 +19,15 @@ export interface PinnedRepoResponse {
 }
 
 export function compare(a: Repository, b: Repository) {
-  let starDiff = b.stargazerCount - a.stargazerCount;
-  let forkDiff = b.forkCount - a.forkCount;
-  let tagDiff =
+  const starDiff = b.stargazerCount - a.stargazerCount;
+  const forkDiff = b.forkCount - a.forkCount;
+  const tagDiff =
     b.repositoryTopics.length -
     a.repositoryTopics.length +
     b.languages.length -
     a.languages.length;
-  let nameDiff = a.name.localeCompare(b.name);
-  if (starDiff !== 0) {
-    return starDiff;
-  } else if (forkDiff !== 0) {
-    return forkDiff;
-  } else if (tagDiff !== 0) {
-    return tagDiff;
-  } else if (nameDiff !== 0) {
-    return nameDiff;
-  }
+  const nameDiff = a.name.localeCompare(b.name);
+  return starDiff || forkDiff || tagDiff || nameDiff;
 }
 
 /**
@@ -92,7 +83,7 @@ becomes the following after running flatten():
   "login": "kclejeune",
   "itemShowcase": {
     "totalCount": 6,
-    "edges": [
+    "items": [
       {
         "name": "system",
         "stargazerCount": 59,
@@ -113,7 +104,7 @@ becomes the following after running flatten():
  * @param {node} any - an element inside of a graphQL response
  *
  */
-export function flatten(node: any) {
+export function flatten(node: any): any {
   if (Array.isArray(node)) {
     // if the node is an array, flatten all of its elements
     return node.map(flatten);
@@ -124,8 +115,11 @@ export function flatten(node: any) {
       return flatten(node[props[0]]);
     } else if (props.length > 1) {
       // if there are multiple props, return the same object with each property flattened
-      return props.reduce((result, key) => {
-        result[key] = flatten(node[key]);
+      return props.reduce((result: Record<string, any>, key: string) => {
+        const prop = ["edges", "nodes"].includes(key.toLowerCase())
+          ? "items"
+          : key;
+        result[prop] = flatten(node[key]);
         return result;
       }, {});
     }
@@ -136,10 +130,10 @@ export function flatten(node: any) {
 }
 
 export function getPinnedRepoQuery(
-  username: string = "kclejeune",
-  maxNumRepos: number = 15,
-  maxNumTopics: number = 15,
-  maxNumLanguages: number = 15
+  username = "kclejeune",
+  maxNumRepos = 15,
+  maxNumTopics = 15,
+  maxNumLanguages = 15
 ) {
   return `
 query {

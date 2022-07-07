@@ -1,4 +1,4 @@
-import type { PinnedRepoResponse, Repository } from "$lib/utils";
+import type { PinnedRepoResponse } from "$lib/utils";
 import { compare, flatten, getPinnedRepoQuery } from "$lib/utils";
 
 export async function get() {
@@ -18,20 +18,17 @@ export async function get() {
   });
 
   if (res?.ok) {
-    const data = await res
+    const repos = await res
       .json()
-      .then((res) => flatten(res))
-      .then(
-        (res: PinnedRepoResponse) =>
-          res?.itemShowcase?.edges ?? res?.itemShowcase?.nodes ?? []
-      )
-      .then((repos: Repository[]) => repos.sort(compare));
+      .then((json) => flatten(json))
+      .then((pin: PinnedRepoResponse) => pin?.itemShowcase?.items ?? []);
+    repos.sort(compare);
     return {
-      body: data,
+      body: repos,
     };
   }
   return {
-    status: res.status,
-    error: new Error(res.statusText),
+    status: res?.status ?? 404,
+    error: new Error(res?.statusText),
   };
 }
