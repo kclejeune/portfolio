@@ -22,15 +22,15 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
-    "@tailwindcss/typography": "^0.5.3",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5",
+    "@tailwindcss/typography": "^0.5.4",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
     "autoprefixer": "^10.4.7",
     "cssnano": "^5.1.12",
-    "eslint": "^8.19.0",
+    "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-svelte3": "^4.0.0",
-    "npm-check-updates": "^15.2.6",
+    "npm-check-updates": "^15.3.4",
     "postcss": "^8.4.14",
     "postcss-load-config": "^4.0.1",
     "prettier": "~2.7.1",
@@ -40,10 +40,10 @@
     "svelte-preprocess": "^4.10.7",
     "svelte-scrollto-element": "^0.7.0",
     "svelte-seo": "^1.4.1",
-    "tailwindcss": "^3.1.5",
+    "tailwindcss": "^3.1.6",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4",
-    "vite": "^2.9.14"
+    "vite": "^3.0.0"
   },
   "type": "module"
 }

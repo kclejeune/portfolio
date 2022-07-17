@@ -1,7 +1,7 @@
 import type { PinnedRepoResponse } from "$lib/utils";
 import { compare, flatten, getPinnedRepoQuery } from "$lib/utils";
 
-export async function get() {
+export async function GET() {
   const GITHUB_USERNAME = import.meta.env.VITE_GITHUB_USERNAME.toString();
   const GITHUB_API = import.meta.env.VITE_GITHUB_API.toString();
   const API_KEY = import.meta.env.VITE_GITHUB_API_KEY;
