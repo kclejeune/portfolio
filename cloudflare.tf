@@ -16,7 +16,7 @@ terraform {
 provider "cloudflare" {}
 
 locals {
-  deploy_target = "portfolio-kte.pages.dev"
+  deploy_target = "kclj.pages.dev"
   canonical     = "kclj.io"
   domains       = ["kclj.io", "kennanlejeune.com", "kclejeune.com", "kennan.me"]
 }
