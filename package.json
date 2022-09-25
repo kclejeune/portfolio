@@ -17,6 +17,7 @@
     "upgrade": "npm-check-updates -u && npm install"
   },
   "devDependencies": {
+    "@brainandbones/skeleton": "^0.41.49",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@tailwindcss/typography": "^0.5.7",
