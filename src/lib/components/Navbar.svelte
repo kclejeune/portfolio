@@ -1,11 +1,12 @@
 <script lang="ts">
+  import { shadow } from "$lib/utils/constants";
   import { onDestroy } from "svelte";
   import { animateScroll } from "svelte-scrollto-element";
-  import { shadow } from "$lib/utils/constants";
   import { fade, slide } from "svelte/transition";
 
   animateScroll.setGlobalOptions({
-    onStart: (element, offset) => {
+    // (element, offset)
+    onStart: () => {
       open = false;
     },
   });
@@ -82,9 +83,12 @@
       }
     );
 
-    pages.forEach((route) =>
-      observer.observe(document.getElementById(route.name))
-    );
+    pages?.forEach((route) => {
+      const element = document.getElementById(route.name);
+      if (element) {
+        observer?.observe(element);
+      }
+    });
   }
 
   $: if (innerHeight) {
@@ -161,9 +165,12 @@
               <a
                 href={route.id}
                 on:click={() => {
-                  animateScroll.scrollTo({
-                    element: document.querySelector(route.id),
-                  });
+                  const el = document.getElementById(route.name);
+                  if (el) {
+                    animateScroll.scrollTo({
+                      element: el,
+                    });
+                  }
                 }}
                 class="px-4 py-2 text-sm font-medium rounded-md
                                 {activeHash === route.id
@@ -191,9 +198,12 @@
             href={route.id}
             on:click={() => {
               open = false;
-              animateScroll.scrollTo({
-                element: document.querySelector(route.id),
-              });
+              const el = document.getElementById(route.name);
+              if (el) {
+                animateScroll.scrollTo({
+                  element: el,
+                });
+              }
             }}
             class="{colors.buttonText} block px-3 py-2 rounded-md text-base font-medium
                     {activeHash === route.id

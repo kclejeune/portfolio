@@ -1,5 +1,4 @@
 const colors = require("tailwindcss/colors");
-const typography = require("@tailwindcss/typography");
 
 const config = {
   content: ["./src/**/*.{html,js,svelte,ts}"],
@@ -11,7 +10,7 @@ const config = {
       },
     },
   },
-  plugins: [typography],
+  plugins: [require("@tailwindcss/typography")],
 };
 
 module.exports = config;

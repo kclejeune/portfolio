@@ -142,7 +142,10 @@
     <IconButton link="#about" name="scroll down" newTab={false}>
       <svg
         on:click={() => {
-          animateScroll.scrollTo({ element: document.querySelector("#about") });
+          const el = document.getElementById("about");
+          if (el) {
+            animateScroll.scrollTo({ element: el });
+          }
         }}
         aria-hidden="true"
         focusable="false"

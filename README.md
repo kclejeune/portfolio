@@ -7,7 +7,7 @@ SvelteKit allows for development and page rendering in JavaScript, but remains c
 
 ## Developing
 
-Install dependencies with `npm install`. To preview the site, run
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
 ```bash
 npm run dev
@@ -18,15 +18,12 @@ npm run dev -- --open
 
 ## Building
 
-Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment.
-As mentioned previously, this project uses adapter-static.
-
-To build and deploy, run
+To create a production version of your app:
 
 ```bash
 npm run build
 ```
 
-and copy the `build/` output folder to any static web server.
+You can preview the production build with `npm run preview`.
 
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

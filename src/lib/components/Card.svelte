@@ -1,9 +1,9 @@
 <script lang="ts">
   import Link from "./Link.svelte";
-  export let title: string = undefined;
-  export let subtitle: string = undefined;
-  export let url: string = undefined;
-  export let tags: string[] = undefined;
+  export let title: string = "";
+  export let subtitle: string = "";
+  export let url: string = "";
+  export let tags: string[] = [];
 </script>
 
 <div
@@ -29,7 +29,7 @@
     </div>
   </div>
   <div>
-    {#if tags}
+    {#if tags?.length > 0}
       <div class="px-6 pt-4 pb-2 align-bottom">
         {#each tags as tag}
           <span

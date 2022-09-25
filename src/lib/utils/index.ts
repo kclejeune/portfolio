@@ -101,7 +101,7 @@ becomes the following after running flatten():
   }
 }
 ```
- * @param {node} any - an element inside of a graphQL response
+ * @param node an element inside of a graphQL response
  *
  */
 export function flatten(node: any): any {

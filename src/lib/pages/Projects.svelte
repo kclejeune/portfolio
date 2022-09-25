@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { primaryBackground } from "$lib/utils/constants";
-  import Page from "$lib/components/Page.svelte";
   import Card from "$lib/components/Card.svelte";
+  import Page from "$lib/components/Page.svelte";
   import type { Repository } from "$lib/utils";
+  import { primaryBackground } from "$lib/utils/constants";
 
   /**
    * convert repository name slugs into titles (with some exceptions)
@@ -14,7 +14,7 @@
       return str;
     }
     return str.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1);
+      return txt.charAt(0).toUpperCase() + txt.substring(1);
     });
   }
 
