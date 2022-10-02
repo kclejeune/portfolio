@@ -2,7 +2,7 @@ import { readable, writable, type Readable, type Writable } from "svelte/store";
 import type { Route } from "$lib/utils/types";
 
 // maintain nav drawer state
-export const isDrawerOpen: Writable<boolean> = writable(true);
+export const isDrawerOpen: Writable<boolean> = writable(false);
 
 // maintain current page location
 export const activeHash: Writable<string> = writable("");
