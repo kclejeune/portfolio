@@ -2,3 +2,47 @@
 /* Write your global styles here, in PostCSS syntax */
 @tailwind components;
 @tailwind utilities;
+
+html,
+body {
+  @apply h-full overflow-hidden;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+}
+
+.adaptive-text {
+  @apply text-surface-800 dark:text-surface-100;
+}
+
+.btn {
+  @apply font-medium rounded-md text-sm;
+}
+
+.btn-icon {
+  @apply font-medium;
+}
+
+.card {
+  @apply rounded-xl;
+}
+
+.card-title {
+  @apply font-medium text-2xl;
+}
+
+.card-subtitle {
+  @apply card-title;
+  @apply font-light text-lg text-surface-600 dark:text-surface-400;
+}
+
+.page {
+  width: 100%;
+  @apply min-h-[calc(100vh-4rem)];
+  scroll-margin-top: -1px;
+}

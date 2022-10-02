@@ -1,79 +1,25 @@
 <script lang="ts">
-  import "@brainandbones/skeleton/themes/theme-skeleton.css";
   import "@brainandbones/skeleton/styles/all.css";
+  import "@brainandbones/skeleton/themes/theme-skeleton.css";
   import "../app.css";
-  import SEO from "svelte-seo";
 
-  import { shadow } from "$lib/utils/constants";
+  import NavItems from "$lib/components/NavItems.svelte";
+  import { activeHash, isDrawerOpen, routes } from "$lib/utils/stores";
+  import {
+    AppBar,
+    AppShell,
+    Drawer,
+    LightSwitch,
+  } from "@brainandbones/skeleton";
   import { onDestroy } from "svelte";
-  import { animateScroll } from "svelte-scrollto-element";
-  import { fade, slide } from "svelte/transition";
+  import HamburgerButton from "$lib/components/HamburgerButton.svelte";
 
-  animateScroll.setGlobalOptions({
-    // (element, offset)
-    onStart: () => {
-      open = false;
-    },
-  });
-
-  interface Route {
-    id: string;
-    route: string;
-    name: string;
-    title: string;
-    color?: string;
-  }
-
-  export let pages: Route[] = [
-    {
-      id: "#home",
-      route: "/home",
-      name: "home",
-      title: "Home",
-    },
-    {
-      id: "#about",
-      route: "/about",
-      name: "about",
-      title: "About Me",
-    },
-    {
-      id: "#work",
-      route: "/work",
-      name: "work",
-      title: "Work Experience",
-    },
-    {
-      id: "#projects",
-      route: "/projects",
-      name: "projects",
-      title: "Projects",
-    },
-    {
-      id: "#skills",
-      route: "/skills",
-      name: "skills",
-      title: "Skills",
-    },
-  ];
-  const menuDuration = 200;
-  let open = false;
-  let colors = {
-    nav: "bg-neutral-300 dark:bg-neutral-800",
-    button: {
-      active:
-        "bg-primary-200 hover:bg-primary-300 dark:bg-primary-800 dark:hover:bg-primary-700 shadow-md",
-      inactive:
-        "bg-neutral-50 hover:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-600 shadow-md",
-    },
-    buttonText: "text-neutral-800 dark:text-neutral-200",
-  };
-
-  let activeHash = "";
   let observer: IntersectionObserver;
   let innerHeight: number;
 
-  function scrollSpy(height: number, navHeight: number = 64) {
+  function scrollSpy(height: number) {
+    const navHeight =
+      document?.getElementById("shell-header")?.clientHeight ?? 70;
     observer?.disconnect();
     observer = new IntersectionObserver(
       (entries) =>
@@ -81,19 +27,16 @@
           .filter((e) => e.isIntersecting)
           .reverse()
           .forEach((entry) => {
-            activeHash = "#" + entry.target.id;
+            $activeHash = "#" + entry.target.id;
           }),
       {
-        rootMargin: `${navHeight}px 0px -${height - navHeight}px 0px`,
+        rootMargin: `${navHeight}px 0px -${height - navHeight - 1}px 0px`,
       }
     );
 
-    pages?.forEach((route) => {
-      const element = document.getElementById(route.name);
-      if (element) {
-        observer?.observe(element);
-      }
-    });
+    $routes
+      ?.map((route) => document.getElementById(route.name))
+      .forEach((el) => el && observer.observe(el));
   }
 
   $: if (innerHeight) {
@@ -107,122 +50,39 @@
 
 <svelte:window bind:innerHeight />
 <!-- This example requires Tailwind CSS v2.0+ -->
-<nav class="fixed top-0 w-full {shadow} {colors.buttonText} {colors.nav} z-50">
-  <div class="px-2 max-w-7xl sm:px-6 lg:px-8">
-    <div class="relative flex items-center justify-between h-16">
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-        <!-- Mobile menu button-->
-        <button
-          on:click={() => (open = !open)}
-          type="button"
-          class="inline-flex items-center justify-center p-2 rounded-md
-                    {colors.button.inactive}"
-          aria-controls="mobile-menu"
-          aria-expanded={open}
-        >
-          {#if !open}
-            <span class="sr-only">Open main menu</span>
-            <svg
-              class="w-6 h-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-              in:fade={{ duration: menuDuration }}
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          {:else}
-            <span class="sr-only">Close main menu</span>
-            <svg
-              class="w-6 h-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden={!open}
-              in:fade={{ duration: menuDuration }}
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          {/if}
-        </button>
-      </div>
-      <!-- expanded nav page -->
-      <div
-        class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start"
-      >
-        <div class="hidden sm:block">
-          <div class="flex space-x-4">
-            <!-- Current: "bg-neutral-900 text-white", Default: "text-neutral-300 hover:bg-neutral-700 hover:text-white" -->
-            {#each pages as route}
-              <a
-                href={route.id}
-                on:click={() => {
-                  const el = document.getElementById(route.name);
-                  if (el) {
-                    animateScroll.scrollTo({
-                      element: el,
-                    });
-                  }
-                }}
-                class="px-4 py-2 text-sm font-medium rounded-md
-                                {activeHash === route.id
-                  ? colors.button.active
-                  : colors.button.inactive ?? colors.button.inactive}"
-                aria-current="page">{route.title}</a
-              >
-            {/each}
-          </div>
-        </div>
-      </div>
-    </div>
+<AppShell>
+  <svelte:fragment slot="header">
+    <AppBar padding="px-4 py-4">
+      <svelte:fragment slot="lead">
+        <HamburgerButton />
+        <!-- top nav items -->
+        <span class="hidden space-x-4 sm:flex">
+          <NavItems routes={$routes} activeHash={$activeHash} />
+        </span>
+      </svelte:fragment>
+      <svelte:fragment slot="trail">
+        <LightSwitch class="js-only" />
+      </svelte:fragment>
+    </AppBar>
+  </svelte:fragment>
+  <slot id="content" />
+</AppShell>
+<!-- Mobile menu, show/hide based on menu state. -->
+<Drawer open={isDrawerOpen} class="js-only sm:hidden" position="left">
+  <div class="flex flex-col m-1 sm:hidden">
+    <NavItems margin="m-1" routes={$routes} activeHash={$activeHash} />
   </div>
+</Drawer>
 
-  <!-- Mobile menu, show/hide based on menu state. -->
-  {#if open}
-    <div
-      class="sm:hidden"
-      id="mobile-menu"
-      transition:slide={{ duration: menuDuration }}
-    >
-      <div class="px-2 pt-2 pb-3 space-y-1">
-        {#each pages as route}
-          <a
-            href={route.id}
-            on:click={() => {
-              open = false;
-              const el = document.getElementById(route.name);
-              if (el) {
-                animateScroll.scrollTo({
-                  element: el,
-                });
-              }
-            }}
-            class="{colors.buttonText} block px-3 py-2 rounded-md text-base font-medium
-                    {activeHash === route.id
-              ? colors.button.active
-              : colors.button.inactive ?? colors.button.inactive}"
-            aria-current="page"
-          >
-            {route.title}
-          </a>
-        {/each}
-      </div>
-    </div>
-  {/if}
-</nav>
-<main class="pt-16">
-  <slot />
-</main>
+<noscript>
+  <style lang="postcss">
+    /* header, */
+    .js-only {
+      @apply hidden;
+    }
+
+    header {
+      @apply hidden sm:block;
+    }
+  </style>
+</noscript>

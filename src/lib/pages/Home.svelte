@@ -1,7 +1,5 @@
 <script lang="ts">
-  import Anchor from "$lib/components/Anchor.svelte";
   import IconButton from "$lib/components/IconButton.svelte";
-  import { animateScroll } from "svelte-scrollto-element";
 
   let color = "text-primary-300";
   let hover = "sm:hover:text-primary-500";
@@ -43,10 +41,9 @@
   };
 </script>
 
-<Anchor id="home" />
 <div
   class="flex flex-col items-center justify-center bg-center bg-no-repeat bg-cover page lg:bg-fixed bg-neutral-600 bg-blend-soft-light dark:bg-blend-soft-light dark:bg-neutral-700"
-  id="bg"
+  id="home"
 >
   <div class="text-center">
     <h1 class="text-5xl m-6 {color} font-light">Hi, I'm Kennan.</h1>
@@ -141,11 +138,11 @@
   <div>
     <IconButton link="#about" name="scroll down" newTab={false}>
       <svg
-        on:click={() => {
-          const el = document.getElementById("about");
-          if (el) {
-            animateScroll.scrollTo({ element: el });
-          }
+        on:click|preventDefault={() => {
+          document?.getElementById("about")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
         }}
         aria-hidden="true"
         focusable="false"
@@ -165,7 +162,7 @@
 </div>
 
 <style>
-  #bg {
+  #home {
     /* The image used */
     background-image: url("/assets/images/cube.webp");
   }
