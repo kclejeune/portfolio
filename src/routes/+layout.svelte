@@ -60,9 +60,6 @@
           <NavItems routes={$routes} activeHash={$activeHash} />
         </span>
       </svelte:fragment>
-      <svelte:fragment slot="trail">
-        <LightSwitch class="js-only" />
-      </svelte:fragment>
     </AppBar>
   </svelte:fragment>
   <slot id="content" />
