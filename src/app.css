@@ -38,7 +38,7 @@ body {
 
 .card-subtitle {
   @apply card-title;
-  @apply font-light text-lg text-surface-600 dark:text-surface-400;
+  @apply font-light text-base text-surface-600 dark:text-surface-400;
 }
 
 .page {

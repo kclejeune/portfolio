@@ -1,10 +1,8 @@
 <script lang="ts">
-  import { claim_component } from "svelte/internal";
-
   export let id: string;
   export let title: string = "";
-  export let backgroundClass: string = "bg-neutral-200 dark:bg-neutral-900";
-  export let textClass: string = "text-neutral-800 dark:text-neutral-200";
+  export let backgroundClass: string = "bg-surface-200 dark:bg-surface-900";
+  export let textClass: string = "text-surface-800 dark:text-surface-200";
 </script>
 
 <section {id} class="page {backgroundClass} {textClass}">

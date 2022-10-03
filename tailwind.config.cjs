@@ -9,7 +9,6 @@ const config = {
     extend: {
       colors: {
         primary: colors.blue,
-        neutral: colors.gray,
       },
     },
   },

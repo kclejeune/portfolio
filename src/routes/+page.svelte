@@ -7,7 +7,7 @@
   import type { PageData } from "./$types";
 
   let primaryBackground = "bg-primary-200 dark:bg-primary-900";
-  let neutralBackground = "bg-neutral-200 dark:bg-neutral-900";
+  let neutralBackground = "bg-surface-200 dark:bg-surface-900";
   export let data: PageData;
 </script>
 

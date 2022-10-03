@@ -2,7 +2,7 @@
   import IconButton from "$lib/components/IconButton.svelte";
 
   let color = "text-primary-300";
-  let hover = "sm:hover:text-primary-500";
+  let hover = "sm:hover:text-primary-400";
   let colorClass = `${color} ${hover}`;
   let spacingClass = "mx-5";
   let sizeClass = "h-8 w-8";
@@ -42,7 +42,7 @@
 </script>
 
 <div
-  class="flex flex-col items-center justify-center bg-center bg-no-repeat bg-cover page lg:bg-fixed bg-neutral-600 bg-blend-soft-light dark:bg-blend-soft-light dark:bg-neutral-700"
+  class="flex flex-col items-center justify-center bg-center bg-no-repeat bg-cover page lg:bg-fixed bg-surface-600 bg-blend-soft-light dark:bg-blend-soft-light dark:bg-surface-700"
   id="home"
 >
   <div class="text-center">

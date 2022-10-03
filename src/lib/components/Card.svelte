@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Link from "./Link.svelte";
   export let title: string = "";
   export let subtitle: string = "";
   export let url: string = "";
@@ -14,7 +13,7 @@
         <div class="card-subtitle">{subtitle}</div>
       {:else if url}
         <div class="mb-1">
-          <Link {url}>{url}</Link>
+          <a href={url}>{url}</a>
         </div>
       {/if}
     </header>
