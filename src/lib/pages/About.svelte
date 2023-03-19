@@ -12,8 +12,8 @@
     <p>Hey, I'm Kennan!</p>
     <p>
       I first started programming on calculators with TI-BASIC back in high
-      school, and I've been addicted ever since. Outside of my studies, I'm an
-      avid cyclist, musician, linux enthusiast. Prior to college, I was an
+      school, and I've been addicted ever since. In my spare time, I love
+      cycling, skiing, and contributing to open-source software. I was an
       active competitor in the Rubik's Cube speedsolving community, where
       <Link url="https://www.worldcubeassociation.org/persons/2013LEJE03"
         >my highlights</Link
@@ -21,17 +21,15 @@
       rank for the 3x3 Rubik's Cube.
     </p>
     <p>
-      I recently completed my BS and MS in Computer Science at <Link
+      I completed my BS and MS in Computer Science at <Link
         url="https://case.edu/">Case Western Reserve University</Link
       >
       with my thesis "Dynamic Structure Adaptation for Communities of Learning Machines,"
-      supervised by Dr. Soumya Ray. Post-graduation, I'm working on Software Engineering
-      and Data Science at the
+      supervised by Dr. Soumya Ray. Now, I'm a software enginer at
       <Link url="https://www.jhuapl.edu/">
-        Johns Hopkins University Applied Physics Laboratory
-      </Link>. My current work involves building automated software systems for
-      chemical/biological threat assessment and detecting weapons of mass
-      destruction.
+        the Johns Hopkins University Applied Physics Laboratory
+      </Link>. My current work focuses on applying NLP and ontological knowledge representation
+      detect early stage biothreats using public information.
     </p>
   </Text>
 </Page>
