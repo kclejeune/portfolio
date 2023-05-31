@@ -3,6 +3,7 @@
   "singleQuote": false,
   "trailingComma": "es5",
   "arrowParens": "always",
+  "htmlWhitespaceSensitivity": "ignore",
   "plugins": ["prettier-plugin-svelte"],
   "pluginSearchDirs": ["."],
   "quoteProps": "as-needed",

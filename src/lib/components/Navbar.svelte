@@ -176,8 +176,10 @@
                                 {activeHash === route.id
                   ? colors.button.active
                   : colors.button.inactive ?? colors.button.inactive}"
-                aria-current="page">{route.title}</a
+                aria-current="page"
               >
+                {route.title}
+              </a>
             {/each}
           </div>
         </div>

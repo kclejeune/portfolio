@@ -6,8 +6,8 @@
 
 <svelte:head>
   <SEO
-    title="Kennan LeJeune - ML Researcher & Software Engineer"
-    description="Kennan LeJeune - ML Researcher & Software Engineer"
+    title="Kennan LeJeune | Full-Stack Software Engineer"
+    description="Kennan LeJeune | Full-Stack Software Engineer"
     canonical="https://www.kclj.io"
   />
 </svelte:head>
