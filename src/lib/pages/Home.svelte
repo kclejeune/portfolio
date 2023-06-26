@@ -1,7 +1,6 @@
 <script lang="ts">
   import Anchor from "$lib/components/Anchor.svelte";
   import IconButton from "$lib/components/IconButton.svelte";
-  import { animateScroll } from "svelte-scrollto-element";
 
   let color = "text-primary-300";
   let hover = "sm:hover:text-primary-500";
@@ -144,12 +143,6 @@
   <div>
     <IconButton link="#about" name="scroll down" newTab={false}>
       <svg
-        on:click={() => {
-          const el = document.getElementById("about");
-          if (el) {
-            animateScroll.scrollTo({ element: el });
-          }
-        }}
         aria-hidden="true"
         focusable="false"
         data-prefix="fas"

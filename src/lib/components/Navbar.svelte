@@ -1,15 +1,7 @@
 <script lang="ts">
   import { shadow } from "$lib/utils/constants";
   import { onDestroy } from "svelte";
-  import { animateScroll } from "svelte-scrollto-element";
   import { fade, slide } from "svelte/transition";
-
-  animateScroll.setGlobalOptions({
-    // (element, offset)
-    onStart: () => {
-      open = false;
-    },
-  });
 
   interface Route {
     id: string;
@@ -164,14 +156,6 @@
             {#each pages as route}
               <a
                 href={route.id}
-                on:click={() => {
-                  const el = document.getElementById(route.name);
-                  if (el) {
-                    animateScroll.scrollTo({
-                      element: el,
-                    });
-                  }
-                }}
                 class="px-4 py-2 text-sm font-medium rounded-md
                                 {activeHash === route.id
                   ? colors.button.active
@@ -200,12 +184,6 @@
             href={route.id}
             on:click={() => {
               open = false;
-              const el = document.getElementById(route.name);
-              if (el) {
-                animateScroll.scrollTo({
-                  element: el,
-                });
-              }
             }}
             class="{colors.buttonText} block px-3 py-2 rounded-md text-base font-medium
                     {activeHash === route.id
