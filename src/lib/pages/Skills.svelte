@@ -1,27 +1,8 @@
 <script lang="ts">
   import Card from "$lib/components/Card.svelte";
   import Page from "$lib/components/Page.svelte";
+  import { skills } from "$lib/data/skills";
   import { neutralBackground } from "$lib/utils/constants";
-  const skills: Array<string> = [
-    "Python",
-    "Scikit-Learn",
-    "Tensorflow",
-    "Keras",
-    "NixOS",
-    "Bash",
-    "Awk",
-    "TypeScript",
-    "Javascript",
-    "Angular",
-    "Vue",
-    "Svelte",
-    "HTML",
-    "CSS",
-    "Java",
-    "Kotlin",
-    "SQL",
-    "Scheme",
-  ];
 
   interface Props {
     backgroundClass?: string;

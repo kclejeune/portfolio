@@ -1,15 +1,11 @@
 <script lang="ts">
   import Card from "$lib/components/Card.svelte";
+  import Link from "$lib/components/Link.svelte";
   import Page from "$lib/components/Page.svelte";
   import type { Repository } from "$lib/utils";
   import { primaryBackground } from "$lib/utils/constants";
 
-  /**
-   * convert repository name slugs into titles (with some exceptions)
-   * @param str
-   */
   function titleCase(str: string): string {
-    // don't apply this to things that are named using my username
     if (str.includes(username)) {
       return str;
     }
@@ -18,10 +14,6 @@
     });
   }
 
-  /**
-   * get a set of unique, normalized tags from repository topics and detected languages
-   * @param repo
-   */
   function getRepoTags(repo: Repository): string[] {
     const tags = Array.from(
       new Set<string>(
@@ -56,25 +48,35 @@
     repos,
     backgroundClass = primaryBackground,
   }: Props = $props();
+
+  const githubUrl = `https://github.com/${username}`;
 </script>
 
 <Page id="projects" title="Projects" {backgroundClass}>
-  <div
-    class="container mx-auto grid max-w-screen-xl gap-4 md:grid-cols-1 lg:grid-cols-2"
-  >
-    {#each repos as repo}
-      <Card
-        title={titleCase(repo.name.replace(/-/g, " "))}
-        url={repo.url}
-        tags={getRepoTags(repo)}
-      >
-        <span>
-          {getRepoStats(repo)}
-        </span>
-        <div>
-          {repo.description}
-        </div>
-      </Card>
-    {/each}
-  </div>
+  {#if repos.length > 0}
+    <div
+      class="container mx-auto grid max-w-screen-xl gap-4 md:grid-cols-1 lg:grid-cols-2"
+    >
+      {#each repos as repo}
+        <Card
+          title={titleCase(repo.name.replace(/-/g, " "))}
+          url={repo.url}
+          tags={getRepoTags(repo)}
+        >
+          <span>
+            {getRepoStats(repo)}
+          </span>
+          <div>
+            {repo.description}
+          </div>
+        </Card>
+      {/each}
+    </div>
+  {:else}
+    <div class="container mx-auto max-w-screen-xl text-center py-8">
+      <p class="text-lg">
+        Check out my projects on <Link url={githubUrl}>GitHub</Link>
+      </p>
+    </div>
+  {/if}
 </Page>

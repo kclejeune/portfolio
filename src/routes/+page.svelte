@@ -4,20 +4,14 @@
   import Projects from "$lib/pages/Projects.svelte";
   import Skills from "$lib/pages/Skills.svelte";
   import Work from "$lib/pages/Work.svelte";
+  import { primaryBackground, neutralBackground } from "$lib/utils/constants";
   import type { PageData } from "./$types";
-
-  let primaryBackground = "bg-primary-200 dark:bg-primary-900";
-  let neutralBackground = "bg-neutral-200 dark:bg-neutral-900";
 
   let { data }: { data: PageData } = $props();
 </script>
 
 <Home />
-<!--About me/bio-->
 <About backgroundClass={primaryBackground} />
-<!--Work Experience-->
 <Work backgroundClass={neutralBackground} />
-<!-- Starred Projects from Github -->
 <Projects backgroundClass={primaryBackground} repos={data?.repos ?? []} />
-<!--Technologies I've worked with-->
 <Skills backgroundClass={neutralBackground} />

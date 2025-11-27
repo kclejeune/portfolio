@@ -31,15 +31,16 @@
         Case Western Reserve University
       </Link>
       with my thesis "Dynamic Structure Adaptation for Communities of Learning Machines,"
-      supervised by Dr. Soumya Ray. Now, I'm a full-stack software engineer at <Link
-        url="https://www.jhuapl.edu/"
+      supervised by Dr. Soumya Ray. Now, I'm a software engineer at <Link
+        url="https://www.anduril.com/"
       >
-        the Johns Hopkins University Applied Physics Laboratory,
-      </Link>
-      where my current work focuses on applying NLP and semantic knowledge representation
-      methods to detect early stage biothreats from large-scale public data sources.
-      In conjunction with this work, I specialize in using DevOps tools to build
-      higher quality software and optimize developer workflows.
+        Anduril Industries
+      </Link>,
+      where I'm building infrastructure for <Link
+        url="https://www.anduril.com/lattice/mission-autonomy"
+      >
+        Lattice Mission Autonomy
+      </Link>, distributed mesh networking systems, and systems for managing robotics software at scale.
     </p>
   </Text>
 </Page>
