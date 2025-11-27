@@ -6,3 +6,8 @@
 html {
   scroll-behavior: smooth;
 }
+
+.page {
+  min-height: calc(100vh - 4rem);
+  width: 100%;
+}

@@ -4,7 +4,11 @@
   import Text from "$lib/components/Text.svelte";
   import { primaryBackground } from "$lib/utils/constants";
 
-  export let backgroundClass = primaryBackground;
+  interface Props {
+    backgroundClass?: string;
+  }
+
+  let { backgroundClass = primaryBackground }: Props = $props();
 </script>
 
 <Page id="about" title="The Essentials" {backgroundClass}>

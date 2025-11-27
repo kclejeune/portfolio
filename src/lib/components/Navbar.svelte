@@ -11,40 +11,47 @@
     color?: string;
   }
 
-  export let pages: Route[] = [
-    {
-      id: "#home",
-      route: "/home",
-      name: "home",
-      title: "Home",
-    },
-    {
-      id: "#about",
-      route: "/about",
-      name: "about",
-      title: "About Me",
-    },
-    {
-      id: "#work",
-      route: "/work",
-      name: "work",
-      title: "Work Experience",
-    },
-    {
-      id: "#projects",
-      route: "/projects",
-      name: "projects",
-      title: "Projects",
-    },
-    {
-      id: "#skills",
-      route: "/skills",
-      name: "skills",
-      title: "Skills",
-    },
-  ];
+  interface Props {
+    pages?: Route[];
+  }
+
+  let {
+    pages = [
+      {
+        id: "#home",
+        route: "/home",
+        name: "home",
+        title: "Home",
+      },
+      {
+        id: "#about",
+        route: "/about",
+        name: "about",
+        title: "About Me",
+      },
+      {
+        id: "#work",
+        route: "/work",
+        name: "work",
+        title: "Work Experience",
+      },
+      {
+        id: "#projects",
+        route: "/projects",
+        name: "projects",
+        title: "Projects",
+      },
+      {
+        id: "#skills",
+        route: "/skills",
+        name: "skills",
+        title: "Skills",
+      },
+    ],
+  }: Props = $props();
+
   const menuDuration = 200;
-  let open = false;
+  let open = $state(false);
   let colors = {
     nav: "bg-neutral-300 dark:bg-neutral-800",
     button: {
@@ -56,9 +63,9 @@
     buttonText: "text-neutral-800 dark:text-neutral-200",
   };
 
-  let activeHash = "";
+  let activeHash = $state("");
   let observer: IntersectionObserver;
-  let innerHeight: number;
+  let innerHeight = $state(0);
 
   function scrollSpy(height: number, navHeight: number = 64) {
     observer?.disconnect();
@@ -83,9 +90,11 @@
     });
   }
 
-  $: if (innerHeight) {
-    scrollSpy(innerHeight);
-  }
+  $effect(() => {
+    if (innerHeight) {
+      scrollSpy(innerHeight);
+    }
+  });
 
   onDestroy(() => {
     observer?.disconnect();
@@ -100,7 +109,7 @@
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
         <button
-          on:click={() => (open = !open)}
+          onclick={() => (open = !open)}
           type="button"
           class="inline-flex items-center justify-center p-2 rounded-md
                     {colors.button.inactive}"
@@ -159,7 +168,7 @@
                 class="px-4 py-2 text-sm font-medium rounded-md
                                 {activeHash === route.id
                   ? colors.button.active
-                  : colors.button.inactive ?? colors.button.inactive}"
+                  : (colors.button.inactive ?? colors.button.inactive)}"
                 aria-current="page"
               >
                 {route.title}
@@ -182,13 +191,13 @@
         {#each pages as route}
           <a
             href={route.id}
-            on:click={() => {
+            onclick={() => {
               open = false;
             }}
             class="{colors.buttonText} block px-3 py-2 rounded-md text-base font-medium
                     {activeHash === route.id
               ? colors.button.active
-              : colors.button.inactive ?? colors.button.inactive}"
+              : (colors.button.inactive ?? colors.button.inactive)}"
             aria-current="page"
           >
             {route.title}

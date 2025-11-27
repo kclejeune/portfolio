@@ -23,7 +23,11 @@
     "Scheme",
   ];
 
-  export let backgroundClass = neutralBackground;
+  interface Props {
+    backgroundClass?: string;
+  }
+
+  let { backgroundClass = neutralBackground }: Props = $props();
 </script>
 
 <Page id="skills" title="Technologies I Use" {backgroundClass}>

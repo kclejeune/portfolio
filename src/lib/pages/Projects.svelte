@@ -45,9 +45,17 @@
     return arr.join(", ");
   }
 
-  export let username = "kclejeune";
-  export let repos: Repository[];
-  export let backgroundClass = primaryBackground;
+  interface Props {
+    username?: string;
+    repos: Repository[];
+    backgroundClass?: string;
+  }
+
+  let {
+    username = "kclejeune",
+    repos,
+    backgroundClass = primaryBackground,
+  }: Props = $props();
 </script>
 
 <Page id="projects" title="Projects" {backgroundClass}>

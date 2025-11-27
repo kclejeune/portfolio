@@ -2,6 +2,8 @@
   import "../app.css";
   import Navbar from "$lib/components/Navbar.svelte";
   import SEO from "svelte-seo";
+
+  let { children } = $props();
 </script>
 
 <svelte:head>
@@ -14,5 +16,5 @@
 
 <Navbar />
 <main class="pt-16">
-  <slot />
+  {@render children()}
 </main>

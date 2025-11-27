@@ -8,7 +8,8 @@
 
   let primaryBackground = "bg-primary-200 dark:bg-primary-900";
   let neutralBackground = "bg-neutral-200 dark:bg-neutral-900";
-  export let data: PageData;
+
+  let { data }: { data: PageData } = $props();
 </script>
 
 <Home />

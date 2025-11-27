@@ -91,7 +91,11 @@
     },
   ];
 
-  export let backgroundClass = neutralBackground;
+  interface Props {
+    backgroundClass?: string;
+  }
+
+  let { backgroundClass = neutralBackground }: Props = $props();
 </script>
 
 <Page id="work" title="Work Experience" {backgroundClass}>

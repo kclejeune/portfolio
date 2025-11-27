@@ -1,22 +1,33 @@
 <script lang="ts">
-  export let link: string;
-  export let name: string;
-  export let newTab: boolean = true;
+  import type { Snippet } from "svelte";
+
+  interface Props {
+    link: string;
+    name: string;
+    newTab?: boolean;
+    children?: Snippet;
+    onclick?: () => void;
+  }
+
+  let { link, name, newTab = true, children, onclick }: Props = $props();
 </script>
 
 {#if newTab}
   <a
     target="_blank"
     rel="noopener noreferrer"
-    alt={name}
     aria-label={name}
     href={link}
-    on:click
+    {onclick}
   >
-    <slot />
+    {#if children}
+      {@render children()}
+    {/if}
   </a>
 {:else}
-  <a on:click alt={name} aria-label={name} href={link}>
-    <slot />
+  <a {onclick} aria-label={name} href={link}>
+    {#if children}
+      {@render children()}
+    {/if}
   </a>
 {/if}

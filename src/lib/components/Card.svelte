@@ -1,9 +1,22 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
   import Link from "./Link.svelte";
-  export let title: string = "";
-  export let subtitle: string = "";
-  export let url: string = "";
-  export let tags: string[] = [];
+
+  interface Props {
+    title?: string;
+    subtitle?: string;
+    url?: string;
+    tags?: string[];
+    children?: Snippet;
+  }
+
+  let {
+    title = "",
+    subtitle = "",
+    url = "",
+    tags = [],
+    children,
+  }: Props = $props();
 </script>
 
 <div
@@ -25,7 +38,9 @@
       </div>
     {/if}
     <div>
-      <slot />
+      {#if children}
+        {@render children()}
+      {/if}
     </div>
   </div>
   <div>
