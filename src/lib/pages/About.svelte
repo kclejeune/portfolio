@@ -35,12 +35,12 @@
         url="https://www.anduril.com/"
       >
         Anduril Industries
-      </Link>,
-      where I'm building infrastructure for <Link
+      </Link>, where I'm building infrastructure for <Link
         url="https://www.anduril.com/lattice/mission-autonomy"
       >
         Lattice Mission Autonomy
-      </Link>, distributed mesh networking systems, and systems for managing robotics software at scale.
+      </Link>, distributed mesh networking systems, and systems for managing
+      robotics software at scale.
     </p>
   </Text>
 </Page>
