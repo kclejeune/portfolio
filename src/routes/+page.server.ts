@@ -11,9 +11,28 @@ import {
   type Repository,
 } from "$lib/utils";
 import { error } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
+
+const CACHE_KEY = "github_pinned_repos";
+const CACHE_TTL_SECONDS = 3600; // 1 hour
 
 // SSR for Projects component
-export async function load(): Promise<Record<string, Repository[]>> {
+export const load: PageServerLoad = async ({ fetch, platform }) => {
+  const kv = platform?.env?.KV;
+
+  // Try to get cached data
+  if (kv) {
+    try {
+      const cached = await kv.get(CACHE_KEY, "json");
+      if (cached) {
+        return { repos: cached as Repository[] };
+      }
+    } catch (e) {
+      console.error("KV cache read error:", e);
+    }
+  }
+
+  // Fetch fresh data
   const res = await fetch(GITHUB_API_URL, {
     method: "POST",
     headers: {
@@ -30,12 +49,17 @@ export async function load(): Promise<Record<string, Repository[]>> {
       .json()
       .then(flatten)
       .then((pin: PinnedRepoResponse) => pin?.itemShowcase?.items ?? [])
-      .then((repos) => {
-        return repos.sort(compare);
-      });
-    return {
-      repos: repos,
-    };
+      .then((repos) => repos.sort(compare));
+    if (kv) {
+      try {
+        await kv.put(CACHE_KEY, JSON.stringify(repos), {
+          expirationTtl: CACHE_TTL_SECONDS,
+        });
+      } catch (e) {
+        console.error("KV cache write error:", e);
+      }
+    }
+    return { repos };
   }
   throw error(res?.status ?? 404, res?.statusText ?? "Not Found");
-}
+};
