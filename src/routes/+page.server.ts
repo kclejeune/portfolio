@@ -41,7 +41,7 @@ async function fetchGitHubRepos(): Promise<Repository[]> {
 
 // SSR for Projects component
 export const load: PageServerLoad = async ({ platform }) => {
-  const kv = platform?.env?.GITHUB_CACHE;
+  const kv = platform?.env?.KV;
 
   // Try to get cached data
   if (kv) {

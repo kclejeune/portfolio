@@ -10,7 +10,7 @@ declare global {
     // interface PageState {}
     interface Platform {
       env: {
-        GITHUB_CACHE?: KVNamespace;
+        KV?: KVNamespace;
       };
     }
   }
