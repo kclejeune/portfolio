@@ -5,8 +5,8 @@
   import type { Repository } from "$lib/utils";
   import { primaryBackground } from "$lib/utils/constants";
 
-  function titleCase(str: string): string {
-    if (str.includes(username)) {
+  function titleCase(str: string, user: string): string {
+    if (str.includes(user)) {
       return str;
     }
     return str.replace(/\w\S*/g, (txt) => {
@@ -49,7 +49,7 @@
     backgroundClass = primaryBackground,
   }: Props = $props();
 
-  const githubUrl = `https://github.com/${username}`;
+  const githubUrl = $derived(`https://github.com/${username}`);
 </script>
 
 <Page id="projects" title="Projects" {backgroundClass}>
@@ -59,7 +59,7 @@
     >
       {#each repos as repo}
         <Card
-          title={titleCase(repo.name.replace(/-/g, " "))}
+          title={titleCase(repo.name.replace(/-/g, " "), username)}
           url={repo.url}
           tags={getRepoTags(repo)}
         >
