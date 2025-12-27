@@ -16,7 +16,23 @@ import type { PageServerLoad } from "./$types";
 const CACHE_KEY = "github_pinned_repos";
 const CACHE_TTL_SECONDS = 3600; // 1 hour
 
-async function fetchGitHubRepos(): Promise<Repository[]> {
+// SSR for Projects component
+export const load: PageServerLoad = async ({ fetch, platform }) => {
+  const kv = platform?.env?.KV;
+
+  // Try to get cached data
+  if (kv) {
+    try {
+      const cached = await kv.get(CACHE_KEY, "json");
+      if (cached) {
+        return { repos: cached as Repository[] };
+      }
+    } catch (e) {
+      console.error("KV cache read error:", e);
+    }
+  }
+
+  // Fetch fresh data
   const res = await fetch(GITHUB_API_URL, {
     method: "POST",
     headers: {
@@ -34,40 +50,16 @@ async function fetchGitHubRepos(): Promise<Repository[]> {
       .then(flatten)
       .then((pin: PinnedRepoResponse) => pin?.itemShowcase?.items ?? [])
       .then((repos) => repos.sort(compare));
-    return repos;
+    if (kv) {
+      try {
+        await kv.put(CACHE_KEY, JSON.stringify(repos), {
+          expirationTtl: CACHE_TTL_SECONDS,
+        });
+      } catch (e) {
+        console.error("KV cache write error:", e);
+      }
+    }
+    return { repos };
   }
   throw error(res?.status ?? 404, res?.statusText ?? "Not Found");
-}
-
-// SSR for Projects component
-export const load: PageServerLoad = async ({ platform }) => {
-  const kv = platform?.env?.KV;
-
-  // Try to get cached data
-  if (kv) {
-    try {
-      const cached = await kv.get(CACHE_KEY, "json");
-      if (cached) {
-        return { repos: cached as Repository[] };
-      }
-    } catch (e) {
-      console.error("KV cache read error:", e);
-    }
-  }
-
-  // Fetch fresh data
-  const repos = await fetchGitHubRepos();
-
-  // Cache the result
-  if (kv) {
-    try {
-      await kv.put(CACHE_KEY, JSON.stringify(repos), {
-        expirationTtl: CACHE_TTL_SECONDS,
-      });
-    } catch (e) {
-      console.error("KV cache write error:", e);
-    }
-  }
-
-  return { repos };
 };
