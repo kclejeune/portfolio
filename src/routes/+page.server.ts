@@ -14,22 +14,39 @@ import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 const CACHE_KEY = "github_pinned_repos";
-const CACHE_TTL_SECONDS = 3600; // 1 hour
+const CACHE_TTL_SECONDS = 1800; // every 30 minutes
+
+interface KV {
+  get(key: string): Promise<string | null>;
+  put(
+    key: string,
+    value: string,
+    opts: Record<string, any> | undefined
+  ): Promise<void>;
+}
+
+class KVShim implements KV {
+  get(key: string) {
+    return Promise.resolve(null);
+  }
+  put(key: string, value: string, opts: Record<string, any> | undefined) {
+    return Promise.resolve();
+  }
+}
 
 // SSR for Projects component
 export const load: PageServerLoad = async ({ fetch, platform }) => {
-  const kv = platform?.env?.KV;
+  const kv: KV = platform?.env?.KV ?? new KVShim();
 
   // Try to get cached data
-  if (kv) {
-    try {
-      const cached = await kv.get(CACHE_KEY, "json");
-      if (cached) {
-        return { repos: cached as Repository[] };
-      }
-    } catch (e) {
-      console.error("KV cache read error:", e);
+  try {
+    const cached = await kv.get(CACHE_KEY);
+    if (cached) {
+      const repos: Repository[] = JSON.parse(cached);
+      return { repos: repos };
     }
+  } catch (e) {
+    console.error("KV cache read error:", e);
   }
 
   // Fetch fresh data
@@ -50,14 +67,12 @@ export const load: PageServerLoad = async ({ fetch, platform }) => {
       .then(flatten)
       .then((pin: PinnedRepoResponse) => pin?.itemShowcase?.items ?? [])
       .then((repos) => repos.sort(compare));
-    if (kv) {
-      try {
-        await kv.put(CACHE_KEY, JSON.stringify(repos), {
-          expirationTtl: CACHE_TTL_SECONDS,
-        });
-      } catch (e) {
-        console.error("KV cache write error:", e);
-      }
+    try {
+      await kv.put(CACHE_KEY, JSON.stringify(repos), {
+        expirationTtl: CACHE_TTL_SECONDS,
+      });
+    } catch (e) {
+      console.error("KV cache write error:", e);
     }
     return { repos };
   }
