@@ -2,50 +2,72 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-primary-50: oklch(0.97 0.01 250);
-  --color-primary-100: oklch(0.93 0.03 250);
-  --color-primary-200: oklch(0.86 0.06 250);
-  --color-primary-300: oklch(0.76 0.1 250);
-  --color-primary-400: oklch(0.64 0.15 250);
-  --color-primary-500: oklch(0.55 0.2 250);
-  --color-primary-600: oklch(0.49 0.22 250);
-  --color-primary-700: oklch(0.43 0.19 250);
-  --color-primary-800: oklch(0.37 0.16 250);
-  --color-primary-900: oklch(0.31 0.12 250);
-  --color-primary-950: oklch(0.24 0.09 250);
+  /* Primary - Refined blue with slight indigo tint */
+  --color-primary-50: oklch(0.97 0.02 255);
+  --color-primary-100: oklch(0.94 0.04 255);
+  --color-primary-200: oklch(0.88 0.08 255);
+  --color-primary-300: oklch(0.78 0.12 255);
+  --color-primary-400: oklch(0.65 0.18 255);
+  --color-primary-500: oklch(0.55 0.22 255);
+  --color-primary-600: oklch(0.48 0.22 255);
+  --color-primary-700: oklch(0.42 0.18 255);
+  --color-primary-800: oklch(0.35 0.14 255);
+  --color-primary-900: oklch(0.28 0.1 255);
+  --color-primary-950: oklch(0.2 0.06 255);
 
-  /* Cool gray tones with stronger blue undertone */
-  --color-gray-50: oklch(0.98 0.015 250);
-  --color-gray-100: oklch(0.96 0.02 250);
-  --color-gray-200: oklch(0.92 0.025 250);
-  --color-gray-300: oklch(0.87 0.03 250);
-  --color-gray-400: oklch(0.71 0.035 250);
-  --color-gray-500: oklch(0.55 0.04 250);
-  --color-gray-600: oklch(0.45 0.045 250);
-  --color-gray-700: oklch(0.37 0.04 250);
-  --color-gray-800: oklch(0.28 0.035 250);
-  --color-gray-900: oklch(0.21 0.03 250);
-  --color-gray-950: oklch(0.13 0.025 250);
+  /* Slate - Cool gray base with subtle blue undertone */
+  --color-slate-50: oklch(0.98 0.005 260);
+  --color-slate-100: oklch(0.96 0.008 260);
+  --color-slate-200: oklch(0.91 0.012 260);
+  --color-slate-300: oklch(0.85 0.016 260);
+  --color-slate-400: oklch(0.65 0.02 260);
+  --color-slate-500: oklch(0.5 0.02 260);
+  --color-slate-600: oklch(0.4 0.018 260);
+  --color-slate-700: oklch(0.32 0.015 260);
+  --color-slate-800: oklch(0.23 0.012 260);
+  --color-slate-850: oklch(0.18 0.01 260);
+  --color-slate-900: oklch(0.15 0.008 260);
+  --color-slate-950: oklch(0.1 0.006 260);
 
-  /* Neutral aliased to cool gray for overlay compatibility */
-  --color-neutral-50: var(--color-gray-50);
-  --color-neutral-100: var(--color-gray-100);
-  --color-neutral-200: var(--color-gray-200);
-  --color-neutral-300: var(--color-gray-300);
-  --color-neutral-400: var(--color-gray-400);
-  --color-neutral-500: var(--color-gray-500);
-  --color-neutral-600: var(--color-gray-600);
-  --color-neutral-700: var(--color-gray-700);
-  --color-neutral-800: var(--color-gray-800);
-  --color-neutral-900: var(--color-gray-900);
-  --color-neutral-950: var(--color-gray-950);
+  /* Accent - Warm complement for highlights */
+  --color-accent-400: oklch(0.75 0.15 45);
+  --color-accent-500: oklch(0.65 0.18 45);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-.page {
-  min-height: calc(100vh - 4rem);
-  width: 100%;
+body {
+  @apply bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200;
+  @apply antialiased;
+}
+
+/* Page wrapper */
+.page-content {
+  @apply min-h-[calc(100vh-3.5rem)] w-full;
+}
+
+/* Card style */
+.card {
+  @apply bg-white dark:bg-slate-800;
+  @apply border border-slate-200 dark:border-slate-700;
+  @apply rounded-xl;
+}
+
+/* Card hover effect */
+.card-hover {
+  @apply transition-all duration-200 ease-out;
+  @apply hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600;
+}
+
+/* Section container */
+.section-container {
+  @apply max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12;
+}
+
+/* Tag styles */
+.tag {
+  @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full;
+  @apply bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300;
 }

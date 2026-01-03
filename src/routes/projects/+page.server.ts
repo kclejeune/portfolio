@@ -9,7 +9,7 @@ import {
   getPinnedRepoQuery,
   type PinnedRepoResponse,
   type Repository,
-} from "$lib/utils";
+} from "$lib/utils/index";
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
@@ -25,11 +25,33 @@ interface KV {
   ): Promise<void>;
 }
 
+type KVShimEntry = {
+  value: string;
+  ttl: number;
+  createdTimestamp: Date;
+};
+
 class KVShim implements KV {
+  private readonly cache: Record<string, KVShimEntry> = {};
+
   get(key: string) {
-    return Promise.resolve(null);
+    let value = this.cache[key];
+    let now = new Date();
+    if (
+      !value ||
+      now.getUTCSeconds() - value.createdTimestamp.getUTCSeconds() > value.ttl
+    ) {
+      delete this.cache[key];
+      return Promise.resolve(null);
+    }
+    return Promise.resolve(value.value);
   }
-  put(key: string, value: string, opts: Record<string, any> | undefined) {
+  put(key: string, value: string, opts: Record<string, any> = {}) {
+    this.cache[key] = {
+      value,
+      ttl: (opts.expirationTtl as number) ?? CACHE_TTL_SECONDS,
+      createdTimestamp: new Date(),
+    };
     return Promise.resolve();
   }
 }

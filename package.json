@@ -8,15 +8,14 @@
   "version": "0.0.1",
   "packageManager": "pnpm@10.26.2",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "preview": "vite preview",
+    "build": "pnpm check && vite build",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --check . && eslint .",
+    "dev": "vite dev",
+    "preview": "vite preview",
     "format": "prettier --write .",
-    "upgrade": "npm-check-updates -u && pnpm install",
-    "postinstall": "svelte-kit sync"
+    "lint": "prettier --check . && eslint .",
+    "upgrade": "npm-check-updates -u && pnpm install"
   },
   "devDependencies": {
     "@sveltejs/adapter-cloudflare": "^7.2.4",
