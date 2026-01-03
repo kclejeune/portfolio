@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Repository } from "$lib/utils/index";
+  import PageNav from "$lib/components/PageNav.svelte";
   import SEO from "svelte-seo";
   import { siteConfig } from "$lib/config.svelte";
 
@@ -54,12 +55,14 @@
 <div class="page-content">
   <div class="section-container">
     <!-- Header -->
-    <div class="text-center mb-6 md:mb-10">
-      <h1
-        class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white"
-      >
-        Projects
-      </h1>
+    <div class="mb-6 md:mb-10">
+      <PageNav>
+        <h1
+          class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white"
+        >
+          Projects
+        </h1>
+      </PageNav>
     </div>
 
     <!-- Projects Grid -->
@@ -97,7 +100,7 @@
               <div class="flex items-center gap-3 mb-2">
                 {#each getRepoStats(repo) as stat}
                   <div
-                    class="flex items-center gap-1 text-xs text-primary-500 dark:text-primary-400"
+                    class="flex items-center gap-1 text-xs text-primary-400 dark:text-primary-400"
                   >
                     {#if stat.icon === "star"}
                       <svg

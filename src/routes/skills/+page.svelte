@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { skills } from "$lib/data/skills";
-  import SEO from "svelte-seo";
+  import PageNav from "$lib/components/PageNav.svelte";
   import { siteConfig } from "$lib/config.svelte";
+  import SEO from "svelte-seo";
 
   const skillCategories = [
     {
@@ -31,12 +31,14 @@
 <div class="page-content">
   <div class="section-container">
     <!-- Header -->
-    <div class="text-center mb-6 md:mb-10">
-      <h1
-        class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white"
-      >
-        Skills & Technologies
-      </h1>
+    <div class="mb-6 md:mb-10">
+      <PageNav>
+        <h1
+          class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white"
+        >
+          Skills & Technologies
+        </h1>
+      </PageNav>
     </div>
 
     <!-- Skills by Category -->

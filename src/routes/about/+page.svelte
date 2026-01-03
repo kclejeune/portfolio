@@ -1,5 +1,6 @@
 <script lang="ts">
   import Link from "$lib/components/Link.svelte";
+  import PageNav from "$lib/components/PageNav.svelte";
   import SEO from "svelte-seo";
   import { siteConfig } from "$lib/config.svelte";
 </script>
@@ -13,12 +14,14 @@
 <div class="page-content">
   <div class="section-container">
     <!-- Header -->
-    <div class="text-center mb-6 md:mb-10">
-      <h1
-        class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white"
-      >
-        About Me
-      </h1>
+    <div class="mb-6 md:mb-10">
+      <PageNav>
+        <h1
+          class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white"
+        >
+          About Me
+        </h1>
+      </PageNav>
     </div>
 
     <!-- Content -->
@@ -54,22 +57,6 @@
             managing robotics software at scale.
           </p>
         </div>
-      </div>
-
-      <!-- Quick Links -->
-      <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a
-          href="/work"
-          class="px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium transition-colors"
-        >
-          View Experience
-        </a>
-        <a
-          href="/projects"
-          class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition-colors"
-        >
-          View Projects
-        </a>
       </div>
     </div>
   </div>

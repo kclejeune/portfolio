@@ -68,3 +68,11 @@ export function formatDateRange(start: Date, end: Date): string {
     `${months[date.getMonth()]} ${date.getFullYear()}`;
   return `${formatDate(start)} - ${formatDate(end)}`;
 }
+
+export function isCurrentJob(job: Job): boolean {
+  const now = new Date();
+  return (
+    job.endDate.getFullYear() === now.getFullYear() &&
+    job.endDate.getMonth() === now.getMonth()
+  );
+}

@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { jobs, formatDateRange } from "$lib/data/jobs";
+  import { jobs, formatDateRange, isCurrentJob } from "$lib/data/jobs";
+  import PageNav from "$lib/components/PageNav.svelte";
   import SEO from "svelte-seo";
   import { siteConfig } from "$lib/config.svelte";
 </script>
@@ -13,39 +14,28 @@
 <div class="page-content">
   <div class="section-container">
     <!-- Header -->
-    <div class="text-center mb-6 md:mb-10">
-      <h1
-        class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white"
-      >
-        Work Experience
-      </h1>
+    <div class="mb-6 md:mb-10">
+      <PageNav>
+        <h1
+          class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white"
+        >
+          Work Experience
+        </h1>
+      </PageNav>
     </div>
 
     <!-- Timeline -->
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       <div class="relative">
         <!-- Timeline line (hidden on mobile) -->
         <div
-          class="hidden md:block absolute left-1/2 -translate-x-px top-0 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-700"
+          class="hidden md:block absolute right-[82px] translate-x-px top-0 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-700"
         ></div>
 
-        {#each jobs as job, index}
-          <div class="relative mb-6 md:mb-8 last:mb-0">
-            <!-- Timeline dot (hidden on mobile) -->
-            <div
-              class="hidden md:block absolute left-1/2 -translate-x-1/2 mt-1.5"
-            >
-              <div
-                class="w-3 h-3 rounded-full bg-primary-500 ring-4 ring-slate-100 dark:ring-slate-900"
-              ></div>
-            </div>
-
+        {#each jobs as job}
+          <div class="relative md:flex md:items-center mb-6 md:mb-8 last:mb-0">
             <!-- Content card -->
-            <div
-              class="md:w-[calc(50%-1.5rem)] {index % 2 === 0
-                ? 'md:mr-auto md:pr-0'
-                : 'md:ml-auto md:pl-0'}"
-            >
+            <div class="md:mr-[100px] flex-1">
               <div class="card card-hover p-5">
                 <!-- Header -->
                 <div class="mb-3">
@@ -55,11 +45,14 @@
                     {job.employer}
                   </h3>
                   <p
-                    class="text-primary-600 dark:text-primary-400 text-base font-medium"
+                    class="text-primary-500 dark:text-primary-400 text-base font-medium"
                   >
                     {job.title}
                   </p>
-                  <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  <!-- Date range shown on mobile only -->
+                  <p
+                    class="md:hidden text-sm text-slate-500 dark:text-slate-400 mt-1"
+                  >
                     {formatDateRange(job.startDate, job.endDate)}
                   </p>
                 </div>
@@ -71,7 +64,7 @@
                   {#each job.tasks as task}
                     <li class="flex items-start gap-2">
                       <span
-                        class="w-1.5 h-1.5 rounded-full bg-primary-500 mt-2 flex-shrink-0"
+                        class="w-1.5 h-1.5 rounded-full bg-primary-400 mt-2 flex-shrink-0"
                       ></span>
                       <span>{task}</span>
                     </li>
@@ -87,6 +80,36 @@
                   </div>
                 {/if}
               </div>
+            </div>
+
+            <!-- Timeline dot (hidden on mobile) -->
+            <div class="hidden md:block absolute right-[82px] translate-x-1/2">
+              <div
+                class="w-3 h-3 rounded-full ring-4 ring-slate-100 dark:ring-slate-900 {isCurrentJob(
+                  job
+                )
+                  ? 'bg-primary-400'
+                  : 'bg-slate-100 dark:bg-slate-900 border-2 border-primary-400'}"
+              ></div>
+            </div>
+
+            <!-- Date label (hidden on mobile) -->
+            <div
+              class="hidden md:flex absolute right-0 w-[75px] justify-start pl-2"
+            >
+              <span
+                class="text-xs font-medium text-slate-500 dark:text-slate-400 text-left leading-tight"
+              >
+                {job.startDate.toLocaleDateString("en-US", {
+                  month: "short",
+                  year: "numeric",
+                })}
+                –
+                {job.endDate.toLocaleDateString("en-US", {
+                  month: "short",
+                  year: "numeric",
+                })}
+              </span>
             </div>
           </div>
         {/each}

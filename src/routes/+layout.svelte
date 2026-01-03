@@ -1,21 +1,18 @@
 <script lang="ts">
-  import "../app.css";
   import { page } from "$app/state";
-  import { fade, slide } from "svelte/transition";
   import Footer from "$lib/components/Footer.svelte";
+  import { routeOrder, siteConfig } from "$lib/config.svelte";
   import SEO from "svelte-seo";
-  import { siteConfig } from "$lib/config.svelte";
+  import { fade, slide } from "svelte/transition";
+  import "../app.css";
 
   let { children } = $props();
 
-  // Navigation routes
-  const routes = [
-    { path: "/", title: "Home" },
-    { path: "/about", title: "About" },
-    { path: "/work", title: "Work" },
-    { path: "/projects", title: "Projects", preload: "hover" as const },
-    { path: "/skills", title: "Skills" },
-  ];
+  // Navigation routes with preload config
+  const routes = routeOrder.map((r) => ({
+    ...r,
+    preload: r.path === "/projects" ? ("hover" as const) : undefined,
+  }));
 
   // Mobile menu state
   const menuDuration = 200;
