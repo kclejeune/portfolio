@@ -2,6 +2,7 @@
   import { page } from "$app/state";
   import AppBar from "$lib/components/AppBar.svelte";
   import { routeOrder, siteConfig } from "$lib/config.svelte";
+  import "@fontsource-variable/ibm-plex-sans";
   import SEO from "svelte-seo";
   import { fade, slide } from "svelte/transition";
   import "../app.css";

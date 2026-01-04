@@ -2,6 +2,9 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
+  /* Font family */
+  --font-sans: "IBM Plex Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
   /* Primary - Refined blue with slight indigo tint */
   --color-primary-50: oklch(0.97 0.02 255);
   --color-primary-100: oklch(0.94 0.04 255);
