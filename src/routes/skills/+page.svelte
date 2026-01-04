@@ -39,6 +39,7 @@
           Skills & Technologies
         </h1>
       </PageNav>
+      <p class="mt-2 text-slate-600 dark:text-slate-400 text-center">&nbsp;</p>
     </div>
 
     <!-- Skills by Category -->
