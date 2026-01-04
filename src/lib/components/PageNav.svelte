@@ -14,7 +14,7 @@
     {#if adjacent.prev}
       <a
         href={adjacent.prev.path}
-        class="flex items-center gap-1.5 p-1.5 rounded-lg text-slate-400 dark:text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+        class="flex items-center gap-1.5 p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-slate-800/50 transition-colors"
         aria-label="Previous: {adjacent.prev.title}"
       >
         <svg
@@ -45,7 +45,7 @@
     {#if adjacent.next}
       <a
         href={adjacent.next.path}
-        class="flex items-center gap-1.5 p-1.5 rounded-lg text-slate-400 dark:text-slate-500 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+        class="flex items-center gap-1.5 p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-slate-800/50 transition-colors"
         aria-label="Next: {adjacent.next.title}"
       >
         <span class="hidden md:inline text-sm">{adjacent.next.title}</span>
