@@ -14,6 +14,7 @@
     {#if adjacent.prev}
       <a
         href={adjacent.prev.path}
+        data-sveltekit-preload-data
         class="flex items-center gap-1.5 p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-slate-800/50 transition-colors"
         aria-label="Previous: {adjacent.prev.title}"
       >
@@ -45,6 +46,7 @@
     {#if adjacent.next}
       <a
         href={adjacent.next.path}
+        data-sveltekit-preload-data
         class="flex items-center gap-1.5 p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-slate-800/50 transition-colors"
         aria-label="Next: {adjacent.next.title}"
       >

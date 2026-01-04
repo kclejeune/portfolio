@@ -34,18 +34,15 @@ export const siteConfig = {
 } as const;
 
 // Ordered route list for navigation
-export const routeOrder = Object.values(siteConfig.routes);
+export const routes = Object.values(siteConfig.routes);
 
 // Get previous and next routes for a given path
 export function getAdjacentRoutes(currentPath: string) {
-  const currentIndex = routeOrder.findIndex((r) => r.path === currentPath);
+  const currentIndex = routes.findIndex((r) => r.path === currentPath);
   if (currentIndex === -1) return { prev: null, next: null };
 
   return {
-    prev: currentIndex > 0 ? routeOrder[currentIndex - 1] : null,
-    next:
-      currentIndex < routeOrder.length - 1
-        ? routeOrder[currentIndex + 1]
-        : null,
+    prev: currentIndex > 0 ? routes[currentIndex - 1] : null,
+    next: currentIndex < routes.length - 1 ? routes[currentIndex + 1] : null,
   };
 }

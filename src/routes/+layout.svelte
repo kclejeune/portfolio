@@ -1,19 +1,13 @@
 <script lang="ts">
   import { page } from "$app/state";
   import AppBar from "$lib/components/AppBar.svelte";
-  import { routeOrder, siteConfig } from "$lib/config.svelte";
+  import { routes, siteConfig } from "$lib/config.svelte";
   import "@fontsource-variable/ibm-plex-sans";
   import SEO from "svelte-seo";
   import { fade, slide } from "svelte/transition";
   import "../app.css";
 
   let { children } = $props();
-
-  // Navigation routes with preload config
-  const routes = routeOrder.map((r) => ({
-    ...r,
-    preload: r.path === "/projects" ? ("hover" as const) : undefined,
-  }));
 
   // Mobile menu state
   const menuDuration = 200;
@@ -104,7 +98,7 @@
         {#each routes as route}
           <a
             href={route.path}
-            data-sveltekit-preload-data={route.preload}
+            data-sveltekit-preload-data
             class="px-3 py-1.5 text-sm font-medium rounded-md transition-colors {navLinkClass(
               route.path
             )}"
@@ -170,7 +164,7 @@
           <a
             href={route.path}
             onclick={() => (mobileMenuOpen = false)}
-            data-sveltekit-preload-data={route.preload}
+            data-sveltekit-preload-data
             class="block px-3 py-2 rounded-md text-base font-medium transition-colors {navLinkClass(
               route.path
             )}"
