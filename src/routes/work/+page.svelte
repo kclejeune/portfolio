@@ -25,7 +25,7 @@
     </div>
 
     <!-- Timeline -->
-    <div class="max-w-4xl mx-auto">
+    <div>
       <div class="relative">
         <!-- Timeline line (hidden on mobile) -->
         <div
@@ -33,7 +33,7 @@
         ></div>
 
         {#each jobs as job}
-          <div class="relative md:flex md:items-center mb-6 md:mb-8 last:mb-0">
+          <div class="relative md:flex md:items-center mb-4 sm:mb-6 last:mb-0">
             <!-- Content card -->
             <div class="md:mr-[100px] flex-1">
               <div class="card card-hover p-5">

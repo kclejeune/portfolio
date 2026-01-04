@@ -25,7 +25,7 @@
     </div>
 
     <!-- Content -->
-    <div class="max-w-2xl mx-auto">
+    <div>
       <div class="card card-hover p-6 md:p-8">
         <div class="space-y-4 text-slate-600 dark:text-slate-300">
           <p>Hey, I'm Kennan!</p>

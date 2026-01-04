@@ -67,7 +67,7 @@
 
     <!-- Projects Grid -->
     {#if data.repos && data.repos.length > 0}
-      <div class="max-w-4xl mx-auto grid gap-4 md:grid-cols-2">
+      <div class="grid gap-4 sm:gap-6 md:grid-cols-2">
         {#each data.repos as repo}
           <a
             href={repo.url}
@@ -153,7 +153,7 @@
         {/each}
       </div>
     {:else}
-      <div class="max-w-md mx-auto card p-8 text-center">
+      <div class="card p-8 text-center">
         <p class="text-slate-600 dark:text-slate-400 mb-4">
           Check out my projects on GitHub
         </p>

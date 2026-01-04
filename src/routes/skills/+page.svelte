@@ -42,7 +42,7 @@
     </div>
 
     <!-- Skills by Category -->
-    <div class="max-w-2xl mx-auto space-y-6">
+    <div class="space-y-6">
       {#each skillCategories as category}
         <div class="card card-hover p-6">
           <div class="flex items-center gap-3 mb-4">

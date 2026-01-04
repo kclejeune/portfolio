@@ -33,7 +33,7 @@
 <div
   class="{baseClasses} {positionClasses} {themeClasses} {borderClasses} {hiddenClasses}"
 >
-  <div class="max-w-5xl mx-auto h-full flex items-center">
+  <div class="max-w-4xl mx-auto h-full flex items-center">
     {#if children}
       {@render children()}
     {/if}
