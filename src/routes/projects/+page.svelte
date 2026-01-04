@@ -152,18 +152,6 @@
           </a>
         {/each}
       </div>
-
-      <!-- GitHub link -->
-      <div class="mt-8 text-center">
-        <a
-          href={githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium transition-colors"
-        >
-          View all on GitHub →
-        </a>
-      </div>
     {:else}
       <div class="max-w-md mx-auto card p-8 text-center">
         <p class="text-slate-600 dark:text-slate-400 mb-4">

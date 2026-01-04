@@ -112,15 +112,5 @@
         </div>
       {/each}
     </div>
-
-    <!-- CTA -->
-    <div class="mt-10 text-center">
-      <a
-        href="mailto:contact@kclj.io"
-        class="px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium transition-colors"
-      >
-        Get in Touch
-      </a>
-    </div>
   </div>
 </div>
