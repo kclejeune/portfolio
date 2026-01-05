@@ -29,21 +29,51 @@
     },
   };
 
-  // Pulse animation state
-  const pulse = new Tween(
+  // Pulse animation state - multiple ripples
+  const pulseDuration = 3000;
+  const pulse1 = new Tween(
     { scale: 1, opacity: 0.5 },
-    { duration: 2000, easing: cubicOut }
+    { duration: pulseDuration, easing: cubicOut }
+  );
+  const pulse2 = new Tween(
+    { scale: 1, opacity: 0.5 },
+    { duration: pulseDuration, easing: cubicOut }
+  );
+  const pulse3 = new Tween(
+    { scale: 1, opacity: 0.5 },
+    { duration: pulseDuration, easing: cubicOut }
   );
 
-  const animate = () => {
-    pulse.set({ scale: 1, opacity: 0.5 }, { duration: 0 });
-    pulse.set({ scale: 1.8, opacity: 0 });
+  const animateRipple = (pulse: Tween<{ scale: number; opacity: number }>) => {
+    pulse.set({ scale: 1, opacity: 0.4 }, { duration: 0 });
+    pulse.set({ scale: 2, opacity: 0 });
   };
 
   $effect(() => {
-    animate();
-    const interval = setInterval(animate, 2000);
-    return () => clearInterval(interval);
+    // Start first ripple immediately
+    animateRipple(pulse1);
+    const interval1 = setInterval(() => animateRipple(pulse1), pulseDuration);
+
+    // Start second ripple after 1/3 of the cycle
+    const timeout2 = setTimeout(() => {
+      animateRipple(pulse2);
+      var interval2 = setInterval(() => animateRipple(pulse2), pulseDuration);
+    }, pulseDuration / 3);
+
+    // Start third ripple after 2/3 of the cycle
+    const timeout3 = setTimeout(
+      () => {
+        animateRipple(pulse3);
+        var interval3 = setInterval(() => animateRipple(pulse3), pulseDuration);
+      },
+      (pulseDuration / 3) * 2
+    );
+
+    return () => {
+      clearInterval(interval1);
+      clearTimeout(timeout2);
+      clearTimeout(timeout3);
+    };
   });
 </script>
 
@@ -133,11 +163,21 @@
       class="group relative inline-flex items-center justify-center w-10 h-10 rounded-full border border-primary-200/40 text-primary-200/70 hover:text-primary-100 hover:border-primary-200/60 transition-colors"
       aria-label="Learn more about me"
     >
-      <!-- Ripple ring -->
+      <!-- Ripple rings -->
       <span
         class="absolute inset-0 rounded-full border-[1.5px] border-primary-200"
-        style="transform: scale({pulse.current.scale}); opacity: {pulse.current
-          .opacity};"
+        style="transform: scale({pulse1.current.scale}); opacity: {pulse1
+          .current.opacity};"
+      ></span>
+      <span
+        class="absolute inset-0 rounded-full border-[1.5px] border-primary-200"
+        style="transform: scale({pulse2.current.scale}); opacity: {pulse2
+          .current.opacity};"
+      ></span>
+      <span
+        class="absolute inset-0 rounded-full border-[1.5px] border-primary-200"
+        style="transform: scale({pulse3.current.scale}); opacity: {pulse3
+          .current.opacity};"
       ></span>
       <svg
         class="w-5 h-5 relative z-10"
