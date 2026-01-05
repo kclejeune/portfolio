@@ -1,0 +1,10 @@
+export { default as GitHubIcon } from "./GitHubIcon.svelte";
+export { default as LinkedInIcon } from "./LinkedInIcon.svelte";
+export { default as EmailIcon } from "./EmailIcon.svelte";
+export { default as ResumeIcon } from "./ResumeIcon.svelte";
+export { default as ExternalLinkIcon } from "./ExternalLinkIcon.svelte";
+export { default as ChevronLeftIcon } from "./ChevronLeftIcon.svelte";
+export { default as ChevronRightIcon } from "./ChevronRightIcon.svelte";
+export { default as ChevronDownIcon } from "./ChevronDownIcon.svelte";
+export { default as MenuIcon } from "./MenuIcon.svelte";
+export { default as CloseIcon } from "./CloseIcon.svelte";

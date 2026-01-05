@@ -2,6 +2,7 @@
   import type { Snippet } from "svelte";
   import { page } from "$app/state";
   import { getAdjacentRoutes } from "$lib/config.svelte";
+  import { ChevronLeftIcon, ChevronRightIcon } from "$lib/components/icons";
 
   let { children }: { children: Snippet } = $props();
 
@@ -18,19 +19,7 @@
         class="flex items-center gap-1.5 p-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-slate-800/50 transition-colors"
         aria-label="Previous: {adjacent.prev.title}"
       >
-        <svg
-          class="w-5 h-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
+        <ChevronLeftIcon />
         <span class="hidden md:inline text-sm">{adjacent.prev.title}</span>
       </a>
     {/if}
@@ -51,19 +40,7 @@
         aria-label="Next: {adjacent.next.title}"
       >
         <span class="hidden md:inline text-sm">{adjacent.next.title}</span>
-        <svg
-          class="w-5 h-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
+        <ChevronRightIcon />
       </a>
     {/if}
   </div>
