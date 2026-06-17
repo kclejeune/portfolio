@@ -10,7 +10,6 @@ export { default as MenuIcon } from "./MenuIcon.svelte";
 export { default as CloseIcon } from "./CloseIcon.svelte";
 export { default as SunIcon } from "./SunIcon.svelte";
 export { default as MoonIcon } from "./MoonIcon.svelte";
-export { default as MonitorIcon } from "./MonitorIcon.svelte";
 export { default as StarIcon } from "./StarIcon.svelte";
 export { default as ForkIcon } from "./ForkIcon.svelte";
 export { default as ArrowUpRightIcon } from "./ArrowUpRightIcon.svelte";

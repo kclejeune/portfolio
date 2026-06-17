@@ -1,6 +1,6 @@
 <script lang="ts">
   import { theme } from "$lib/theme.svelte";
-  import { SunIcon, MoonIcon, MonitorIcon } from "$lib/components/icons";
+  import { SunIcon, MoonIcon } from "$lib/components/icons";
 
   let {
     themable = true,
@@ -8,13 +8,8 @@
     themable?: boolean;
   } = $props();
 
-  const label = $derived(
-    theme.current === "system"
-      ? "Theme: system"
-      : theme.current === "dark"
-        ? "Theme: dark"
-        : "Theme: light",
-  );
+  const isDark = $derived(theme.resolved === "dark");
+  const label = $derived(isDark ? "Switch to light theme" : "Switch to dark theme");
 
   const buttonClass = $derived(
     themable
@@ -30,11 +25,9 @@
   aria-label={label}
   title={label}
 >
-  {#if theme.current === "system"}
-    <MonitorIcon class="h-5 w-5" />
-  {:else if theme.current === "dark"}
-    <MoonIcon class="h-5 w-5" />
-  {:else}
+  {#if isDark}
     <SunIcon class="h-5 w-5" />
+  {:else}
+    <MoonIcon class="h-5 w-5" />
   {/if}
 </button>

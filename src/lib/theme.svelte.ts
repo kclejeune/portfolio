@@ -50,11 +50,9 @@ class ThemeStore {
     }
   }
 
-  /** Cycle light → dark → system. */
+  /** Flip between light and dark based on what's currently shown. */
   toggle() {
-    const order: Theme[] = ["light", "dark", "system"];
-    const next = order[(order.indexOf(this.current) + 1) % order.length];
-    this.set(next);
+    this.set(this.resolved === "dark" ? "light" : "dark");
   }
 }
 
