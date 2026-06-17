@@ -37,16 +37,16 @@ GITHUB_API_KEY="<token>" pnpm dev
 
 ## Scripts
 
-| Command       | Description                                  |
-| ------------- | -------------------------------------------- |
-| `pnpm dev`    | Start the dev server                         |
-| `pnpm build`  | Type-check and build for production          |
-| `pnpm preview`| Preview the production build                 |
-| `pnpm check`  | Run `svelte-check`                           |
-| `pnpm lint`   | Check formatting (oxfmt) and lint (ESLint)   |
-| `pnpm format` | Format the codebase with oxfmt               |
-| `pnpm test`   | Run the Vitest suite                         |
-| `pnpm upgrade`| Update dependencies via npm-check-updates    |
+| Command        | Description                                |
+| -------------- | ------------------------------------------ |
+| `pnpm dev`     | Start the dev server                       |
+| `pnpm build`   | Type-check and build for production        |
+| `pnpm preview` | Preview the production build               |
+| `pnpm check`   | Run `svelte-check`                         |
+| `pnpm lint`    | Check formatting (oxfmt) and lint (ESLint) |
+| `pnpm format`  | Format the codebase with oxfmt             |
+| `pnpm test`    | Run the Vitest suite                       |
+| `pnpm upgrade` | Update dependencies via npm-check-updates  |
 
 ## Building
 

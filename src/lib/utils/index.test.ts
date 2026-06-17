@@ -16,6 +16,7 @@ const sampleResponse = {
       login: "kclejeune",
       name: "Kennan LeJeune",
       followers: { totalCount: 42 },
+      publicRepoCount: { totalCount: 7 },
       repositories: {
         totalCount: 3,
         nodes: [
@@ -163,8 +164,14 @@ describe("parseStats", () => {
   it("derives followers, repo count, and total stars", () => {
     const stats = parseStats(sampleResponse.data.user);
     expect(stats.followers).toBe(42);
-    expect(stats.publicRepos).toBe(3);
+    // Uses the unfiltered public count (includes forks), not the non-fork set.
+    expect(stats.publicRepos).toBe(7);
     expect(stats.totalStars).toBe(69);
+  });
+
+  it("falls back to the filtered repo count when the unfiltered one is absent", () => {
+    const stats = parseStats({ repositories: { totalCount: 3, nodes: [] } });
+    expect(stats.publicRepos).toBe(3);
   });
 });
 

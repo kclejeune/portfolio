@@ -160,7 +160,9 @@ export function parseStats(user: any): ProfileStats {
   const repoNodes: any[] = user?.repositories?.nodes ?? [];
   return {
     followers: user?.followers?.totalCount ?? 0,
-    publicRepos: user?.repositories?.totalCount ?? 0,
+    // Use the unfiltered public count so forks aren't dropped from the stat.
+    // (`repositories` above is filtered to non-forks for language/star totals.)
+    publicRepos: user?.publicRepoCount?.totalCount ?? user?.repositories?.totalCount ?? 0,
     totalStars: repoNodes.reduce((sum: number, r: any) => sum + (r?.stargazerCount ?? 0), 0),
   };
 }
@@ -192,6 +194,9 @@ query {
     login
     name
     followers {
+      totalCount
+    }
+    publicRepoCount: repositories(privacy: PUBLIC, ownerAffiliations: OWNER) {
       totalCount
     }
     repositories(
