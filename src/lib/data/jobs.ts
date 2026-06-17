@@ -40,19 +40,6 @@ export const jobs: Job[] = [
     ],
     tags: ["Python", "Machine Learning", "NLP", "DevOps", "Tensorflow"],
   },
-  {
-    employer: "Agriplex Genomics",
-    title: "Software Engineering Intern",
-    location: "Cleveland, OH",
-    startDate: new Date(2018, 8),
-    endDate: new Date(2019, 4),
-    tasks: [
-      "Developed a job scheduling application from scratch in Angular and designed an algorithm to optimize job scheduling to increase data throughput.",
-      "Designed a Postgres database model to store jobs and their associated data, and built a corresponding REST API to allow application interaction.",
-      "Created an Amazon AWS management server to create and destroy EC2 instances to efficiently allocate funds and expedite job processing.",
-    ],
-    tags: ["Angular", "Typescript", "Postgres", "AWS"],
-  },
 ];
 
 const months = [
