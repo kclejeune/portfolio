@@ -13,13 +13,7 @@
 </script>
 
 {#if newTab}
-  <a
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label={name}
-    href={link}
-    {onclick}
-  >
+  <a target="_blank" rel="noopener noreferrer" aria-label={name} href={link} {onclick}>
     {#if children}
       {@render children()}
     {/if}

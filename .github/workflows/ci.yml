@@ -19,5 +19,9 @@ jobs:
           cache: pnpm
       - name: Install Dependencies
         run: pnpm install
+      - name: Lint
+        run: pnpm lint
+      - name: Test
+        run: pnpm test
       - name: Build Project
         run: GITHUB_API_KEY="fake" pnpm build

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxfmt/configuration_schema.json",
+  "svelte": true,
+  "ignorePatterns": [
+    "build/**",
+    ".svelte-kit/**",
+    "dist/**",
+    ".wrangler/**",
+    "pnpm-lock.yaml",
+    "static/assets/fontawesome/**"
+  ]
+}
