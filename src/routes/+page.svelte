@@ -77,11 +77,9 @@
   <div
     class="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white/25 dark:from-primary-950/25 dark:via-transparent dark:to-slate-950/50"
   ></div>
-  <!-- Feathered blur softens the busy photo detail directly behind the hero
-       text (both themes) so it stays readable without heavy global scrims. -->
-  <div
-    class="absolute inset-0 backdrop-blur-md [mask-image:radial-gradient(ellipse_58%_48%_at_50%_46%,black_40%,transparent_78%)]"
-  ></div>
+  <!-- Uniform blur keeps the photo atmospheric while text stays readable
+       without heavy global scrims. -->
+  <div class="absolute inset-0 backdrop-blur-md"></div>
   <!-- Theme-matched radial behind the text: light glow / dark shade. -->
   <div
     class="absolute inset-0 bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(255_255_255/0.7),transparent_70%)] dark:bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(8_11_18/0.5),transparent_70%)]"
