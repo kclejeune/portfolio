@@ -73,37 +73,30 @@
 >
   <!-- Layered overlay: a light scrim in light mode, a dark one in dark mode,
        plus a vertical gradient for text legibility at the center/edges. -->
-  <div class="absolute inset-0 bg-white/10 dark:bg-slate-950/55"></div>
+  <div class="absolute inset-0 bg-white/5 dark:bg-slate-950/40"></div>
   <div
-    class="absolute inset-0 bg-gradient-to-b from-white/30 via-white/5 to-white/40 dark:from-primary-950/40 dark:via-transparent dark:to-slate-950/70"
+    class="absolute inset-0 bg-gradient-to-b from-white/25 via-transparent to-white/30 dark:from-primary-950/30 dark:via-transparent dark:to-slate-950/60"
   ></div>
   <!-- Light mode only: a soft glow behind the hero text so it stays legible
        without flattening the rest of the photo. -->
   <div
-    class="absolute inset-0 bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(255_255_255/0.68),transparent_70%)] dark:hidden"
+    class="absolute inset-0 bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(255_255_255/0.62),transparent_70%)] dark:hidden"
   ></div>
 </div>
 
 <!-- Hero content -->
 <div class="flex flex-1 flex-col items-center justify-center px-4">
   <div class="text-center">
-    <p
-      class="mb-4 text-xs font-semibold tracking-[0.22em] text-primary-700 uppercase dark:text-primary-200/90"
-      style="animation: var(--animate-fade-up); animation-delay: 0ms;"
-    >
-      Full-stack Software Engineer
-    </p>
-
     <h1
       class="mb-5 text-4xl font-light text-slate-900 md:text-6xl dark:text-white"
-      style="animation: var(--animate-fade-up); animation-delay: 80ms;"
+      style="animation: var(--animate-fade-up); animation-delay: 0ms;"
     >
-      Hi, I'm <span class="font-semibold">Kennan</span>.
+      Hi, I'm Kennan.
     </h1>
 
     <p
       class="mx-auto mb-10 max-w-xl text-base text-pretty text-slate-700 md:text-lg dark:text-primary-100/80"
-      style="animation: var(--animate-fade-up); animation-delay: 160ms;"
+      style="animation: var(--animate-fade-up); animation-delay: 100ms;"
     >
       I build infrastructure for distributed systems, autonomy, and robotics software at scale.
     </p>
@@ -111,7 +104,7 @@
     <!-- Social icons -->
     <div
       class="mb-12 flex justify-center gap-7"
-      style="animation: var(--animate-fade-up); animation-delay: 240ms;"
+      style="animation: var(--animate-fade-up); animation-delay: 200ms;"
     >
       {#each socials as social (social.name)}
         <IconButton link={social.link} name={social.name}>
@@ -126,7 +119,7 @@
     <a
       href="/about"
       class="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-700/40 text-slate-700/80 transition-colors hover:border-slate-700/70 hover:text-slate-900 dark:border-primary-200/40 dark:text-primary-100/70 dark:hover:border-primary-200/70 dark:hover:text-primary-100"
-      style="animation: var(--animate-fade-in); animation-delay: 400ms;"
+      style="animation: var(--animate-fade-in); animation-delay: 360ms;"
       aria-label="Learn more about me"
     >
       {#each pulses as pulse, i (i)}
