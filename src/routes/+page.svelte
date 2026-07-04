@@ -73,16 +73,16 @@
 >
   <!-- Layered overlay: a light scrim in light mode, a dark one in dark mode,
        plus a vertical gradient for text legibility at the center/edges. -->
-  <div class="absolute inset-0 bg-white/5 dark:bg-slate-950/30"></div>
+  <div class="absolute inset-0 bg-white/5 dark:bg-slate-950/20"></div>
   <div
-    class="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white/25 dark:from-primary-950/25 dark:via-transparent dark:to-slate-950/50"
+    class="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-white/20 dark:from-primary-950/20 dark:via-transparent dark:to-slate-950/40"
   ></div>
   <!-- Uniform blur keeps the photo atmospheric while text stays readable
        without heavy global scrims. -->
   <div class="absolute inset-0 backdrop-blur-md"></div>
   <!-- Theme-matched radial behind the text: light glow / dark shade. -->
   <div
-    class="absolute inset-0 bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(255_255_255/0.7),transparent_70%)] dark:bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(8_11_18/0.5),transparent_70%)]"
+    class="absolute inset-0 bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(255_255_255/0.55),transparent_70%)] dark:bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(8_11_18/0.4),transparent_70%)]"
   ></div>
 </div>
 
@@ -90,14 +90,14 @@
 <div class="flex flex-1 flex-col items-center justify-center px-4">
   <div class="text-center">
     <h1
-      class="mb-5 text-4xl font-light text-primary-950 md:text-6xl dark:text-primary-50"
+      class="mb-5 text-4xl font-light text-primary-900 md:text-6xl dark:text-primary-100"
       style="animation: var(--animate-fade-up); animation-delay: 0ms;"
     >
       Hi, I'm Kennan.
     </h1>
 
     <p
-      class="mx-auto mb-10 max-w-xl text-base text-pretty text-primary-900/90 md:text-lg dark:text-primary-100/90"
+      class="mx-auto mb-10 max-w-xl text-base text-pretty text-primary-800/90 md:text-lg dark:text-primary-200/90"
       style="animation: var(--animate-fade-up); animation-delay: 100ms;"
     >
       I build infrastructure for distributed systems, autonomy, and robotics software at scale.
@@ -111,7 +111,7 @@
       {#each socials as social (social.name)}
         <IconButton link={social.link} name={social.name}>
           <social.icon
-            class="h-7 w-7 text-primary-900 transition-colors hover:text-primary-950 dark:text-primary-100 dark:hover:text-white"
+            class="h-7 w-7 text-primary-800 transition-colors hover:text-primary-950 dark:text-primary-200 dark:hover:text-white"
           />
         </IconButton>
       {/each}
@@ -120,7 +120,7 @@
     <!-- Scroll cue -->
     <a
       href="/about"
-      class="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary-800/40 text-primary-900/70 transition-colors hover:border-primary-800/70 hover:text-primary-900 dark:border-primary-200/40 dark:text-primary-100/70 dark:hover:border-primary-200/70 dark:hover:text-primary-100"
+      class="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary-800/40 text-primary-800/70 transition-colors hover:border-primary-800/70 hover:text-primary-900 dark:border-primary-300/40 dark:text-primary-200/70 dark:hover:border-primary-300/70 dark:hover:text-primary-100"
       style="animation: var(--animate-fade-in); animation-delay: 360ms;"
       aria-label="Learn more about me"
     >
