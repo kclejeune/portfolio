@@ -10,8 +10,9 @@
 </script>
 
 <div class="flex items-center justify-between w-full">
-  <!-- Previous -->
-  <div class="flex-1 flex justify-start">
+  <!-- Previous (min-w matches a chevron link so the title stays centered
+       even when only one side has a link and space is tight) -->
+  <div class="flex-1 min-w-8 flex justify-start">
     {#if adjacent.prev}
       <a
         href={adjacent.prev.path}
@@ -26,12 +27,12 @@
   </div>
 
   <!-- Title -->
-  <div class="flex-shrink-0 px-4">
+  <div class="min-w-0 px-4">
     {@render children()}
   </div>
 
   <!-- Next -->
-  <div class="flex-1 flex justify-end">
+  <div class="flex-1 min-w-8 flex justify-end">
     {#if adjacent.next}
       <a
         href={adjacent.next.path}

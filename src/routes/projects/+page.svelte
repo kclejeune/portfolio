@@ -95,7 +95,7 @@
 
 <div class="page-content">
   <div class="section-container">
-    <PageHeader eyebrow="What I build — and what I build with" title="Projects & Skills">
+    <PageHeader eyebrow="What I build & build with" title="Projects & Skills">
       <SocialLinks links={[{ label: "View all on GitHub", href: githubUrl }]} />
     </PageHeader>
 

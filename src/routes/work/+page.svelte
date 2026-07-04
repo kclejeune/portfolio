@@ -34,19 +34,19 @@
       />
     </PageHeader>
 
-    <ol class="relative ml-1.5 space-y-5 border-l border-slate-200 pl-6 dark:border-slate-800">
+    <ol class="relative ml-1 space-y-5 border-l border-slate-200 pl-4 dark:border-slate-800">
       {#each jobs as job (job.employer)}
         {@const isOpen = open.has(job.employer)}
         {@const current = isCurrentJob(job)}
         <li class="relative">
-          <!-- Timeline node -->
+          <!-- Timeline node, centered on the rail (pl-4 + half node + half border) -->
           <span
-            class="absolute top-5 -left-[31px] flex h-4 w-4 items-center justify-center rounded-full ring-4 ring-slate-50 dark:ring-slate-950 {current
+            class="absolute top-5 -left-[23px] flex h-3.5 w-3.5 items-center justify-center rounded-full ring-4 ring-slate-50 dark:ring-slate-950 {current
               ? 'bg-primary-500'
               : 'border-2 border-primary-400 bg-slate-50 dark:bg-slate-950'}"
           >
             {#if current}
-              <span class="absolute h-4 w-4 animate-ping rounded-full bg-primary-500/60"></span>
+              <span class="absolute h-3.5 w-3.5 animate-ping rounded-full bg-primary-500/60"></span>
             {/if}
           </span>
 
