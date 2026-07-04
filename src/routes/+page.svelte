@@ -71,10 +71,16 @@
   class="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
   style="background-image: url('/assets/images/cube.webp');"
 >
-  <!-- Layered overlay: darken for legibility + primary tint + vignette -->
-  <div class="absolute inset-0 bg-slate-950/55"></div>
+  <!-- Layered overlay: a light scrim in light mode, a dark one in dark mode,
+       plus a vertical gradient for text legibility at the center/edges. -->
+  <div class="absolute inset-0 bg-white/20 dark:bg-slate-950/55"></div>
   <div
-    class="absolute inset-0 bg-gradient-to-b from-primary-950/40 via-transparent to-slate-950/70"
+    class="absolute inset-0 bg-gradient-to-b from-white/45 via-white/15 to-white/60 dark:from-primary-950/40 dark:via-transparent dark:to-slate-950/70"
+  ></div>
+  <!-- Light mode only: a soft glow behind the hero text so it stays legible
+       without flattening the rest of the photo. -->
+  <div
+    class="absolute inset-0 bg-[radial-gradient(ellipse_55%_45%_at_50%_46%,rgb(255_255_255/0.72),transparent_72%)] dark:hidden"
   ></div>
 </div>
 
@@ -82,21 +88,21 @@
 <div class="flex flex-1 flex-col items-center justify-center px-4">
   <div class="text-center">
     <p
-      class="mb-4 text-xs font-semibold tracking-[0.22em] text-primary-200/90 uppercase"
+      class="mb-4 text-xs font-semibold tracking-[0.22em] text-primary-700 uppercase dark:text-primary-200/90"
       style="animation: var(--animate-fade-up); animation-delay: 0ms;"
     >
       Full-stack Software Engineer
     </p>
 
     <h1
-      class="mb-5 text-4xl font-light text-white md:text-6xl"
+      class="mb-5 text-4xl font-light text-slate-900 md:text-6xl dark:text-white"
       style="animation: var(--animate-fade-up); animation-delay: 80ms;"
     >
       Hi, I'm <span class="font-semibold">Kennan</span>.
     </h1>
 
     <p
-      class="mx-auto mb-10 max-w-xl text-base text-pretty text-primary-100/80 md:text-lg"
+      class="mx-auto mb-10 max-w-xl text-base text-pretty text-slate-700 md:text-lg dark:text-primary-100/80"
       style="animation: var(--animate-fade-up); animation-delay: 160ms;"
     >
       I build infrastructure for distributed systems, autonomy, and robotics software at scale.
@@ -109,7 +115,9 @@
     >
       {#each socials as social (social.name)}
         <IconButton link={social.link} name={social.name}>
-          <social.icon class="h-7 w-7 text-primary-100 transition-colors hover:text-white" />
+          <social.icon
+            class="h-7 w-7 text-slate-700 transition-colors hover:text-slate-950 dark:text-primary-100 dark:hover:text-white"
+          />
         </IconButton>
       {/each}
     </div>
@@ -117,13 +125,13 @@
     <!-- Scroll cue -->
     <a
       href="/about"
-      class="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary-200/40 text-primary-100/70 transition-colors hover:border-primary-200/70 hover:text-primary-100"
+      class="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-700/40 text-slate-700/80 transition-colors hover:border-slate-700/70 hover:text-slate-900 dark:border-primary-200/40 dark:text-primary-100/70 dark:hover:border-primary-200/70 dark:hover:text-primary-100"
       style="animation: var(--animate-fade-in); animation-delay: 400ms;"
       aria-label="Learn more about me"
     >
       {#each pulses as pulse, i (i)}
         <span
-          class="absolute inset-0 rounded-full border-[1.5px] border-primary-200"
+          class="absolute inset-0 rounded-full border-[1.5px] border-slate-600 dark:border-primary-200"
           style="transform: scale({pulse.current.scale}); opacity: {pulse.current.opacity};"
         ></span>
       {/each}

@@ -24,11 +24,13 @@
     return currentPath.startsWith(path);
   }
 
+  // "Non-themable" chrome floats over the hero photo: dark text on the light
+  // scrim in light mode, white text on the dark scrim in dark mode.
   function navLinkClass(path: string): string {
     if (!isThemable) {
       return isActive(path)
-        ? "bg-white/15 text-white"
-        : "text-white/75 hover:bg-white/10 hover:text-white";
+        ? "bg-slate-900/10 text-slate-900 dark:bg-white/15 dark:text-white"
+        : "text-slate-700 hover:bg-slate-900/5 hover:text-slate-900 dark:text-white/75 dark:hover:bg-white/10 dark:hover:text-white";
     }
     return isActive(path)
       ? "bg-primary-100/80 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300"
@@ -38,29 +40,31 @@
   const logoTextClass = $derived(
     isThemable
       ? "text-slate-900 hover:text-primary-600 dark:text-white dark:hover:text-primary-400"
-      : "text-white hover:text-white/80",
+      : "text-slate-900 hover:text-slate-700 dark:text-white dark:hover:text-white/80",
   );
 
   const mobileButtonClass = $derived(
     isThemable
       ? "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800/60"
-      : "text-white/80 hover:bg-white/10 hover:text-white",
+      : "text-slate-700 hover:bg-slate-900/5 dark:text-white/80 dark:hover:bg-white/10 dark:hover:text-white",
   );
 
   const mobileMenuClass = $derived(
     isThemable
       ? "border-t border-slate-200/60 bg-white/95 dark:border-slate-800 dark:bg-slate-950/95"
-      : "border-t border-white/10 bg-slate-950/60",
+      : "border-t border-slate-900/10 bg-white/70 dark:border-white/10 dark:bg-slate-950/60",
   );
 
   const currentYear = new Date().getFullYear();
 
   const footerTextClass = $derived(
-    isThemable ? "text-slate-500 dark:text-slate-400" : "text-white/50",
+    isThemable ? "text-slate-500 dark:text-slate-400" : "text-slate-600 dark:text-white/50",
   );
 
   const footerLinkClass = $derived(
-    isThemable ? "hover:text-slate-700 dark:hover:text-slate-300" : "hover:text-white/80",
+    isThemable
+      ? "hover:text-slate-700 dark:hover:text-slate-300"
+      : "hover:text-slate-900 dark:hover:text-white/80",
   );
 </script>
 
@@ -101,7 +105,9 @@
           </a>
         {/each}
         <div
-          class="mx-1 h-5 w-px {isThemable ? 'bg-slate-200 dark:bg-slate-700' : 'bg-white/20'}"
+          class="mx-1 h-5 w-px {isThemable
+            ? 'bg-slate-200 dark:bg-slate-700'
+            : 'bg-slate-900/15 dark:bg-white/20'}"
           aria-hidden="true"
         ></div>
         <ThemeToggle themable={isThemable} />

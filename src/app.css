@@ -120,13 +120,14 @@
     @apply text-xs font-semibold uppercase tracking-[0.18em] text-primary-600 dark:text-primary-400;
   }
 
-  /* Surface / card */
+  /* Surface / card — dark surface sits a full step above the page background
+     so cards read as elevated panels rather than blending into it. */
   .card {
-    @apply rounded-2xl border border-slate-200/80 bg-white/90 dark:border-slate-800 dark:bg-slate-900/70;
+    @apply rounded-2xl border border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-850;
   }
 
   .card-hover {
-    @apply transition duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/5 dark:hover:border-slate-700 dark:hover:shadow-black/20;
+    @apply transition duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/5 dark:hover:border-slate-600 dark:hover:shadow-black/20;
   }
 
   /* Pill tag */

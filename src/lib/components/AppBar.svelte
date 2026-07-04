@@ -20,7 +20,7 @@
   const themeClasses = $derived(
     themable
       ? "bg-white/70 dark:bg-slate-900/80 border-slate-200/50 dark:border-slate-700/50"
-      : "bg-white/5 border-transparent",
+      : "bg-white/30 dark:bg-white/5 border-transparent",
   );
 
   const borderClasses = $derived(position === "top" ? "border-b" : "border-t");

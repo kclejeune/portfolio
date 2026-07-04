@@ -14,7 +14,7 @@
   const buttonClass = $derived(
     themable
       ? "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
-      : "text-white/70 hover:bg-white/10 hover:text-white",
+      : "text-slate-600 hover:bg-slate-900/5 hover:text-slate-900 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white",
   );
 </script>
 
