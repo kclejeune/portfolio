@@ -1,11 +1,16 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@theme {
-  /* Font family */
-  --font-sans: "IBM Plex Sans Variable", ui-sans-serif, system-ui, sans-serif;
+/* Toggle dark mode via a `.dark` class on <html> (set by the theme store /
+   the no-flash script in app.html) instead of the OS preference alone. */
+@custom-variant dark (&:where(.dark, .dark *));
 
-  /* Primary - Refined blue with slight indigo tint */
+@theme {
+  /* Typography */
+  --font-sans: "IBM Plex Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, monospace;
+
+  /* Primary — refined blue with a slight indigo tint */
   --color-primary-50: oklch(0.97 0.02 255);
   --color-primary-100: oklch(0.94 0.04 255);
   --color-primary-200: oklch(0.88 0.08 255);
@@ -18,7 +23,7 @@
   --color-primary-900: oklch(0.28 0.1 255);
   --color-primary-950: oklch(0.2 0.06 255);
 
-  /* Slate - Cool gray base with subtle blue undertone */
+  /* Slate — cool gray base with a subtle blue undertone */
   --color-slate-50: oklch(0.98 0.005 260);
   --color-slate-100: oklch(0.96 0.008 260);
   --color-slate-200: oklch(0.91 0.012 260);
@@ -32,45 +37,115 @@
   --color-slate-900: oklch(0.15 0.008 260);
   --color-slate-950: oklch(0.1 0.006 260);
 
-  /* Accent - Warm complement for highlights */
+  /* Accent — warm complement for highlights */
+  --color-accent-300: oklch(0.82 0.11 45);
   --color-accent-400: oklch(0.75 0.15 45);
   --color-accent-500: oklch(0.65 0.18 45);
+
+  /* Motion */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Animations */
+  --animate-fade-up: fade-up 0.6s var(--ease-out-quint) both;
+  --animate-fade-in: fade-in 0.5s ease both;
 }
 
-html {
-  scroll-behavior: smooth;
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-body {
-  @apply bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200;
-  @apply antialiased;
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* Page wrapper */
-.page-content {
-  @apply w-full;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased dark:bg-slate-950 dark:text-slate-200;
+  }
+
+  /* Consistent, visible keyboard focus for accessibility */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary-500;
+  }
+
+  ::selection {
+    @apply bg-primary-500/25 text-slate-900 dark:text-white;
+  }
+
+  /* Respect users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
-/* Card style */
-.card {
-  @apply bg-white dark:bg-slate-800;
-  @apply border border-slate-200 dark:border-slate-700;
-  @apply rounded-xl;
-}
+@layer components {
+  /* Page wrapper */
+  .page-content {
+    @apply w-full;
+  }
 
-/* Card hover effect */
-.card-hover {
-  @apply transition-all duration-200 ease-out;
-  @apply hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600;
-}
+  /* Section container */
+  .section-container {
+    @apply mx-auto max-w-4xl px-4 py-8 sm:px-6 md:py-14 lg:px-8;
+  }
 
-/* Section container */
-.section-container {
-  @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12;
-}
+  /* Small uppercase label used above section headings */
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-primary-600 dark:text-primary-400;
+  }
 
-/* Tag styles */
-.tag {
-  @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full;
-  @apply bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300;
+  /* Surface / card — dark surface sits a full step above the page background
+     so cards read as elevated panels rather than blending into it. */
+  .card {
+    @apply rounded-2xl border border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-850;
+  }
+
+  .card-hover {
+    @apply transition duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/5 dark:hover:border-slate-600 dark:hover:shadow-black/20;
+  }
+
+  /* Pill tag */
+  .tag {
+    @apply inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300;
+  }
+
+  .tag-primary {
+    @apply inline-flex items-center rounded-full bg-primary-100 px-3 py-1 text-sm font-medium text-primary-700 dark:bg-primary-500/15 dark:text-primary-200;
+  }
+
+  /* Inline text link */
+  .link {
+    @apply text-primary-600 underline decoration-primary-400/40 underline-offset-2 transition-colors hover:text-primary-700 hover:decoration-primary-500 dark:text-primary-400 dark:hover:text-primary-300;
+  }
+
+  /* Solid button */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700;
+  }
 }

@@ -1,22 +1,32 @@
 <!doctype html>
-<html lang="en" class="w-full h-full p-0 m-0">
+<html lang="en" class="h-full">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#0f1117" />
     <title></title>
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-      href="%sveltekit.assets%/favicon.ico"
-    />
+    <link rel="shortcut icon" type="image/x-icon" href="%sveltekit.assets%/favicon.ico" />
+    <script>
+      // Apply the saved theme before first paint to avoid a flash.
+      (() => {
+        try {
+          const stored = localStorage.getItem("theme");
+          const dark =
+            stored === "dark" ||
+            ((stored === null || stored === "system") &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", dark);
+          document
+            .querySelector('meta[name="theme-color"]')
+            ?.setAttribute("content", dark ? "#0f1117" : "#f8f9fb");
+        } catch {
+          /* ignore */
+        }
+      })();
+    </script>
     %sveltekit.head%
   </head>
-  <body
-    class="w-full h-full p-0 m-0 text-neutral-800 bg-neutral-100 smoothscroll dark:text-neutral-200 dark:bg-neutral-800"
-  >
-    <div id="svelte">%sveltekit.body%</div>
+  <body class="h-full">
+    <div id="svelte" class="contents">%sveltekit.body%</div>
   </body>
 </html>

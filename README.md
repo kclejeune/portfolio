@@ -2,28 +2,56 @@
 
 [![CI](https://github.com/kclejeune/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/kclejeune/portfolio/actions/workflows/ci.yml)
 
-Basic personal site written with SvelteKit as an overpowered static site generator.
-SvelteKit allows for development and page rendering in JavaScript, but remains compatible with non-js browsers.
+Personal site built with SvelteKit, deployed to Cloudflare Workers. The
+Projects and Skills pages pull live data from the GitHub GraphQL API
+(pinned repos, language footprint, contribution activity) with KV caching.
+
+## Stack
+
+- **Framework:** SvelteKit 2 + Svelte 5 (runes)
+- **Build:** Vite 8 (Rolldown bundler)
+- **Styling:** Tailwind CSS 4 via `@tailwindcss/vite`
+- **Linting:** ESLint 9 (flat config) + `eslint-plugin-svelte`
+- **Formatting:** [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html)
+- **Tests:** Vitest
+- **Deploy:** `@sveltejs/adapter-cloudflare`
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Install dependencies with `pnpm install`, then start a dev server:
 
 ```bash
-npm run dev
+pnpm dev
 
 # or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm dev --open
 ```
+
+The GitHub-backed pages need a token to fetch live data. Provide a
+`GITHUB_API_KEY` with `read:user`/`public_repo` scope via the environment
+(the rest of the GitHub config lives in `.env`):
+
+```bash
+GITHUB_API_KEY="<token>" pnpm dev
+```
+
+## Scripts
+
+| Command        | Description                                |
+| -------------- | ------------------------------------------ |
+| `pnpm dev`     | Start the dev server                       |
+| `pnpm build`   | Type-check and build for production        |
+| `pnpm preview` | Preview the production build               |
+| `pnpm check`   | Run `svelte-check`                         |
+| `pnpm lint`    | Check formatting (oxfmt) and lint (ESLint) |
+| `pnpm format`  | Format the codebase with oxfmt             |
+| `pnpm test`    | Run the Vitest suite                       |
+| `pnpm upgrade` | Update dependencies via npm-check-updates  |
 
 ## Building
 
-To create a production version of your app:
-
 ```bash
-npm run build
+pnpm build
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Preview the production build with `pnpm preview`.
