@@ -10,6 +10,8 @@ export interface Repository {
   description: string;
   repositoryTopics: string[];
   languages: string[];
+  /** Largest language in the repo, GitHub-style (name + brand color). */
+  primaryLanguage: { name: string; color: string } | null;
 }
 
 export interface LanguageStat {
@@ -71,17 +73,23 @@ export function compare(a: Repository, b: Repository) {
 // ---------------------------------------------------------------------------
 
 export function parseRepositories(nodes: any[]): Repository[] {
-  const repos: Repository[] = (nodes ?? []).filter(Boolean).map((node: any) => ({
-    name: node.name,
-    stargazerCount: node.stargazerCount ?? 0,
-    forkCount: node.forkCount ?? 0,
-    url: node.url,
-    description: node.description ?? "",
-    repositoryTopics: (node.repositoryTopics?.nodes ?? [])
-      .map((t: any) => t?.topic?.name)
-      .filter(Boolean),
-    languages: (node.languages?.nodes ?? []).map((l: any) => l?.name).filter(Boolean),
-  }));
+  const repos: Repository[] = (nodes ?? []).filter(Boolean).map((node: any) => {
+    // Language nodes are ordered by size, so the first is the primary one.
+    const languageNodes: any[] = (node.languages?.nodes ?? []).filter((l: any) => l?.name);
+    const primary = languageNodes[0];
+    return {
+      name: node.name,
+      stargazerCount: node.stargazerCount ?? 0,
+      forkCount: node.forkCount ?? 0,
+      url: node.url,
+      description: node.description ?? "",
+      repositoryTopics: (node.repositoryTopics?.nodes ?? [])
+        .map((t: any) => t?.topic?.name)
+        .filter(Boolean),
+      languages: languageNodes.map((l: any) => l.name),
+      primaryLanguage: primary ? { name: primary.name, color: primary.color ?? "#94a3b8" } : null,
+    };
+  });
   return repos.sort(compare);
 }
 
@@ -246,9 +254,10 @@ query {
                 }
               }
             }
-            languages(first: ${maxNumLanguages}) {
+            languages(first: ${maxNumLanguages}, orderBy: { field: SIZE, direction: DESC }) {
               nodes {
                 name
+                color
               }
             }
           }

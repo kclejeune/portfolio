@@ -66,7 +66,7 @@ const sampleResponse = {
               url: "https://github.com/kclejeune/system",
               description: "Declarative system configs",
               repositoryTopics: { nodes: [{ topic: { name: "nix" } }] },
-              languages: { nodes: [{ name: "Nix" }] },
+              languages: { nodes: [{ name: "Nix", color: "#7e7eff" }] },
             },
             {
               name: "portfolio",
@@ -75,7 +75,12 @@ const sampleResponse = {
               url: "https://github.com/kclejeune/portfolio",
               description: "Personal site",
               repositoryTopics: { nodes: [] },
-              languages: { nodes: [{ name: "Svelte" }] },
+              languages: {
+                nodes: [
+                  { name: "Svelte", color: "#ff3e00" },
+                  { name: "TypeScript", color: "#3178c6" },
+                ],
+              },
             },
           ],
         },
@@ -94,6 +99,13 @@ describe("parseRepositories", () => {
     expect(repos[0].stargazerCount).toBeGreaterThan(repos[1].stargazerCount);
   });
 
+  it("extracts the primary language with its color", () => {
+    const repos = parseRepositories(sampleResponse.data.user.itemShowcase.items.nodes);
+    expect(repos[0].primaryLanguage).toEqual({ name: "Nix", color: "#7e7eff" });
+    // First language node wins (they're ordered by size).
+    expect(repos[1].primaryLanguage).toEqual({ name: "Svelte", color: "#ff3e00" });
+  });
+
   it("tolerates missing fields", () => {
     const repos = parseRepositories([{ name: "bare", url: "https://example.com" }]);
     expect(repos[0]).toMatchObject({
@@ -103,6 +115,7 @@ describe("parseRepositories", () => {
       description: "",
       repositoryTopics: [],
       languages: [],
+      primaryLanguage: null,
     });
   });
 });
@@ -203,6 +216,7 @@ describe("compare", () => {
       description: "",
       repositoryTopics: [],
       languages: [],
+      primaryLanguage: null,
       ...over,
     });
     const repos = [

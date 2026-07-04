@@ -5,9 +5,15 @@
   let {
     data,
     max = 5,
+    label = "Radar chart of relative language usage across repositories",
+    showValues = false,
   }: {
     data: { axis: string; level: number }[];
     max?: number;
+    /** Accessible description of what the chart shows. */
+    label?: string;
+    /** Render each axis value (rounded percent) next to its label. */
+    showValues?: boolean;
   } = $props();
 
   const size = 280;
@@ -50,9 +56,9 @@
 
 <svg
   viewBox="0 0 {size} {size}"
-  class="mx-auto h-auto w-full max-w-[320px]"
+  class="mx-auto h-auto w-full max-w-[320px] overflow-visible"
   role="img"
-  aria-label="Radar chart of skill proficiency across domains"
+  aria-label={label}
 >
   <!-- Grid rings -->
   {#each ringPolys as poly (poly)}
@@ -80,9 +86,11 @@
       y={lp[1]}
       text-anchor={labelAnchor(lp[0])}
       dominant-baseline="middle"
-      class="fill-slate-500 text-[9px] font-medium dark:fill-slate-400"
+      class="fill-slate-600 text-[10px] font-medium dark:fill-slate-300"
     >
-      {d.axis}
+      {d.axis}{#if showValues}<tspan class="fill-slate-400 dark:fill-slate-500" dx="3"
+          >{Math.round(d.level)}%</tspan
+        >{/if}
     </text>
   {/each}
 
@@ -97,6 +105,8 @@
   <!-- Vertices -->
   {#each levels as level, i (data[i].axis)}
     {@const p = point(i, (level / max) * radius * grow.current)}
-    <circle cx={p[0]} cy={p[1]} r="3" class="fill-primary-500" />
+    <circle cx={p[0]} cy={p[1]} r="3" class="fill-primary-500">
+      <title>{data[i].axis}: {Math.round(level)}{showValues ? "%" : ""}</title>
+    </circle>
   {/each}
 </svg>

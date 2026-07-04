@@ -54,7 +54,14 @@
     <!-- Language footprint (objective, from GitHub repo activity) -->
     <div class="card mb-6 p-6 md:p-8">
       <div class="grid items-center gap-6 md:grid-cols-2">
-        <SkillsRadar data={radarData} max={radarMax} />
+        <SkillsRadar
+          data={radarData}
+          max={radarMax}
+          showValues={hasLanguageData}
+          label={hasLanguageData
+            ? "Radar chart of relative language usage across public GitHub repositories"
+            : "Radar chart of focus across engineering domains"}
+        />
         <div>
           <h2 class="text-lg font-semibold text-slate-900 dark:text-white">
             {hasLanguageData ? "Language footprint" : "Domain focus"}
@@ -99,8 +106,8 @@
           </div>
 
           <div class="flex flex-wrap gap-2">
-            {#each category.skills as skill (skill.name)}
-              <span class="tag-primary">{skill.name}</span>
+            {#each category.skills as skill (skill)}
+              <span class="tag-primary">{skill}</span>
             {/each}
           </div>
         </div>

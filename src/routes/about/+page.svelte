@@ -43,8 +43,10 @@
         <Link url={current.employerUrl ?? "#"}>{current.employer}</Link>
       </h2>
       <p class="mt-1.5 text-slate-600 dark:text-slate-300">
-        {#if current.location}{current.location} ·
-        {/if}Building infrastructure for
+        {#if current.location}
+          <span>{current.location} ·</span>
+        {/if}
+        Building infrastructure for
         <Link url="https://www.anduril.com/lattice/mission-autonomy">
           Lattice Mission Autonomy
         </Link>, distributed mesh networking, and systems for running robotics software at scale.

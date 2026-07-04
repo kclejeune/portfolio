@@ -17,19 +17,10 @@
   const hasStats = $derived(profile.stats.publicRepos > 0 || profile.contributions.total > 0);
   const hasHeatmap = $derived(profile.contributions.weeks.length > 0);
 
-  function titleCase(str: string): string {
-    if (str.includes(username)) return str;
-    return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substring(1));
-  }
-
+  // Topics only — the primary language gets its own GitHub-style color dot.
   function repoTags(repo: Repository): string[] {
     return Array.from(
-      new Set<string>(
-        repo.repositoryTopics
-          .concat(repo.languages)
-          .filter(Boolean)
-          .map((e) => e.toLowerCase().trim()),
-      ),
+      new Set<string>(repo.repositoryTopics.filter(Boolean).map((e) => e.toLowerCase().trim())),
     ).sort();
   }
 </script>
@@ -84,42 +75,25 @@
             href={repo.url}
             target="_blank"
             rel="noopener noreferrer"
-            class="group card card-hover block p-5"
+            class="group card card-hover flex flex-col p-5"
           >
             <div class="mb-2 flex items-start justify-between gap-2">
               <h3
-                class="text-lg font-semibold text-slate-900 transition-colors group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400"
+                class="text-lg font-semibold break-all text-slate-900 transition-colors group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400"
               >
-                {titleCase(repo.name.replace(/-/g, " "))}
+                {repo.name}
               </h3>
               <ArrowUpRightIcon
                 class="mt-1 h-4 w-4 shrink-0 text-slate-400 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary-500"
               />
             </div>
 
-            {#if repo.stargazerCount > 0 || repo.forkCount > 0}
-              <div class="mb-2 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
-                {#if repo.stargazerCount > 0}
-                  <span class="flex items-center gap-1">
-                    <StarIcon class="h-3.5 w-3.5 text-accent-400" />
-                    {repo.stargazerCount}
-                  </span>
-                {/if}
-                {#if repo.forkCount > 0}
-                  <span class="flex items-center gap-1">
-                    <ForkIcon class="h-3.5 w-3.5" />
-                    {repo.forkCount}
-                  </span>
-                {/if}
-              </div>
-            {/if}
-
             <p class="mb-3 line-clamp-2 text-base text-slate-600 dark:text-slate-300">
               {repo.description || "No description available"}
             </p>
 
             {#if repoTags(repo).length > 0}
-              <div class="flex flex-wrap gap-1.5">
+              <div class="mb-3 flex flex-wrap gap-1.5">
                 {#each repoTags(repo).slice(0, 4) as tag (tag)}
                   <span class="tag">{tag}</span>
                 {/each}
@@ -130,6 +104,31 @@
                 {/if}
               </div>
             {/if}
+
+            <!-- GitHub-style meta row, pinned to the bottom of the card -->
+            <div class="mt-auto flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
+              {#if repo.primaryLanguage}
+                <span class="flex items-center gap-1.5">
+                  <span
+                    class="h-2.5 w-2.5 rounded-full"
+                    style="background-color: {repo.primaryLanguage.color};"
+                  ></span>
+                  {repo.primaryLanguage.name}
+                </span>
+              {/if}
+              {#if repo.stargazerCount > 0}
+                <span class="flex items-center gap-1">
+                  <StarIcon class="h-3.5 w-3.5 text-accent-400" />
+                  {repo.stargazerCount.toLocaleString()}
+                </span>
+              {/if}
+              {#if repo.forkCount > 0}
+                <span class="flex items-center gap-1">
+                  <ForkIcon class="h-3.5 w-3.5" />
+                  {repo.forkCount.toLocaleString()}
+                </span>
+              {/if}
+            </div>
           </a>
         {/each}
       </div>

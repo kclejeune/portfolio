@@ -1,11 +1,5 @@
 <script lang="ts">
-  import {
-    jobs,
-    formatMonthYear,
-    formatDuration,
-    durationMonths,
-    isCurrentJob,
-  } from "$lib/data/jobs";
+  import { jobs, formatMonthYear, formatDuration, isCurrentJob } from "$lib/data/jobs";
   import PageHeader from "$lib/components/PageHeader.svelte";
   import SocialLinks from "$lib/components/SocialLinks.svelte";
   import { ChevronDownIcon, ExternalLinkIcon } from "$lib/components/icons";
@@ -13,9 +7,6 @@
   import { slide } from "svelte/transition";
   import { SvelteSet } from "svelte/reactivity";
   import { siteConfig } from "$lib/config.svelte";
-
-  // Longest tenure, used to scale the duration bars.
-  const maxMonths = Math.max(...jobs.map((j) => durationMonths(j.startDate, j.endDate)));
 
   // Expanded roles — the current role starts open.
   const open = new SvelteSet(jobs.filter(isCurrentJob).map((j) => j.employer));
@@ -45,7 +36,6 @@
 
     <ol class="relative ml-1.5 space-y-5 border-l border-slate-200 pl-6 dark:border-slate-800">
       {#each jobs as job (job.employer)}
-        {@const months = durationMonths(job.startDate, job.endDate)}
         {@const isOpen = open.has(job.employer)}
         {@const current = isCurrentJob(job)}
         <li class="relative">
@@ -94,17 +84,6 @@
                     {job.location}
                   {/if}
                 </p>
-
-                <!-- Tenure bar -->
-                <div
-                  class="mt-3 h-1.5 w-32 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800"
-                  role="presentation"
-                >
-                  <div
-                    class="h-full rounded-full bg-gradient-to-r from-primary-400 to-primary-600"
-                    style="width: {(months / maxMonths) * 100}%"
-                  ></div>
-                </div>
               </div>
 
               <ChevronDownIcon
