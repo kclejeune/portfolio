@@ -68,8 +68,9 @@
           </h2>
           <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
             {#if hasLanguageData}
-              Relative share of each language across my public GitHub repositories — a more
-              objective look at what I actually build with day to day.
+              How much each language shows up across my public GitHub repositories, with every repo
+              weighted equally — an objective look at what I actually build with, without one large
+              codebase skewing the picture.
             {:else}
               A high-level view of where I spend my time across distributed systems, infrastructure,
               backend, and applied machine learning.

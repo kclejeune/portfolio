@@ -121,14 +121,33 @@ describe("parseRepositories", () => {
 });
 
 describe("aggregateLanguages", () => {
-  it("sums byte sizes across repos and computes percentages", () => {
+  it("averages each language's share across repos, weighting repos equally", () => {
     const langs = aggregateLanguages(sampleResponse.data.user.repositories.nodes);
     const total = langs.reduce((s, l) => s + l.percent, 0);
     expect(Math.round(total)).toBe(100);
-    // Nix: 8000 + 1000 = 9000 of 15000 total -> largest share
-    expect(langs[0].name).toBe("Nix");
+    // Repo 1: Nix 80%, Shell 20%. Repo 2: TypeScript 80%, Nix 20%.
+    // Averaged: Nix 50%, TypeScript 40%, Shell 10%.
+    expect(langs.map((l) => l.name)).toEqual(["Nix", "TypeScript", "Shell"]);
     expect(langs[0].size).toBe(9000);
-    expect(langs[0].percent).toBeCloseTo(60, 5);
+    expect(langs[0].percent).toBeCloseTo(50, 5);
+    expect(langs[1].percent).toBeCloseTo(40, 5);
+    expect(langs[2].percent).toBeCloseTo(10, 5);
+  });
+
+  it("does not let one byte-heavy repo dominate the footprint", () => {
+    const nodes = [
+      // A huge single-language infra repo…
+      { languages: { edges: [{ size: 900000, node: { name: "HCL", color: "#844" } }] } },
+      // …and two small mixed repos.
+      { languages: { edges: [{ size: 1000, node: { name: "TypeScript", color: "#317" } }] } },
+      { languages: { edges: [{ size: 500, node: { name: "TypeScript", color: "#317" } }] } },
+    ];
+    const langs = aggregateLanguages(nodes);
+    // By raw bytes HCL would be ~99.8%; repo-weighted it is one repo of three.
+    expect(langs[0].name).toBe("TypeScript");
+    expect(langs[0].percent).toBeCloseTo(66.67, 1);
+    expect(langs[1].name).toBe("HCL");
+    expect(langs[1].percent).toBeCloseTo(33.33, 1);
   });
 
   it("collapses overflow languages into an 'Other' bucket", () => {

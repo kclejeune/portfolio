@@ -19,7 +19,7 @@ export interface LanguageStat {
   color: string;
   /** Total bytes of this language across the parsed repositories. */
   size: number;
-  /** Share of the total, 0–100. */
+  /** Repo-averaged share, 0–100 (each repository is weighted equally). */
   percent: number;
 }
 
@@ -94,32 +94,41 @@ export function parseRepositories(nodes: any[]): Repository[] {
 }
 
 export function aggregateLanguages(nodes: any[], top = 6): LanguageStat[] {
-  const totals = new Map<string, { color: string; size: number }>();
+  // Weight each repository equally: a language's share is its average share
+  // *within* each repo, not its raw byte total. This stops one large or
+  // verbose codebase (e.g. a Terraform-heavy infra repo) from dominating.
+  const totals = new Map<string, { color: string; size: number; weight: number }>();
+  let repoCount = 0;
 
   for (const node of nodes ?? []) {
-    for (const edge of node?.languages?.edges ?? []) {
-      const name = edge?.node?.name;
-      if (!name) continue;
+    const edges: any[] = (node?.languages?.edges ?? []).filter((e: any) => e?.node?.name);
+    const repoTotal = edges.reduce((sum: number, e: any) => sum + (e.size ?? 0), 0);
+    if (repoTotal === 0) continue;
+    repoCount += 1;
+
+    for (const edge of edges) {
+      const name = edge.node.name;
       const entry = totals.get(name) ?? {
         color: edge.node.color ?? "#94a3b8",
         size: 0,
+        weight: 0,
       };
       entry.size += edge.size ?? 0;
+      entry.weight += (edge.size ?? 0) / repoTotal;
       totals.set(name, entry);
     }
   }
 
-  const grandTotal = [...totals.values()].reduce((sum, l) => sum + l.size, 0);
-  if (grandTotal === 0) return [];
+  if (repoCount === 0) return [];
 
   const sorted = [...totals.entries()]
-    .map(([name, { color, size }]) => ({
+    .map(([name, { color, size, weight }]) => ({
       name,
       color,
       size,
-      percent: (size / grandTotal) * 100,
+      percent: (weight / repoCount) * 100,
     }))
-    .sort((a, b) => b.size - a.size);
+    .sort((a, b) => b.percent - a.percent);
 
   const head = sorted.slice(0, top);
   const tail = sorted.slice(top);
