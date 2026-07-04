@@ -34,3 +34,25 @@ export const skillCategories: SkillCategory[] = [
 
 /** Flat list of every skill name, kept for any consumers that need it. */
 export const skills: string[] = skillCategories.flatMap((c) => c.skills);
+
+/**
+ * Extra lowercase terms a skill should match beyond its own name, used to
+ * connect skills to repository languages and topics.
+ */
+const skillAliases: Record<string, string[]> = {
+  NixOS: ["nix", "nixos", "nix-darwin", "home-manager", "flakes"],
+  Svelte: ["svelte", "sveltekit"],
+  Vue: ["vuejs", "nuxt"],
+  Angular: ["angularjs"],
+  Postgres: ["postgresql"],
+  Kubernetes: ["k8s"],
+  "Scikit-Learn": ["sklearn"],
+  TensorFlow: ["tf"],
+  AWS: ["amazon-web-services"],
+  "Machine Learning": ["ml"],
+};
+
+/** All lowercase terms that identify a skill in repo languages/topics. */
+export function skillTerms(skill: string): string[] {
+  return [skill.toLowerCase(), ...(skillAliases[skill] ?? [])];
+}

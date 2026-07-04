@@ -25,11 +25,6 @@ export const siteConfig = {
       canonicalUrl: `${baseUrl}/projects`,
       title: "Projects",
     },
-    skills: {
-      path: "/skills",
-      canonicalUrl: `${baseUrl}/skills`,
-      title: "Skills",
-    },
   },
 } as const;
 
