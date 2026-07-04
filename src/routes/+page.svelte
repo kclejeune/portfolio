@@ -90,14 +90,14 @@
 <div class="flex flex-1 flex-col items-center justify-center px-4">
   <div class="text-center">
     <h1
-      class="mb-5 text-4xl font-light text-slate-900 md:text-6xl dark:text-white"
+      class="mb-5 text-4xl font-light text-primary-950 md:text-6xl dark:text-primary-50"
       style="animation: var(--animate-fade-up); animation-delay: 0ms;"
     >
       Hi, I'm Kennan.
     </h1>
 
     <p
-      class="mx-auto mb-10 max-w-xl text-base text-pretty text-slate-800 md:text-lg dark:text-primary-100/90"
+      class="mx-auto mb-10 max-w-xl text-base text-pretty text-primary-900/90 md:text-lg dark:text-primary-100/90"
       style="animation: var(--animate-fade-up); animation-delay: 100ms;"
     >
       I build infrastructure for distributed systems, autonomy, and robotics software at scale.
@@ -111,7 +111,7 @@
       {#each socials as social (social.name)}
         <IconButton link={social.link} name={social.name}>
           <social.icon
-            class="h-7 w-7 text-slate-700 transition-colors hover:text-slate-950 dark:text-primary-100 dark:hover:text-white"
+            class="h-7 w-7 text-primary-900 transition-colors hover:text-primary-950 dark:text-primary-100 dark:hover:text-white"
           />
         </IconButton>
       {/each}
@@ -120,13 +120,13 @@
     <!-- Scroll cue -->
     <a
       href="/about"
-      class="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-700/40 text-slate-700/80 transition-colors hover:border-slate-700/70 hover:text-slate-900 dark:border-primary-200/40 dark:text-primary-100/70 dark:hover:border-primary-200/70 dark:hover:text-primary-100"
+      class="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary-800/40 text-primary-900/70 transition-colors hover:border-primary-800/70 hover:text-primary-900 dark:border-primary-200/40 dark:text-primary-100/70 dark:hover:border-primary-200/70 dark:hover:text-primary-100"
       style="animation: var(--animate-fade-in); animation-delay: 360ms;"
       aria-label="Learn more about me"
     >
       {#each pulses as pulse, i (i)}
         <span
-          class="absolute inset-0 rounded-full border-[1.5px] border-slate-600 dark:border-primary-200"
+          class="absolute inset-0 rounded-full border-[1.5px] border-primary-700 dark:border-primary-200"
           style="transform: scale({pulse.current.scale}); opacity: {pulse.current.opacity};"
         ></span>
       {/each}
