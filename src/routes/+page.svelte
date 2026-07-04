@@ -79,7 +79,7 @@
   ></div>
   <!-- Uniform blur keeps the photo atmospheric while text stays readable
        without heavy global scrims. -->
-  <div class="absolute inset-0 backdrop-blur-md"></div>
+  <div class="absolute inset-0 backdrop-blur-sm"></div>
   <!-- Theme-matched radial behind the text: light glow / dark shade. -->
   <div
     class="absolute inset-0 bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(255_255_255/0.55),transparent_70%)] dark:bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(8_11_18/0.4),transparent_70%)]"
