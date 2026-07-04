@@ -73,14 +73,14 @@
 >
   <!-- Layered overlay: a light scrim in light mode, a dark one in dark mode,
        plus a vertical gradient for text legibility at the center/edges. -->
-  <div class="absolute inset-0 bg-white/20 dark:bg-slate-950/55"></div>
+  <div class="absolute inset-0 bg-white/10 dark:bg-slate-950/55"></div>
   <div
-    class="absolute inset-0 bg-gradient-to-b from-white/45 via-white/15 to-white/60 dark:from-primary-950/40 dark:via-transparent dark:to-slate-950/70"
+    class="absolute inset-0 bg-gradient-to-b from-white/30 via-white/5 to-white/40 dark:from-primary-950/40 dark:via-transparent dark:to-slate-950/70"
   ></div>
   <!-- Light mode only: a soft glow behind the hero text so it stays legible
        without flattening the rest of the photo. -->
   <div
-    class="absolute inset-0 bg-[radial-gradient(ellipse_55%_45%_at_50%_46%,rgb(255_255_255/0.72),transparent_72%)] dark:hidden"
+    class="absolute inset-0 bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(255_255_255/0.68),transparent_70%)] dark:hidden"
   ></div>
 </div>
 
