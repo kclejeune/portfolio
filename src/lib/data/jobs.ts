@@ -17,7 +17,7 @@ export const jobs: Job[] = [
     employer: "Anduril Industries",
     employerUrl: "https://www.anduril.com/",
     title: "Software Engineer",
-    location: "Seattle, WA",
+    location: "Washington, DC",
     startDate: new Date(2025, 0),
     endDate: new Date(currentDate.getFullYear(), currentDate.getMonth()),
     tasks: [
