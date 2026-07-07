@@ -13,10 +13,4 @@
   "cache": {
     "enabled": true,
   },
-  "kv_namespaces": [
-    {
-      "binding": "KV",
-      "id": "f77e939b7284432f9513875fd732a6cd",
-    },
-  ],
 }
