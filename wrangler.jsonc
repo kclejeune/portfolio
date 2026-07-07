@@ -1,7 +1,22 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portfolio",
-  "compatibility_date": "2025-05-05",
+  "compatibility_date": "2026-07-07",
   "compatibility_flags": ["nodejs_compat"],
-  "pages_build_output_dir": ".svelte-kit/cloudflare",
+  "main": ".svelte-kit/cloudflare/_worker.js",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".svelte-kit/cloudflare",
+  },
+  // Workers Caching: cacheable responses (Cache-Control: public, max-age=...)
+  // are served from the edge without invoking the Worker.
+  "cache": {
+    "enabled": true,
+  },
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "f77e939b7284432f9513875fd732a6cd",
+    },
+  ],
 }

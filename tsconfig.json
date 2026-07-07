@@ -5,6 +5,9 @@
     "checkJs": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    // TS 6 checks side-effect imports by default; the fontsource CSS entry
+    // point has no type declarations.
+    "noUncheckedSideEffectImports": false,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
