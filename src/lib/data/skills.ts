@@ -28,7 +28,7 @@ export const skillCategories: SkillCategory[] = [
   {
     name: "Backend & Systems",
     icon: "server",
-    skills: ["NixOS", "Kubernetes", "AWS", "Java", "Kotlin", "Postgres"],
+    skills: ["Go", "NixOS", "Kubernetes", "AWS", "Java", "Kotlin", "Postgres"],
   },
 ];
 
@@ -40,6 +40,7 @@ export const skills: string[] = skillCategories.flatMap((c) => c.skills);
  * connect skills to repository languages and topics.
  */
 const skillAliases: Record<string, string[]> = {
+  Go: ["golang"],
   NixOS: ["nix", "nixos", "nix-darwin", "home-manager", "flakes"],
   Svelte: ["svelte", "sveltekit"],
   Vue: ["vuejs", "nuxt"],

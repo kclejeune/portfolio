@@ -5,7 +5,7 @@
   import Stat from "$lib/components/Stat.svelte";
   import ContributionHeatmap from "$lib/components/ContributionHeatmap.svelte";
   import SkillsRadar from "$lib/components/SkillsRadar.svelte";
-  import LanguageBar from "$lib/components/LanguageBar.svelte";
+  import LanguageFrecency from "$lib/components/LanguageFrecency.svelte";
   import { skillCategories, skillDomains, skillTerms } from "$lib/data/skills";
   import { ArrowUpRightIcon, StarIcon, ForkIcon, RepoIcon, UsersIcon } from "$lib/components/icons";
   import SEO from "svelte-seo";
@@ -20,17 +20,8 @@
   const hasStats = $derived(profile.stats.publicRepos > 0 || profile.contributions.total > 0);
   const hasHeatmap = $derived(profile.contributions.weeks.length > 0);
 
-  // --- Language footprint (radar + bar), from GitHub repo activity ---
-  const radarLanguages = $derived(profile.languages.filter((l) => l.name !== "Other").slice(0, 6));
-  const hasLanguageData = $derived(radarLanguages.length >= 3);
-  const radarData = $derived(
-    hasLanguageData
-      ? radarLanguages.map((l) => ({ axis: l.name, level: l.percent }))
-      : skillDomains,
-  );
-  const radarMax = $derived(
-    hasLanguageData ? Math.max(...radarLanguages.map((l) => l.percent)) : 5,
-  );
+  // --- Language trajectory, from recent commits + long-term repository breadth ---
+  const hasLanguageData = $derived(profile.languages.filter((l) => l.name !== "Other").length >= 3);
 
   // --- Skill ↔ repository matching ---
   function repoTerms(repo: Repository): Set<string> {
@@ -116,38 +107,42 @@
       </div>
     {/if}
 
-    <!-- Language footprint (objective, from GitHub repo activity) -->
+    <!-- Language working set, blending current activity with long-term breadth. -->
     <div class="card mb-6 p-6 md:p-8">
-      <div class="grid items-center gap-6 md:grid-cols-2">
-        <SkillsRadar
-          data={radarData}
-          max={radarMax}
-          showValues={hasLanguageData}
-          label={hasLanguageData
-            ? "Radar chart of relative language usage across public GitHub repositories"
-            : "Radar chart of focus across engineering domains"}
-        />
-        <div>
-          <h2 class="text-lg font-semibold text-slate-900 dark:text-white">
-            {hasLanguageData ? "Language footprint" : "Domain focus"}
-          </h2>
-          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-            {#if hasLanguageData}
-              How much each language shows up across my public GitHub repositories, with every repo
-              weighted equally — an objective look at what I actually build with, without one large
-              codebase skewing the picture.
-            {:else}
+      {#if hasLanguageData}
+        <div
+          class="grid gap-8 md:grid-cols-[minmax(13rem,0.72fr)_minmax(0,1.28fr)] md:items-center"
+        >
+          <div>
+            <p class="eyebrow">Language trajectory</p>
+            <h2 class="mt-2 text-xl font-semibold text-slate-900 dark:text-white">
+              What I reach for now
+            </h2>
+            <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+              Recent public commit activity leads the ranking, while the languages spread across my
+              longer project history keep a meaningful vote.
+            </p>
+            <p class="mt-4 text-xs leading-relaxed text-slate-400 dark:text-slate-500">
+              70% last 12 months · 30% long-term repository footprint
+            </p>
+          </div>
+          <LanguageFrecency languages={profile.languages} />
+        </div>
+      {:else}
+        <div class="grid items-center gap-6 md:grid-cols-2">
+          <SkillsRadar
+            data={skillDomains}
+            label="Radar chart of focus across engineering domains"
+          />
+          <div>
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Domain focus</h2>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
               A high-level view of where I spend my time across distributed systems, infrastructure,
               backend, and applied machine learning.
-            {/if}
-          </p>
-          {#if hasLanguageData}
-            <div class="mt-5">
-              <LanguageBar languages={profile.languages} />
-            </div>
-          {/if}
+            </p>
+          </div>
         </div>
-      </div>
+      {/if}
     </div>
 
     <!-- Toolbox: skills grouped by area; chips with matches filter the repos below -->

@@ -19,8 +19,12 @@ export interface LanguageStat {
   color: string;
   /** Total bytes of this language across the parsed repositories. */
   size: number;
-  /** Repo-averaged share, 0–100 (each repository is weighted equally). */
+  /** Frecency share, 0–100 (70% recent activity, 30% historical footprint). */
   percent: number;
+  /** Share of recent public commit activity, 0–100. */
+  recentPercent: number;
+  /** Repo-averaged lifetime share, 0–100 (each repository is weighted equally). */
+  historicalPercent: number;
 }
 
 export type ContributionLevel = 0 | 1 | 2 | 3 | 4;
@@ -93,42 +97,90 @@ export function parseRepositories(nodes: any[]): Repository[] {
   return repos.sort(compare);
 }
 
-export function aggregateLanguages(nodes: any[], top = 6): LanguageStat[] {
-  // Weight each repository equally: a language's share is its average share
-  // *within* each repo, not its raw byte total. This stops one large or
-  // verbose codebase (e.g. a Terraform-heavy infra repo) from dominating.
-  const totals = new Map<string, { color: string; size: number; weight: number }>();
-  let repoCount = 0;
+function languageShares(node: any): { name: string; color: string; size: number; share: number }[] {
+  const edges: any[] = (node?.languages?.edges ?? []).filter(
+    (edge: any) => edge?.node?.name && (edge.size ?? 0) > 0,
+  );
+  const total = edges.reduce((sum: number, edge: any) => sum + edge.size, 0);
+  if (total === 0) return [];
+  return edges.map((edge: any) => ({
+    name: edge.node.name,
+    color: edge.node.color ?? "#94a3b8",
+    size: edge.size,
+    share: edge.size / total,
+  }));
+}
+
+export function aggregateLanguages(
+  nodes: any[],
+  recentContributions: any[] = [],
+  top = 6,
+): LanguageStat[] {
+  const totals = new Map<
+    string,
+    { color: string; size: number; historical: number; recent: number }
+  >();
+  let historicalRepos = 0;
 
   for (const node of nodes ?? []) {
-    const edges: any[] = (node?.languages?.edges ?? []).filter((e: any) => e?.node?.name);
-    const repoTotal = edges.reduce((sum: number, e: any) => sum + (e.size ?? 0), 0);
-    if (repoTotal === 0) continue;
-    repoCount += 1;
-
-    for (const edge of edges) {
-      const name = edge.node.name;
-      const entry = totals.get(name) ?? {
-        color: edge.node.color ?? "#94a3b8",
+    const shares = languageShares(node);
+    if (shares.length === 0) continue;
+    historicalRepos += 1;
+    for (const language of shares) {
+      const entry = totals.get(language.name) ?? {
+        color: language.color,
         size: 0,
-        weight: 0,
+        historical: 0,
+        recent: 0,
       };
-      entry.size += edge.size ?? 0;
-      entry.weight += (edge.size ?? 0) / repoTotal;
-      totals.set(name, entry);
+      entry.size += language.size;
+      entry.historical += language.share;
+      totals.set(language.name, entry);
     }
   }
 
-  if (repoCount === 0) return [];
+  let recentWeight = 0;
+  for (const contribution of recentContributions ?? []) {
+    if (contribution?.repository?.isPrivate) continue;
+    const commits = contribution?.contributions?.totalCount ?? 0;
+    const shares = languageShares(contribution?.repository);
+    if (commits <= 0 || shares.length === 0) continue;
 
+    // Commit frequency is useful, but raw counts mostly measure commit style.
+    // A logarithm lets sustained work rise without one noisy repo taking over.
+    const weight = Math.log2(commits + 1);
+    recentWeight += weight;
+    for (const language of shares) {
+      const entry = totals.get(language.name) ?? {
+        color: language.color,
+        size: 0,
+        historical: 0,
+        recent: 0,
+      };
+      entry.recent += language.share * weight;
+      totals.set(language.name, entry);
+    }
+  }
+
+  if (historicalRepos === 0 && recentWeight === 0) return [];
+
+  const hasRecentActivity = recentWeight > 0;
   const sorted = [...totals.entries()]
-    .map(([name, { color, size, weight }]) => ({
-      name,
-      color,
-      size,
-      percent: (weight / repoCount) * 100,
-    }))
-    .sort((a, b) => b.percent - a.percent);
+    .map(([name, { color, size, historical, recent }]) => {
+      const historicalPercent = historicalRepos > 0 ? (historical / historicalRepos) * 100 : 0;
+      const recentPercent = hasRecentActivity ? (recent / recentWeight) * 100 : 0;
+      return {
+        name,
+        color,
+        size,
+        percent: hasRecentActivity
+          ? recentPercent * 0.7 + historicalPercent * 0.3
+          : historicalPercent,
+        recentPercent,
+        historicalPercent,
+      };
+    })
+    .sort((a, b) => b.percent - a.percent || b.historicalPercent - a.historicalPercent);
 
   const head = sorted.slice(0, top);
   const tail = sorted.slice(top);
@@ -138,6 +190,8 @@ export function aggregateLanguages(nodes: any[], top = 6): LanguageStat[] {
       color: "#94a3b8",
       size: tail.reduce((s, l) => s + l.size, 0),
       percent: tail.reduce((s, l) => s + l.percent, 0),
+      recentPercent: tail.reduce((s, l) => s + l.recentPercent, 0),
+      historicalPercent: tail.reduce((s, l) => s + l.historicalPercent, 0),
     });
   }
   return head;
@@ -189,7 +243,10 @@ export function buildProfile(json: any): GithubProfile {
   const user = json?.data?.user ?? {};
   return {
     repos: parseRepositories(user?.itemShowcase?.items?.nodes ?? []),
-    languages: aggregateLanguages(user?.repositories?.nodes ?? []),
+    languages: aggregateLanguages(
+      user?.repositories?.nodes ?? [],
+      user?.contributionsCollection?.commitContributionsByRepository ?? [],
+    ),
     contributions: parseCalendar(user?.contributionsCollection?.contributionCalendar ?? {}),
     stats: parseStats(user),
   };
@@ -237,6 +294,23 @@ query {
       }
     }
     contributionsCollection {
+      commitContributionsByRepository(maxRepositories: 100) {
+        contributions {
+          totalCount
+        }
+        repository {
+          isPrivate
+          languages(first: ${maxNumLanguages}, orderBy: { field: SIZE, direction: DESC }) {
+            edges {
+              size
+              node {
+                name
+                color
+              }
+            }
+          }
+        }
+      }
       contributionCalendar {
         totalContributions
         weeks {

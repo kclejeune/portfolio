@@ -41,6 +41,17 @@ const sampleResponse = {
         ],
       },
       contributionsCollection: {
+        commitContributionsByRepository: [
+          {
+            contributions: { totalCount: 31 },
+            repository: {
+              isPrivate: false,
+              languages: {
+                edges: [{ size: 1000, node: { name: "TypeScript", color: "#3178c6" } }],
+              },
+            },
+          },
+        ],
         contributionCalendar: {
           totalContributions: 1234,
           weeks: [
@@ -121,7 +132,7 @@ describe("parseRepositories", () => {
 });
 
 describe("aggregateLanguages", () => {
-  it("averages each language's share across repos, weighting repos equally", () => {
+  it("uses equal repository weight when recent activity is unavailable", () => {
     const langs = aggregateLanguages(sampleResponse.data.user.repositories.nodes);
     const total = langs.reduce((s, l) => s + l.percent, 0);
     expect(Math.round(total)).toBe(100);
@@ -130,8 +141,58 @@ describe("aggregateLanguages", () => {
     expect(langs.map((l) => l.name)).toEqual(["Nix", "TypeScript", "Shell"]);
     expect(langs[0].size).toBe(9000);
     expect(langs[0].percent).toBeCloseTo(50, 5);
+    expect(langs[0].historicalPercent).toBeCloseTo(50, 5);
+    expect(langs[0].recentPercent).toBe(0);
     expect(langs[1].percent).toBeCloseTo(40, 5);
     expect(langs[2].percent).toBeCloseTo(10, 5);
+  });
+
+  it("blends recent commit activity with the long-term footprint", () => {
+    const historical = [
+      { languages: { edges: [{ size: 1, node: { name: "Java", color: "#b07219" } }] } },
+      { languages: { edges: [{ size: 1, node: { name: "Go", color: "#00add8" } }] } },
+    ];
+    const recent = [
+      {
+        contributions: { totalCount: 64 },
+        repository: {
+          isPrivate: false,
+          languages: { edges: [{ size: 1, node: { name: "Go", color: "#00add8" } }] },
+        },
+      },
+    ];
+
+    const langs = aggregateLanguages(historical, recent);
+    expect(langs.map((language) => language.name)).toEqual(["Go", "Java"]);
+    expect(langs[0]).toMatchObject({
+      recentPercent: 100,
+      historicalPercent: 50,
+      percent: 85,
+    });
+    expect(langs[1]).toMatchObject({
+      recentPercent: 0,
+      historicalPercent: 50,
+      percent: 15,
+    });
+  });
+
+  it("excludes private repositories from the recent signal", () => {
+    const historical = [
+      { languages: { edges: [{ size: 1, node: { name: "Go", color: "#00add8" } }] } },
+    ];
+    const recent = [
+      {
+        contributions: { totalCount: 100 },
+        repository: {
+          isPrivate: true,
+          languages: { edges: [{ size: 1, node: { name: "Rust", color: "#dea584" } }] },
+        },
+      },
+    ];
+
+    expect(aggregateLanguages(historical, recent)).toEqual([
+      expect.objectContaining({ name: "Go", percent: 100, recentPercent: 0 }),
+    ]);
   });
 
   it("does not let one byte-heavy repo dominate the footprint", () => {
@@ -162,7 +223,7 @@ describe("aggregateLanguages", () => {
         },
       },
     ];
-    const langs = aggregateLanguages(nodes, 2);
+    const langs = aggregateLanguages(nodes, [], 2);
     expect(langs.map((l) => l.name)).toEqual(["A", "B", "Other"]);
   });
 
@@ -214,6 +275,7 @@ describe("buildProfile", () => {
     expect(profile.languages.length).toBeGreaterThan(0);
     expect(profile.contributions.total).toBe(1234);
     expect(profile.stats.totalStars).toBe(69);
+    expect(profile.languages[0].name).toBe("TypeScript");
   });
 
   it("returns an empty profile for malformed input", () => {
