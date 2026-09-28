@@ -6,90 +6,93 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Typography */
-  --font-sans: "IBM Plex Sans Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, monospace;
+  /* One family: condensed and heavy for display, optical-sized for body. */
+  --font-sans: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
 
-  /* Primary — refined blue with a slight indigo tint */
-  --color-primary-50: oklch(0.97 0.02 255);
-  --color-primary-100: oklch(0.94 0.04 255);
-  --color-primary-200: oklch(0.88 0.08 255);
-  --color-primary-300: oklch(0.78 0.12 255);
-  --color-primary-400: oklch(0.65 0.18 255);
-  --color-primary-500: oklch(0.55 0.22 255);
-  --color-primary-600: oklch(0.48 0.22 255);
-  --color-primary-700: oklch(0.42 0.18 255);
-  --color-primary-800: oklch(0.35 0.14 255);
-  --color-primary-900: oklch(0.28 0.1 255);
-  --color-primary-950: oklch(0.2 0.06 255);
+  /* Neutrals — a cool, faintly green-gray paper rather than warm cream. */
+  --color-paper: #f1f2ee;
+  --color-surface: #f9faf7;
+  --color-sunken: #e5e7e2;
+  --color-ink: #1b1d22;
+  --color-muted: #595e68;
+  --color-faint: #80858d;
+  --color-line: #d6d9d3;
 
-  /* Slate — cool gray base with a subtle blue undertone */
-  --color-slate-50: oklch(0.98 0.005 260);
-  --color-slate-100: oklch(0.96 0.008 260);
-  --color-slate-200: oklch(0.91 0.012 260);
-  --color-slate-300: oklch(0.85 0.016 260);
-  --color-slate-400: oklch(0.65 0.02 260);
-  --color-slate-500: oklch(0.5 0.02 260);
-  --color-slate-600: oklch(0.4 0.018 260);
-  --color-slate-700: oklch(0.32 0.015 260);
-  --color-slate-800: oklch(0.23 0.012 260);
-  --color-slate-850: oklch(0.18 0.01 260);
-  --color-slate-900: oklch(0.15 0.008 260);
-  --color-slate-950: oklch(0.1 0.006 260);
+  /* The cube itself: black plastic body and the six standard sticker colors.
+     These are fixed across themes — they're a physical object. */
+  --color-plastic: #17181b;
+  --color-sticker-white: #f3f3ee;
+  --color-sticker-yellow: #ffd500;
+  --color-sticker-red: #c41e3a;
+  --color-sticker-orange: #ff5800;
+  --color-sticker-blue: #0051ba;
+  --color-sticker-green: #009e60;
 
-  /* Accent — warm complement for highlights */
-  --color-accent-300: oklch(0.82 0.11 45);
-  --color-accent-400: oklch(0.75 0.15 45);
-  --color-accent-500: oklch(0.65 0.18 45);
+  /* Text-safe versions of each section's sticker color. */
+  --color-face-green: #00724a;
+  --color-face-orange: #b23c00;
+  --color-face-blue: #0048a6;
 
-  /* Motion */
+  /* The current section's colors; set per page via [data-face]. */
+  --color-accent: var(--color-face-green);
+  --color-accent-sticker: var(--color-sticker-green);
+
+  /* Type scale (classic 16/18/21/24/36/48/60/72 progression) */
+  --text-display: clamp(3.75rem, 11vw, 8.5rem);
+  --text-display--line-height: 0.88;
+  --text-title: clamp(3rem, 7vw, 4.5rem);
+  --text-title--line-height: 0.95;
+
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-
-  /* Animations */
-  --animate-fade-up: fade-up 0.6s var(--ease-out-quint) both;
-  --animate-fade-in: fade-in 0.5s ease both;
-}
-
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(0.75rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 @layer base {
+  .dark {
+    --color-paper: #16181b;
+    --color-surface: #1d1f23;
+    --color-sunken: #25282d;
+    --color-ink: #ebece7;
+    --color-muted: #a2a7ae;
+    --color-faint: #767b83;
+    --color-line: #2e3137;
+    --color-plastic: #0b0c0d;
+
+    --color-face-green: #3ccf8e;
+    --color-face-orange: #ff8a4c;
+    --color-face-blue: #7fa9ff;
+  }
+
+  [data-face="green"] {
+    --color-accent: var(--color-face-green);
+    --color-accent-sticker: var(--color-sticker-green);
+  }
+  [data-face="orange"] {
+    --color-accent: var(--color-face-orange);
+    --color-accent-sticker: var(--color-sticker-orange);
+  }
+  [data-face="blue"] {
+    --color-accent: var(--color-face-blue);
+    --color-accent-sticker: var(--color-sticker-blue);
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
 
   body {
-    @apply bg-slate-50 text-slate-800 antialiased dark:bg-slate-950 dark:text-slate-200;
+    @apply bg-paper text-ink antialiased;
+    font-optical-sizing: auto;
   }
 
-  /* Consistent, visible keyboard focus for accessibility */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-primary-500;
+    @apply rounded-[3px] outline-2 outline-offset-2 outline-accent;
   }
 
   ::selection {
-    @apply bg-primary-500/25 text-slate-900 dark:text-white;
+    @apply bg-accent-sticker/30;
   }
 
-  /* Respect users who prefer reduced motion */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -105,47 +108,34 @@
 }
 
 @layer components {
-  /* Page wrapper */
-  .page-content {
-    @apply w-full;
+  .container-page {
+    @apply mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8;
   }
 
-  /* Section container */
-  .section-container {
-    @apply mx-auto max-w-4xl px-4 py-8 sm:px-6 md:py-14 lg:px-8;
+  /* Condensed, heavy display type — the site's voice. */
+  .display {
+    font-stretch: 78%;
+    font-weight: 750;
+    letter-spacing: -0.025em;
   }
 
-  /* Small uppercase label used above section headings */
-  .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-primary-600 dark:text-primary-400;
-  }
-
-  /* Surface / card — dark surface sits a full step above the page background
-     so cards read as elevated panels rather than blending into it. */
-  .card {
-    @apply rounded-2xl border border-slate-200/80 bg-white/90 dark:border-slate-700/50 dark:bg-slate-850;
-  }
-
-  .card-hover {
-    @apply transition duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lg hover:shadow-slate-900/5 dark:hover:border-slate-600 dark:hover:shadow-black/20;
-  }
-
-  /* Pill tag */
-  .tag {
-    @apply inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300;
-  }
-
-  .tag-primary {
-    @apply inline-flex items-center rounded-full bg-primary-100 px-3 py-1 text-sm font-medium text-primary-700 dark:bg-primary-500/15 dark:text-primary-200;
-  }
-
-  /* Inline text link */
+  /* Inline text link: ink text, section-colored underline. */
   .link {
-    @apply text-primary-600 underline decoration-primary-400/40 underline-offset-2 transition-colors hover:text-primary-700 hover:decoration-primary-500 dark:text-primary-400 dark:hover:text-primary-300;
+    @apply font-medium text-ink underline decoration-accent/60 decoration-2 underline-offset-[3px] transition-colors hover:decoration-accent;
   }
 
-  /* Solid button */
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700;
+  /* Small sticker-shaped tag */
+  .chip {
+    @apply inline-flex items-center rounded-[5px] bg-sunken px-2 py-0.5 text-sm text-muted;
+  }
+
+  /* Outlined panel, for things you can click through to */
+  .panel {
+    @apply rounded-xl border border-line bg-surface;
+  }
+
+  /* Small label for a group of content */
+  .label {
+    @apply text-sm font-semibold text-muted;
   }
 }

@@ -5,11 +5,11 @@
 
   // Full class strings so Tailwind picks them up during scanning.
   const levelClass: Record<ContributionLevel, string> = {
-    0: "bg-slate-100 dark:bg-slate-800",
-    1: "bg-primary-200 dark:bg-primary-900",
-    2: "bg-primary-300 dark:bg-primary-700",
-    3: "bg-primary-400 dark:bg-primary-600",
-    4: "bg-primary-500 dark:bg-primary-400",
+    0: "bg-sunken",
+    1: "bg-accent-sticker/25",
+    2: "bg-accent-sticker/50",
+    3: "bg-accent-sticker/75",
+    4: "bg-accent-sticker",
   };
 
   const legendLevels: ContributionLevel[] = [0, 1, 2, 3, 4];
@@ -73,11 +73,11 @@
   <div class="flex gap-2">
     <!-- Weekday guide (kept outside the scroll container) -->
     <div
-      class="mt-[17px] flex flex-col gap-[3px] text-[9px] leading-none text-slate-400 dark:text-slate-500"
+      class="mt-[18px] flex flex-col gap-[3px] text-[11px] leading-none text-faint"
       aria-hidden="true"
     >
       {#each weekdayLabels as label, i (i)}
-        <span class="flex h-2.5 items-center">{label}</span>
+        <span class="flex h-3.5 items-center">{label}</span>
       {/each}
     </div>
 
@@ -85,11 +85,11 @@
       <div class="w-max">
         <!-- Month labels -->
         <div
-          class="mb-[4px] flex h-2.5 gap-[3px] text-[9px] leading-none text-slate-400 dark:text-slate-500"
+          class="mb-[4px] flex h-3.5 gap-[3px] text-[11px] leading-none text-faint"
           aria-hidden="true"
         >
           {#each monthLabels as label, w (w)}
-            <span class="relative w-2.5 shrink-0">
+            <span class="relative w-3.5 shrink-0">
               {#if label}
                 <span class="absolute top-0 left-0 whitespace-nowrap">{label}</span>
               {/if}
@@ -107,7 +107,7 @@
             <div class="flex flex-col gap-[3px]">
               {#each week.days as day (day.date)}
                 <span
-                  class="h-2.5 w-2.5 rounded-[2px] {levelClass[day.level]}"
+                  class="h-3.5 w-3.5 rounded-[3px] {levelClass[day.level]}"
                   title={tooltip(day.date, day.count)}
                 ></span>
               {/each}
@@ -119,13 +119,13 @@
   </div>
 
   <div
-    class="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 text-xs text-slate-500 dark:text-slate-400"
+    class="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 text-sm text-muted"
   >
     <span>{calendar.total.toLocaleString()} contributions in the last year</span>
     <div class="flex items-center gap-1">
       <span>Less</span>
       {#each legendLevels as level (level)}
-        <span class="h-2.5 w-2.5 rounded-[2px] {levelClass[level]}"></span>
+        <span class="h-3.5 w-3.5 rounded-[3px] {levelClass[level]}"></span>
       {/each}
       <span>More</span>
     </div>

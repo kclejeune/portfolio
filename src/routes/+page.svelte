@@ -1,63 +1,25 @@
 <script lang="ts">
-  import { Tween } from "svelte/motion";
-  import { cubicOut } from "svelte/easing";
-  import IconButton from "$lib/components/IconButton.svelte";
-  import {
-    GitHubIcon,
-    LinkedInIcon,
-    EmailIcon,
-    ResumeIcon,
-    ChevronDownIcon,
-  } from "$lib/components/icons";
+  import CubeFace from "$lib/components/CubeFace.svelte";
+  import { GitHubIcon, LinkedInIcon, EmailIcon, ResumeIcon } from "$lib/components/icons";
+  import { jobs, isCurrentJob } from "$lib/data/jobs";
+  import { links, sections, siteConfig } from "$lib/config.svelte";
   import SEO from "svelte-seo";
-  import { siteConfig } from "$lib/config.svelte";
 
-  const socials = [
-    { link: "https://github.com/kclejeune", name: "GitHub", icon: GitHubIcon },
-    {
-      link: "https://linkedin.com/in/kclejeune",
-      name: "LinkedIn",
-      icon: LinkedInIcon,
-    },
-    { link: "mailto:contact@kclj.io", name: "Email", icon: EmailIcon },
-    {
-      link: "https://assets.kclj.io/resume.pdf",
-      name: "Resume",
-      icon: ResumeIcon,
-    },
+  const current = jobs.find(isCurrentJob) ?? jobs[0];
+
+  const contacts = [
+    { href: links.github, label: "GitHub", icon: GitHubIcon },
+    { href: links.linkedin, label: "LinkedIn", icon: LinkedInIcon },
+    { href: links.email, label: "Email", icon: EmailIcon },
+    { href: links.resume, label: "Resume", icon: ResumeIcon },
   ];
 
-  // Concentric ripples behind the scroll cue.
-  const pulseCount = 3;
-  const pulseDuration = 3000;
-  const pulses = Array.from(
-    { length: pulseCount },
-    () => new Tween({ scale: 1, opacity: 0 }, { duration: pulseDuration, easing: cubicOut }),
-  );
-
-  const animateRipple = (pulse: Tween<{ scale: number; opacity: number }>) => {
-    pulse.set({ scale: 1, opacity: 0.4 }, { duration: 0 });
-    pulse.set({ scale: 2, opacity: 0 });
-  };
-
-  $effect(() => {
-    const intervals: ReturnType<typeof setInterval>[] = [];
-    const timeouts: ReturnType<typeof setTimeout>[] = [];
-
-    pulses.forEach((pulse, i) => {
-      const delay = (pulseDuration / pulseCount) * i;
-      const timeout = setTimeout(() => {
-        animateRipple(pulse);
-        intervals.push(setInterval(() => animateRipple(pulse), pulseDuration));
-      }, delay);
-      timeouts.push(timeout);
-    });
-
-    return () => {
-      timeouts.forEach(clearTimeout);
-      intervals.forEach(clearInterval);
-    };
-  });
+  // Full class strings so Tailwind picks them up during scanning.
+  const faceBorder = {
+    green: "border-sticker-green",
+    orange: "border-sticker-orange",
+    blue: "border-sticker-blue",
+  } as const;
 </script>
 
 <SEO
@@ -66,71 +28,63 @@
   canonical={siteConfig.routes.home.canonicalUrl}
 />
 
-<!-- Full-viewport background (sits behind the navbar too) -->
-<div
-  class="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
-  style="background-image: url('/assets/images/cube.webp');"
+<section
+  class="container-page grid items-center gap-14 pt-8 pb-20 md:grid-cols-[minmax(0,1fr)_17rem] md:pt-16 md:pb-28 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-20"
 >
-  <!-- Layered overlay: a light scrim in light mode, a dark one in dark mode,
-       plus a vertical gradient for text legibility at the center/edges. -->
-  <div class="absolute inset-0 bg-white/5 dark:bg-slate-950/20"></div>
-  <div
-    class="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-white/20 dark:from-primary-950/20 dark:via-transparent dark:to-slate-950/40"
-  ></div>
-  <!-- Uniform blur keeps the photo atmospheric while text stays readable
-       without heavy global scrims. -->
-  <div class="absolute inset-0 backdrop-blur-sm"></div>
-  <!-- Theme-matched radial behind the text: light glow / dark shade. -->
-  <div
-    class="absolute inset-0 bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(255_255_255/0.55),transparent_70%)] dark:bg-[radial-gradient(ellipse_52%_42%_at_50%_46%,rgb(8_11_18/0.4),transparent_70%)]"
-  ></div>
-</div>
+  <div>
+    <h1 class="display text-display">Hi, I'm<br />Kennan.</h1>
 
-<!-- Hero content -->
-<div class="flex flex-1 flex-col items-center justify-center px-4">
-  <div class="text-center">
-    <h1
-      class="mb-5 text-4xl font-light text-primary-900 md:text-6xl dark:text-primary-100"
-      style="animation: var(--animate-fade-up); animation-delay: 0ms;"
-    >
-      Hi, I'm Kennan.
-    </h1>
-
-    <p
-      class="mx-auto mb-10 max-w-xl text-base text-pretty text-primary-800/90 md:text-lg dark:text-primary-200/90"
-      style="animation: var(--animate-fade-up); animation-delay: 100ms;"
-    >
+    <p class="mt-8 max-w-[30ch] text-2xl leading-snug font-medium text-pretty sm:text-[1.75rem]">
       I build infrastructure for distributed systems, autonomy, and robotics software at scale.
     </p>
 
-    <!-- Social icons -->
-    <div
-      class="mb-12 flex justify-center gap-7"
-      style="animation: var(--animate-fade-up); animation-delay: 200ms;"
-    >
-      {#each socials as social (social.name)}
-        <IconButton link={social.link} name={social.name}>
-          <social.icon
-            class="h-7 w-7 text-primary-800 transition-colors hover:text-primary-950 dark:text-primary-200 dark:hover:text-white"
-          />
-        </IconButton>
-      {/each}
-    </div>
+    <p class="mt-5 max-w-[52ch] text-lg leading-relaxed text-muted">
+      Right now that's at
+      <a href={current.employerUrl} class="link">{current.employer}</a>{current.location
+        ? ` in ${current.location}`
+        : ""}, working on Lattice Mission Autonomy.
+    </p>
 
-    <!-- Scroll cue -->
-    <a
-      href="/about"
-      class="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary-800/40 text-primary-800/70 transition-colors hover:border-primary-800/70 hover:text-primary-900 dark:border-primary-300/40 dark:text-primary-200/70 dark:hover:border-primary-300/70 dark:hover:text-primary-100"
-      style="animation: var(--animate-fade-in); animation-delay: 360ms;"
-      aria-label="Learn more about me"
-    >
-      {#each pulses as pulse, i (i)}
-        <span
-          class="absolute inset-0 rounded-full border-[1.5px] border-primary-700 dark:border-primary-200"
-          style="transform: scale({pulse.current.scale}); opacity: {pulse.current.opacity};"
-        ></span>
+    <ul class="mt-9 flex flex-wrap gap-2.5">
+      {#each contacts as contact (contact.label)}
+        <li>
+          <a
+            href={contact.href}
+            class="inline-flex items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 font-medium transition-colors hover:border-ink"
+          >
+            <contact.icon class="h-4.5 w-4.5 text-muted" />
+            {contact.label}
+          </a>
+        </li>
       {/each}
-      <ChevronDownIcon class="relative z-10 h-5 w-5" />
-    </a>
+    </ul>
   </div>
-</div>
+
+  <figure class="mx-auto w-full max-w-56 md:max-w-none">
+    <CubeFace />
+    <figcaption class="mt-9 text-[0.95rem] leading-snug text-muted">
+      Before infrastructure, I solved these competitively. Press the cube to scramble it.
+    </figcaption>
+  </figure>
+</section>
+
+<nav class="container-page" aria-label="Sections">
+  <ul class="grid gap-10 sm:grid-cols-3 sm:gap-6">
+    {#each sections as section (section.path)}
+      <li>
+        <a
+          href={section.path}
+          data-sveltekit-preload-data
+          class="group block border-t-[5px] pt-5 {faceBorder[section.face]}"
+        >
+          <span
+            class="display block text-4xl transition-transform duration-300 group-hover:translate-x-1"
+          >
+            {section.title}
+          </span>
+          <span class="mt-2 block max-w-[28ch] text-muted">{section.blurb}</span>
+        </a>
+      </li>
+    {/each}
+  </ul>
+</nav>

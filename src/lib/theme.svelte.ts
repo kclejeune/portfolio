@@ -21,7 +21,7 @@ function apply(theme: Theme) {
   // Keep the browser chrome (mobile address bar, etc.) matching the theme.
   document
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute("content", dark ? "#0f1117" : "#f8f9fb");
+    ?.setAttribute("content", dark ? "#16181b" : "#f1f2ee");
 }
 
 class ThemeStore {

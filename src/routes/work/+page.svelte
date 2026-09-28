@@ -1,20 +1,8 @@
 <script lang="ts">
   import { jobs, formatMonthYear, formatDuration, isCurrentJob } from "$lib/data/jobs";
   import PageHeader from "$lib/components/PageHeader.svelte";
-  import SocialLinks from "$lib/components/SocialLinks.svelte";
-  import { ChevronDownIcon, ExternalLinkIcon } from "$lib/components/icons";
   import SEO from "svelte-seo";
-  import { slide } from "svelte/transition";
-  import { SvelteSet } from "svelte/reactivity";
-  import { siteConfig } from "$lib/config.svelte";
-
-  // Expanded roles — the current role starts open.
-  const open = new SvelteSet(jobs.filter(isCurrentJob).map((j) => j.employer));
-
-  function toggle(employer: string) {
-    if (open.has(employer)) open.delete(employer);
-    else open.add(employer);
-  }
+  import { links, siteConfig } from "$lib/config.svelte";
 </script>
 
 <SEO
@@ -23,113 +11,63 @@
   canonical={siteConfig.routes.work.canonicalUrl}
 />
 
-<div class="page-content">
-  <div class="section-container">
-    <PageHeader eyebrow="Where I've worked" title="Work Experience">
-      <SocialLinks
-        links={[
-          { label: "LinkedIn", href: "https://linkedin.com/in/kclejeune" },
-          { label: "Resume", href: "https://assets.kclj.io/resume.pdf" },
-        ]}
-      />
-    </PageHeader>
+<PageHeader title="Work">
+  Infrastructure, autonomy, and applied machine learning. The full history is on my
+  <a href={links.resume} class="link">resume</a> and
+  <a href={links.linkedin} class="link">LinkedIn</a>.
+</PageHeader>
 
-    <ol class="relative ml-1 space-y-5 border-l border-slate-200 pl-4 dark:border-slate-800">
-      {#each jobs as job (job.employer)}
-        {@const isOpen = open.has(job.employer)}
-        {@const current = isCurrentJob(job)}
-        <li class="relative">
-          <!-- Timeline node, centered on the rail (pl-4 + half node + half border) -->
-          <span
-            class="absolute top-5 -left-[23px] flex h-3.5 w-3.5 items-center justify-center rounded-full ring-4 ring-slate-50 dark:ring-slate-950 {current
-              ? 'bg-primary-500'
-              : 'border-2 border-primary-400 bg-slate-50 dark:bg-slate-950'}"
-          >
-            {#if current}
-              <span class="absolute h-3.5 w-3.5 animate-ping rounded-full bg-primary-500/60"></span>
-            {/if}
-          </span>
+<ol class="container-page">
+  {#each jobs as job (job.employer)}
+    {@const current = isCurrentJob(job)}
+    <li
+      class="grid gap-4 border-t border-line py-10 md:grid-cols-[13rem_minmax(0,1fr)] md:gap-10 md:py-12"
+    >
+      <div>
+        <p class="display text-4xl tabular-nums {current ? 'text-accent' : ''}">
+          {job.startDate.getFullYear()}–{current ? "now" : job.endDate.getFullYear()}
+        </p>
+        <p class="mt-2 text-sm text-muted">
+          {formatMonthYear(job.startDate)} to {current ? "present" : formatMonthYear(job.endDate)}
+          <br />
+          {formatDuration(job.startDate, job.endDate)}
+        </p>
+      </div>
 
-          <div class="card card-hover overflow-hidden">
-            <button
-              type="button"
-              onclick={() => toggle(job.employer)}
-              class="flex w-full items-start justify-between gap-3 p-5 text-left"
-              aria-expanded={isOpen}
-            >
-              <div class="min-w-0">
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="text-lg font-semibold text-slate-900 dark:text-white">
-                    {job.employer}
-                  </h3>
-                  {#if current}
-                    <span
-                      class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-700 dark:bg-primary-500/15 dark:text-primary-300"
-                    >
-                      Current
-                    </span>
-                  {/if}
-                </div>
-                <p class="text-base font-medium text-primary-600 dark:text-primary-400">
-                  {job.title}
-                </p>
-                <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                  {formatMonthYear(job.startDate)} – {current
-                    ? "Present"
-                    : formatMonthYear(job.endDate)}
-                  <span class="text-slate-300 dark:text-slate-600">·</span>
-                  {formatDuration(job.startDate, job.endDate)}
-                  {#if job.location}
-                    <span class="text-slate-300 dark:text-slate-600">·</span>
-                    {job.location}
-                  {/if}
-                </p>
-              </div>
+      <div class="max-w-[62ch]">
+        <h2 class="text-2xl leading-tight font-semibold tracking-tight">
+          {#if job.employerUrl}
+            <a href={job.employerUrl} class="hover:underline hover:decoration-accent">
+              {job.employer}
+            </a>
+          {:else}
+            {job.employer}
+          {/if}
+        </h2>
+        <p class="mt-1 text-lg text-muted">
+          {job.title}{job.location ? `, ${job.location}` : ""}
+        </p>
 
-              <ChevronDownIcon
-                class="mt-1 h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200 {isOpen
-                  ? 'rotate-180'
-                  : ''}"
-              />
-            </button>
+        <ul class="mt-5 space-y-2.5 text-lg leading-relaxed">
+          {#each job.tasks as task (task)}
+            <li class="flex gap-3.5">
+              <span
+                class="mt-[0.6em] h-2 w-2 shrink-0 rounded-[2px] bg-accent-sticker"
+                aria-hidden="true"
+              ></span>
+              <span>{task}</span>
+            </li>
+          {/each}
+        </ul>
 
-            {#if isOpen}
-              <div transition:slide={{ duration: 200 }}>
-                <div class="border-t border-slate-100 px-5 pt-4 pb-5 dark:border-slate-800">
-                  <ul class="space-y-2 text-base text-slate-600 dark:text-slate-300">
-                    {#each job.tasks as task (task)}
-                      <li class="flex items-start gap-2.5">
-                        <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-400"></span>
-                        <span>{task}</span>
-                      </li>
-                    {/each}
-                  </ul>
-
-                  {#if job.tags && job.tags.length > 0}
-                    <div class="mt-4 flex flex-wrap gap-1.5">
-                      {#each job.tags as tag (tag)}
-                        <span class="tag">{tag}</span>
-                      {/each}
-                    </div>
-                  {/if}
-
-                  {#if job.employerUrl}
-                    <a
-                      href={job.employerUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="mt-4 inline-flex items-center gap-1 text-sm text-primary-600 transition-colors hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
-                    >
-                      Visit {job.employer}
-                      <ExternalLinkIcon class="h-3.5 w-3.5" />
-                    </a>
-                  {/if}
-                </div>
-              </div>
-            {/if}
-          </div>
-        </li>
-      {/each}
-    </ol>
-  </div>
-</div>
+        {#if job.tags && job.tags.length > 0}
+          <ul class="mt-6 flex flex-wrap gap-1.5" aria-label="Tools">
+            {#each job.tags as tag (tag)}
+              <li class="chip">{tag}</li>
+            {/each}
+          </ul>
+        {/if}
+      </div>
+    </li>
+  {/each}
+</ol>

@@ -62,11 +62,7 @@
 >
   <!-- Grid rings -->
   {#each ringPolys as poly (poly)}
-    <polygon
-      points={poly}
-      class="fill-none stroke-slate-200 dark:stroke-slate-800"
-      stroke-width="1"
-    />
+    <polygon points={poly} class="fill-none stroke-line" stroke-width="1" />
   {/each}
 
   <!-- Axes + labels -->
@@ -78,7 +74,7 @@
       y1={center}
       x2={outer[0]}
       y2={outer[1]}
-      class="stroke-slate-200 dark:stroke-slate-800"
+      class="stroke-line"
       stroke-width="1"
     />
     <text
@@ -86,18 +82,16 @@
       y={lp[1]}
       text-anchor={labelAnchor(lp[0])}
       dominant-baseline="middle"
-      class="fill-slate-600 text-[10px] font-medium dark:fill-slate-300"
+      class="fill-muted text-[10px] font-medium"
     >
-      {d.axis}{#if showValues}<tspan class="fill-slate-400 dark:fill-slate-500" dx="3"
-          >{Math.round(d.level)}%</tspan
-        >{/if}
+      {d.axis}{#if showValues}<tspan class="fill-faint" dx="3">{Math.round(d.level)}%</tspan>{/if}
     </text>
   {/each}
 
   <!-- Data polygon -->
   <polygon
     points={polygon(levels, grow.current)}
-    class="fill-primary-500/20 stroke-primary-500"
+    class="fill-accent-sticker/20 stroke-accent"
     stroke-width="2"
     stroke-linejoin="round"
   />
@@ -105,7 +99,7 @@
   <!-- Vertices -->
   {#each levels as level, i (data[i].axis)}
     {@const p = point(i, (level / max) * radius * grow.current)}
-    <circle cx={p[0]} cy={p[1]} r="3" class="fill-primary-500">
+    <circle cx={p[0]} cy={p[1]} r="3" class="fill-accent">
       <title>{data[i].axis}: {Math.round(level)}{showValues ? "%" : ""}</title>
     </circle>
   {/each}

@@ -4,40 +4,63 @@ const baseUrl = "https://www.kclj.io";
 const name = "Kennan LeJeune";
 const description = "Full-stack Software Engineer";
 
+/**
+ * Each section of the site is a face of the cube: its sticker color is the
+ * accent for that page, the nav marker, and the mini-cube logo.
+ */
+export type Face = "green" | "orange" | "blue";
+
 export const siteConfig = {
   baseUrl,
   name,
   description,
   routes: {
-    home: { path: "/", canonicalUrl: baseUrl, title: "Home" },
+    home: { path: "/", canonicalUrl: baseUrl, title: "Home", face: "green" },
     about: {
       path: "/about",
       canonicalUrl: `${baseUrl}/about`,
       title: "About",
+      face: "orange",
+      blurb: "Who I am, how I got here, and the speedcubing years.",
     },
     work: {
       path: "/work",
       canonicalUrl: `${baseUrl}/work`,
       title: "Work",
+      face: "blue",
+      blurb: "Where I've worked and what I built there.",
     },
     projects: {
       path: "/projects",
       canonicalUrl: `${baseUrl}/projects`,
       title: "Projects",
+      face: "green",
+      blurb: "Open source work, live from GitHub.",
     },
   },
 } as const;
 
-// Ordered route list for navigation
-export const routes = Object.values(siteConfig.routes);
+export const links = {
+  github: "https://github.com/kclejeune",
+  linkedin: "https://linkedin.com/in/kclejeune",
+  email: "mailto:contact@kclj.io",
+  resume: "https://assets.kclj.io/resume.pdf",
+  source: "https://github.com/kclejeune/portfolio",
+} as const;
 
-// Get previous and next routes for a given path
-export function getAdjacentRoutes(currentPath: string) {
-  const currentIndex = routes.findIndex((r) => r.path === currentPath);
-  if (currentIndex === -1) return { prev: null, next: null };
+// Ordered section list for navigation (the logo links home).
+export const sections = [
+  siteConfig.routes.about,
+  siteConfig.routes.work,
+  siteConfig.routes.projects,
+];
 
-  return {
-    prev: currentIndex > 0 ? routes[currentIndex - 1] : null,
-    next: currentIndex < routes.length - 1 ? routes[currentIndex + 1] : null,
-  };
+export function faceFor(path: string): Face {
+  return sections.find((s) => path.startsWith(s.path))?.face ?? siteConfig.routes.home.face;
+}
+
+/** The section after this one, wrapping back to the first. */
+export function nextSection(path: string) {
+  const index = sections.findIndex((s) => path.startsWith(s.path));
+  return index === -1 ? null : sections[(index + 1) % sections.length];
 }

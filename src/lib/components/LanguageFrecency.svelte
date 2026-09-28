@@ -21,56 +21,37 @@
 </script>
 
 <div>
-  <div class="mb-5 flex flex-wrap gap-x-5 gap-y-2 text-xs text-slate-500 dark:text-slate-400">
-    <span class="flex items-center gap-2">
-      <span class="h-2 w-5 rounded-full bg-primary-500"></span>
-      Working set
-    </span>
-    <span class="flex items-center gap-2">
-      <span class="h-3 w-px bg-slate-500 dark:bg-slate-300"></span>
-      Long-term footprint
-    </span>
-  </div>
-
-  <ol class="space-y-4" aria-label="Languages ranked by recent and historical usage">
-    {#each visibleLanguages as language, index (language.name)}
+  <ol class="space-y-3.5" aria-label="Languages ranked by recent and historical usage">
+    {#each visibleLanguages as language (language.name)}
       {@const change = delta(language)}
       <li
-        class="grid grid-cols-[1.5rem_minmax(5rem,7rem)_1fr_auto] items-center gap-2 sm:gap-3"
+        class="grid grid-cols-[minmax(5.5rem,7.5rem)_1fr_3.25rem] items-center gap-3"
         aria-label="{language.name}: {language.percent.toFixed(
           1,
-        )}% working-set share, {language.historicalPercent.toFixed(1)}% long-term share"
+        )}% of recent work, {language.historicalPercent.toFixed(1)}% long-term"
       >
-        <span class="font-mono text-xs text-slate-400 tabular-nums dark:text-slate-500">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-        <span
-          class="flex min-w-0 items-center gap-2 text-sm font-medium text-slate-800 dark:text-slate-200"
-        >
+        <span class="flex min-w-0 items-center gap-2 font-medium">
           <span
-            class="h-2.5 w-2.5 shrink-0 rounded-full"
+            class="h-2.5 w-2.5 shrink-0 rounded-[2px]"
             style="background-color: {language.color};"
           ></span>
           <span class="truncate">{language.name}</span>
         </span>
-        <span class="relative block h-2 rounded-full bg-slate-100 dark:bg-slate-800">
+        <span class="relative block h-3 rounded-[3px] bg-sunken">
           <span
-            class="absolute inset-y-0 left-0 rounded-full bg-primary-500"
+            class="absolute inset-y-0 left-0 rounded-[3px] bg-accent-sticker"
             style="width: {width(language.percent)}%"
           ></span>
           <span
-            class="absolute -top-1 h-4 w-px bg-slate-600 dark:bg-slate-300"
+            class="absolute -top-1 h-5 w-0.5 rounded-full bg-ink"
             style="left: {width(language.historicalPercent)}%"
-            title="Long-term footprint: {language.historicalPercent.toFixed(1)}%"
+            title="Long-term: {language.historicalPercent.toFixed(1)}%"
           ></span>
         </span>
         <span
-          class="w-12 text-right font-mono text-xs tabular-nums {change > 0.05
-            ? 'text-primary-600 dark:text-primary-400'
-            : 'text-slate-400 dark:text-slate-500'}"
-          title="{language.percent.toFixed(
-            1,
-          )}% working-set share; {language.historicalPercent.toFixed(1)}% long-term share"
+          class="text-right text-sm tabular-nums {change > 0.05
+            ? 'font-semibold text-accent'
+            : 'text-faint'}"
         >
           {change > 0.05 ? "+" : ""}{change.toFixed(1)}
         </span>
@@ -78,7 +59,15 @@
     {/each}
   </ol>
 
-  <p class="mt-4 text-right text-[11px] text-slate-400 dark:text-slate-500">
-    Change from long-term share, in percentage points
-  </p>
+  <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
+    <span class="flex items-center gap-2">
+      <span class="h-2.5 w-5 rounded-[2px] bg-accent-sticker"></span>
+      Last 12 months
+    </span>
+    <span class="flex items-center gap-2">
+      <span class="h-3.5 w-0.5 rounded-full bg-ink"></span>
+      Long-term
+    </span>
+    <span>Right column: change in percentage points</span>
+  </div>
 </div>
