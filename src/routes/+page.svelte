@@ -21,9 +21,7 @@
     class="container-page grid items-center gap-14 pt-8 pb-20 md:flex-1 md:grid-cols-[minmax(0,1fr)_19rem] md:py-8 short:py-4 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-20"
   >
     <div>
-      <h1
-        class="display text-display short:text-[min(8.5rem,11vw,15svh)] shorter:text-[min(8.5rem,11vw,14svh)]"
-      >
+      <h1 class="display text-display">
         Hi, I'm<br />Kennan.
       </h1>
 

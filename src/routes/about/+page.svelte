@@ -11,8 +11,6 @@
     "Robotics and autonomy",
   ];
 
-  const interests = ["Cycling", "Skiing", "Open source", "NixOS"];
-
   const cubing = [
     { value: "NAR", label: "North American record" },
     { value: "90", label: "Podium finishes" },
@@ -85,14 +83,9 @@
       <dt class="label">Off the clock</dt>
       <dd class="mt-1.5">
         <p class="text-muted">
-          Usually on a bike, on the slopes, or tinkering with my
+          Cycling, skiing, and tinkering with my
           <a href="https://github.com/kclejeune/system" class="link">NixOS setup</a>.
         </p>
-        <div class="mt-3 flex flex-wrap gap-1.5">
-          {#each interests as interest (interest)}
-            <span class="chip">{interest}</span>
-          {/each}
-        </div>
       </dd>
     </div>
   </dl>
@@ -118,7 +111,7 @@
 
   <div>
     <h2 id="cubing" class="display text-4xl sm:text-5xl">Speedcubing</h2>
-    <p class="mt-5 text-lg leading-relaxed">I used to compete in Rubik's Cube speedsolving.</p>
+    <p class="mt-5 text-lg leading-relaxed">Highlights from my former speedcubing career.</p>
     <dl class="mt-7 divide-y divide-line border-y border-line">
       {#each cubing as stat (stat.label)}
         <div class="flex items-baseline gap-5 py-3">
