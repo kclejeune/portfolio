@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { dev } from "$app/environment";
   import PageHeader from "$lib/components/PageHeader.svelte";
   import { currentJob as current, formatMonthYear } from "$lib/data/jobs";
   import SEO from "svelte-seo";
@@ -16,6 +17,12 @@
     { value: "90", label: "Podium finishes in WCA competitions" },
     { value: "12th", label: "Highest global rank for 3x3x3 average" },
   ];
+
+  // Cloudflare Images resizes the photo per screen (and serves AVIF where
+  // supported) at the edge; `vite dev` has no /cdn-cgi, so it gets the original.
+  const photo = "/assets/images/cube.webp";
+  const resized = (width: number) => `/cdn-cgi/image/width=${width},format=auto${photo} ${width}w`;
+  const photoSrcset = dev ? undefined : [480, 800, 1236].map(resized).join(", ");
 </script>
 
 <SEO
@@ -102,8 +109,13 @@
     class="mt-8 grid gap-y-10 md:grid-cols-2 md:gap-x-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] md:gap-y-3"
   >
     <figure class="md:contents">
+      <!-- Where resizing isn't available (e.g. `vite preview`), dropping the
+           srcset falls back to the original. -->
       <img
-        src="/assets/images/cube.webp"
+        src={photo}
+        srcset={photoSrcset}
+        sizes="(min-width: 64rem) 402px, (min-width: 48rem) calc(50vw - 52px), calc(100vw - 32px)"
+        onerror={(e) => e.currentTarget.removeAttribute("srcset")}
         alt="Kennan, in a plaid shirt, mid-solve at a speedcubing competition"
         width="1236"
         height="695"

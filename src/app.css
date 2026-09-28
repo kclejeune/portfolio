@@ -21,11 +21,56 @@
 /* `.no-js` is on <html> until the inline script in app.html removes it. */
 @custom-variant no-js (&:where(.no-js, .no-js *));
 
+/* Stand-ins shown until the web fonts load, sized to match their width and
+   line metrics (measured against Arial and Courier-width monospace), so the
+   swap doesn't rewrap text and shift the page. */
+@font-face {
+  font-family: "Mona Sans Fallback";
+  src: local("Arial"), local("ArialMT"), local("Helvetica"), local("Liberation Sans");
+  font-weight: 100 599;
+  size-adjust: 103%;
+  ascent-override: 105.8%;
+  descent-override: 31.1%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Mona Sans Fallback";
+  src:
+    local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Bold"),
+    local("Liberation Sans Bold");
+  font-weight: 600 1000;
+  size-adjust: 103%;
+  ascent-override: 105.8%;
+  descent-override: 31.1%;
+  line-gap-override: 0%;
+}
+/* Display type is condensed, which Arial can't do; shrinking it matches the
+   width, so headlines wrap the same. */
+@font-face {
+  font-family: "Mona Sans Display Fallback";
+  src:
+    local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Bold"),
+    local("Liberation Sans Bold");
+  size-adjust: 78%;
+  ascent-override: 139.7%;
+  descent-override: 41%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Monaspace Neon Fallback";
+  src: local("Menlo"), local("Courier New"), local("Liberation Mono");
+  size-adjust: 103.3%;
+  ascent-override: 75.5%;
+  descent-override: 21.3%;
+  line-gap-override: 0%;
+}
+
 @theme {
   /* GitHub's open-source superfamily: Mona Sans (condensed and heavy for
      display, normal width for body) with Monaspace Neon for notation and code. */
-  --font-sans: "Mona Sans Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Monaspace Neon", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: "Mona Sans Variable", "Mona Sans Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    "Monaspace Neon", "Monaspace Neon Fallback", ui-monospace, "SF Mono", Menlo, monospace;
 
   /* Neutrals — a cool, faintly green-gray paper rather than warm cream.
      Each theme token is `light-dark(light, dark)`; see `color-scheme` below. */
@@ -155,6 +200,7 @@
 
   /* Condensed, heavy display type — the site's voice. */
   .display {
+    font-family: "Mona Sans Variable", "Mona Sans Display Fallback", var(--font-sans);
     font-stretch: 80%;
     font-weight: 800;
     letter-spacing: -0.02em;

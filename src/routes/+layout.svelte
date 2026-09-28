@@ -1,6 +1,6 @@
 <script lang="ts">
   import "@fontsource-variable/mona-sans/standard.css";
-  import "@fontsource/monaspace-neon/400.css";
+  // Only 500: body text's 440 weight resolves to it, and nothing sets lighter mono text.
   import "@fontsource/monaspace-neon/500.css";
   import { page } from "$app/state";
   import FaceGlyph from "$lib/components/FaceGlyph.svelte";
@@ -26,9 +26,14 @@
 />
 
 <div data-face={face} class="flex min-h-[100dvh] flex-col">
-  <header class="container-page flex h-(--header-h) items-center justify-between gap-4">
+  <!-- Visible links fetch their route's code early; data still waits for hover. -->
+  <header
+    data-sveltekit-preload-code="viewport"
+    class="container-page flex h-(--header-h) items-center justify-between gap-4"
+  >
     <a
       href="/"
+      data-sveltekit-preload-data
       class="flex items-center gap-2.5 text-[1.0625rem] font-semibold tracking-tight"
       aria-label="Kennan LeJeune, home"
     >

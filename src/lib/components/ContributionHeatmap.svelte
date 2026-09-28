@@ -49,15 +49,18 @@
     return labels;
   });
 
+  // One formatter for every day; toLocaleDateString builds a new one per call.
+  const dateFormat = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
   function tooltip(date: string, count: number): string {
     const label = `${count} contribution${count === 1 ? "" : "s"}`;
     if (!date) return label;
-    return `${label} on ${new Date(date).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-      timeZone: "UTC",
-    })}`;
+    return `${label} on ${dateFormat.format(new Date(date))}`;
   }
 
   // In narrow containers (a sidebar, a phone) the full year shrinks to

@@ -7,6 +7,13 @@ const config = {
 
   kit: {
     adapter: adapter(),
+    prerender: {
+      // Cloudflare's /cdn-cgi paths (image resizing) exist only at the edge.
+      handleHttpError: ({ path, message }) => {
+        if (path.startsWith("/cdn-cgi/")) return;
+        throw new Error(message);
+      },
+    },
   },
 };
 

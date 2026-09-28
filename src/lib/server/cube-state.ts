@@ -1,5 +1,11 @@
 import { cube3x3x3 } from "cubing/puzzles";
-import type { ScrambledCube, StickerColor, VisibleFace, VisibleFaces } from "$lib/data/cube";
+import type {
+  ScrambledCube,
+  SolvedScramble,
+  StickerColor,
+  VisibleFace,
+  VisibleFaces,
+} from "$lib/data/cube";
 
 // cubing.js's net-diagram fills, by color name.
 const fillColors: Record<string, StickerColor> = {
@@ -87,17 +93,34 @@ export async function visibleFaces(scramble: string): Promise<VisibleFaces> {
   return faces;
 }
 
-/** `size` official WCA random-state 3x3 scrambles, with the faces each shows. */
-export async function scramblePool(size: number): Promise<ScrambledCube[]> {
-  const [{ randomScrambleForEvent }, { setSearchDebug }] = await Promise.all([
+/**
+ * `size` official WCA random-state 3x3 scrambles, each with a solution, so the
+ * browser can play them back without loading the solver.
+ */
+export async function solvedScrambles(size: number): Promise<SolvedScramble[]> {
+  const [{ randomScrambleForEvent }, search, { kpuzzle }] = await Promise.all([
     import("cubing/scramble"),
     import("cubing/search"),
+    loadModel(),
   ]);
-  setSearchDebug({ logPerf: false });
+  search.setSearchDebug({ logPerf: false });
   return Promise.all(
     Array.from({ length: size }, async () => {
-      const scramble = (await randomScrambleForEvent("333")).toString();
-      return { scramble, faces: await visibleFaces(scramble) };
+      const scramble = await randomScrambleForEvent("333");
+      const solution = await search.experimentalSolve3x3x3IgnoringCenters(
+        kpuzzle.defaultPattern().applyAlg(scramble),
+      );
+      return { scramble: scramble.toString(), solution: solution.toString() };
     }),
+  );
+}
+
+/** `size` solved scrambles, with the faces each shows. */
+export async function scramblePool(size: number): Promise<ScrambledCube[]> {
+  return Promise.all(
+    (await solvedScrambles(size)).map(async (solved) => ({
+      ...solved,
+      faces: await visibleFaces(solved.scramble),
+    })),
   );
 }

@@ -98,7 +98,7 @@ resource "cloudflare_zone_settings_override" "settings" {
   zone_id  = cloudflare_zone.zones[each.key].id
   settings {
     ssl           = "flexible"
-    rocket_loader = "on"
+    rocket_loader = "off"
     minify {
       html = "on"
       css  = "on"

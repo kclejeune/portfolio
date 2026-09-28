@@ -1,3 +1,4 @@
+import { cube3x3x3 } from "cubing/puzzles";
 import { describe, expect, it } from "vitest";
 import { scramblePool, visibleFaces } from "./cube-state";
 
@@ -41,12 +42,21 @@ describe("visibleFaces", () => {
     expect(faces.R).toEqual([blue, white, green, blue, red, red, green, yellow, green]);
   });
 
-  it("builds a pool of distinct random-state scrambles", async () => {
+  it("builds a pool of distinct random-state scrambles, each with a solution", async () => {
     const pool = await scramblePool(4);
     expect(pool).toHaveLength(4);
     expect(new Set(pool.map((p) => p.scramble)).size).toBe(4);
-    for (const { scramble, faces } of pool) {
+    const puzzle = await cube3x3x3.kpuzzle();
+    for (const { scramble, faces, solution } of pool) {
       expect(scramble.split(" ").length).toBeLessThanOrEqual(21);
+      expect(solution.split(" ").length).toBeLessThanOrEqual(21);
+      expect(
+        puzzle
+          .defaultPattern()
+          .applyAlg(scramble)
+          .applyAlg(solution)
+          .experimentalIsSolved({ ignorePuzzleOrientation: true, ignoreCenterOrientation: true }),
+      ).toBe(true);
       expect(faces.U[4]).toBe(white);
       expect(faces.F[4]).toBe(green);
       expect(faces.R[4]).toBe(red);

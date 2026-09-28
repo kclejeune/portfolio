@@ -13,4 +13,7 @@
   "cache": {
     "enabled": true,
   },
+  // The last successful GitHub profile (see src/lib/server/github.ts). No id:
+  // `wrangler deploy` creates the namespace on first deploy and binds it.
+  "kv_namespaces": [{ "binding": "GITHUB_CACHE" }],
 }
