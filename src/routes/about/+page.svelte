@@ -12,9 +12,9 @@
   ];
 
   const cubing = [
-    { value: "NAR", label: "North American record" },
-    { value: "90", label: "Podium finishes" },
-    { value: "12th", label: "In the world at 3x3" },
+    { value: "1", label: "North American Record (NAR)" },
+    { value: "90", label: "Podium finishes in WCA competitions" },
+    { value: "12th", label: "Highest global rank for 3x3x3 average" },
   ];
 </script>
 
@@ -99,7 +99,7 @@
   <!-- From tablet width up: photo beside the highlights (stretched to the
        photo's height), caption beside the results link. -->
   <div
-    class="mt-8 grid gap-y-10 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] md:gap-x-14 md:gap-y-3"
+    class="mt-8 grid gap-y-10 md:grid-cols-2 md:gap-x-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] md:gap-y-3"
   >
     <figure class="md:contents">
       <img
@@ -121,9 +121,9 @@
       class="divide-y divide-line border-y border-line md:col-start-2 md:row-start-1 md:grid md:grid-rows-3"
     >
       {#each cubing as stat (stat.label)}
-        <div class="flex flex-wrap content-center items-baseline gap-5 py-3">
-          <dt class="order-2 text-muted">{stat.label}</dt>
-          <dd class="display w-20 shrink-0 text-3xl text-accent">{stat.value}</dd>
+        <div class="grid grid-cols-[4.5rem_1fr] content-center items-baseline gap-x-4 py-3 md:py-2">
+          <dt class="col-start-2 row-start-1 text-muted">{stat.label}</dt>
+          <dd class="display col-start-1 row-start-1 text-3xl text-accent">{stat.value}</dd>
         </div>
       {/each}
     </dl>
