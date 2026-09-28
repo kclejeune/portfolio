@@ -27,7 +27,7 @@ export const siteConfig = {
       canonicalUrl: `${baseUrl}/work`,
       title: "Work",
       face: "blue",
-      blurb: "Anduril and Johns Hopkins APL",
+      blurb: "Currently at Anduril, formerly JHU APL",
     },
     projects: {
       path: "/projects",
