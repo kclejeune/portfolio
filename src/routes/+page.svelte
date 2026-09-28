@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { PageData } from "./$types";
+  import PageHeader from "$lib/components/PageHeader.svelte";
   import TwistyCube from "$lib/components/TwistyCube.svelte";
   import { currentJob as current } from "$lib/data/jobs";
   import { contacts, sections, siteConfig } from "$lib/config.svelte";
@@ -18,27 +19,21 @@
      below the header, with the links pinned to the bottom edge. -->
 <div class="md:flex md:min-h-[calc(100svh-var(--header-h))] md:flex-col">
   <section
-    class="container-page grid items-center gap-14 pt-8 pb-20 md:flex-1 md:grid-cols-[minmax(0,1fr)_19rem] md:py-8 short:py-4 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-20"
+    class="container-page grid items-start gap-x-14 pb-20 md:flex-1 md:grid-cols-[minmax(0,1fr)_19rem] md:pb-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-x-20"
   >
     <div>
-      <h1 class="display text-display">
-        Hi, I'm<br />Kennan.
-      </h1>
-
-      <p
-        class="mt-8 max-w-[30ch] text-2xl leading-snug font-medium text-pretty sm:text-[1.75rem] short:mt-5 short:text-2xl shorter:text-xl"
-      >
+      <PageHeader title="Hi, I'm Kennan." marker={false} contained={false}>
         I'm a software engineer building infrastructure for distributed systems and robotics.
-      </p>
+      </PageHeader>
 
-      <p class="mt-5 max-w-[52ch] text-lg leading-relaxed text-muted short:mt-3">
+      <p class="max-w-[52ch] text-lg leading-relaxed text-muted">
         Currently at
         <a href={current.employerUrl} class="link">{current.employer}</a>{current.location
           ? ` in ${current.location}`
           : ""}, working on Lattice Mission Autonomy.
       </p>
 
-      <ul class="mt-9 flex flex-wrap gap-2.5 short:mt-6">
+      <ul class="mt-7 flex flex-wrap gap-2.5 short:mt-5">
         {#each contacts as contact (contact.label)}
           <li>
             <a href={contact.href} class="button">
@@ -50,7 +45,8 @@
       </ul>
     </div>
 
-    <figure class="mx-auto w-full max-w-xs md:max-w-none">
+    <!-- Top-aligned with the page heading, like content beside a title. -->
+    <figure class="mx-auto mt-14 w-full max-w-xs md:mt-0 md:max-w-none md:pt-14 shorter:pt-6">
       <figcaption class="mb-2 text-[0.95rem] leading-snug text-muted">
         I used to solve these competitively.
         <span class="block no-js:hidden">Drag to rotate.</span>
@@ -59,7 +55,10 @@
     </figure>
   </section>
 
-  <nav class="container-page mb-20 sm:mb-28 md:mb-0 md:pb-10 short:pb-6" aria-label="Sections">
+  <nav
+    class="container-page mb-20 sm:mb-28 md:mb-0 md:pb-10 short:pb-6 shorter:pb-4"
+    aria-label="Sections"
+  >
     <ul class="grid gap-10 sm:grid-cols-3 sm:gap-6">
       {#each sections as section (section.path)}
         <li>
