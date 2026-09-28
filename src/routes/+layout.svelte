@@ -1,5 +1,7 @@
 <script lang="ts">
-  import "@fontsource-variable/instrument-sans/standard.css";
+  import "@fontsource-variable/mona-sans/standard.css";
+  import "@fontsource/monaspace-neon/400.css";
+  import "@fontsource/monaspace-neon/500.css";
   import { page } from "$app/state";
   import FaceGlyph from "$lib/components/FaceGlyph.svelte";
   import ThemeToggle from "$lib/components/ThemeToggle.svelte";

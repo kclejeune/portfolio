@@ -6,8 +6,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* One family: condensed and heavy for display, normal width for body. */
-  --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  /* GitHub's open-source superfamily: Mona Sans (condensed and heavy for
+     display, normal width for body) with Monaspace Neon for notation and code. */
+  --font-sans: "Mona Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Monaspace Neon", ui-monospace, "SF Mono", Menlo, monospace;
 
   /* Neutrals — a cool, faintly green-gray paper rather than warm cream. */
   --color-paper: #f1f2ee;
@@ -39,7 +41,7 @@
 
   /* Type scale (classic 16/18/21/24/36/48/60/72 progression) */
   --text-display: clamp(3.75rem, 11vw, 8.5rem);
-  --text-display--line-height: 0.88;
+  --text-display--line-height: 0.95;
   --text-title: clamp(3rem, 7vw, 4.5rem);
   --text-title--line-height: 0.95;
 
@@ -82,6 +84,8 @@
 
   body {
     @apply bg-paper text-ink antialiased;
+    /* Mona Sans runs light at 400; nudge body text up for contrast. */
+    font-weight: 440;
   }
 
   :focus-visible {
@@ -113,9 +117,9 @@
 
   /* Condensed, heavy display type — the site's voice. */
   .display {
-    font-stretch: 82%;
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    font-stretch: 80%;
+    font-weight: 800;
+    letter-spacing: -0.02em;
   }
 
   /* Inline text link: ink text, section-colored underline. */
@@ -125,7 +129,7 @@
 
   /* Small sticker-shaped tag */
   .chip {
-    @apply inline-flex items-center rounded-[5px] bg-sunken px-2 py-0.5 text-sm text-muted;
+    @apply inline-flex items-center rounded-[5px] bg-sunken px-2 py-0.5 font-mono text-[0.8rem] text-muted;
   }
 
   /* Outlined panel, for things you can click through to */

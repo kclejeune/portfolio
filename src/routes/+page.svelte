@@ -1,5 +1,5 @@
 <script lang="ts">
-  import CubeFace from "$lib/components/CubeFace.svelte";
+  import TwistyCube from "$lib/components/TwistyCube.svelte";
   import { GitHubIcon, LinkedInIcon, EmailIcon, ResumeIcon } from "$lib/components/icons";
   import { jobs, isCurrentJob } from "$lib/data/jobs";
   import { links, sections, siteConfig } from "$lib/config.svelte";
@@ -29,7 +29,7 @@
 />
 
 <section
-  class="container-page grid items-center gap-14 pt-8 pb-20 md:grid-cols-[minmax(0,1fr)_17rem] md:pt-16 md:pb-28 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-20"
+  class="container-page grid items-center gap-14 pt-8 pb-20 md:grid-cols-[minmax(0,1fr)_19rem] md:pt-16 md:pb-28 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-20"
 >
   <div>
     <h1 class="display text-display">Hi, I'm<br />Kennan.</h1>
@@ -60,11 +60,11 @@
     </ul>
   </div>
 
-  <figure class="mx-auto w-full max-w-56 md:max-w-none">
-    <CubeFace />
-    <figcaption class="mt-3 text-[0.95rem] leading-snug text-muted">
-      Before infrastructure, I solved these competitively. Press the cube to scramble it.
+  <figure class="mx-auto w-full max-w-xs md:max-w-none">
+    <figcaption class="mb-2 text-[0.95rem] leading-snug text-muted">
+      Before infrastructure, I solved these competitively. Drag the cube to look around.
     </figcaption>
+    <TwistyCube />
   </figure>
 </section>
 
