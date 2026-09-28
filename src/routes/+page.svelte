@@ -62,7 +62,7 @@
 
   <figure class="mx-auto w-full max-w-56 md:max-w-none">
     <CubeFace />
-    <figcaption class="mt-9 text-[0.95rem] leading-snug text-muted">
+    <figcaption class="mt-3 text-[0.95rem] leading-snug text-muted">
       Before infrastructure, I solved these competitively. Press the cube to scramble it.
     </figcaption>
   </figure>

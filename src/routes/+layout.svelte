@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "@fontsource-variable/bricolage-grotesque/standard.css";
+  import "@fontsource-variable/instrument-sans/standard.css";
   import { page } from "$app/state";
   import FaceGlyph from "$lib/components/FaceGlyph.svelte";
   import ThemeToggle from "$lib/components/ThemeToggle.svelte";

@@ -6,8 +6,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* One family: condensed and heavy for display, optical-sized for body. */
-  --font-sans: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  /* One family: condensed and heavy for display, normal width for body. */
+  --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
 
   /* Neutrals — a cool, faintly green-gray paper rather than warm cream. */
   --color-paper: #f1f2ee;
@@ -82,7 +82,6 @@
 
   body {
     @apply bg-paper text-ink antialiased;
-    font-optical-sizing: auto;
   }
 
   :focus-visible {
@@ -114,9 +113,9 @@
 
   /* Condensed, heavy display type — the site's voice. */
   .display {
-    font-stretch: 78%;
-    font-weight: 750;
-    letter-spacing: -0.025em;
+    font-stretch: 82%;
+    font-weight: 700;
+    letter-spacing: -0.03em;
   }
 
   /* Inline text link: ink text, section-colored underline. */

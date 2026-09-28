@@ -1,8 +1,17 @@
-<script lang="ts" module>
-  export type Sticker = "white" | "yellow" | "red" | "orange" | "blue" | "green";
+<script lang="ts">
+  import { prefersReducedMotion } from "svelte/motion";
+  import {
+    applyMoves,
+    faceColorsOf,
+    parseMoves,
+    randomScramble,
+    solvedCube,
+    type Color,
+    type Move,
+  } from "$lib/cube";
 
   // Full class strings so Tailwind picks them up during scanning.
-  export const stickerClass: Record<Sticker, string> = {
+  const stickerClass: Record<Color, string> = {
     white: "bg-sticker-white",
     yellow: "bg-sticker-yellow",
     red: "bg-sticker-red",
@@ -10,83 +19,72 @@
     blue: "bg-sticker-blue",
     green: "bg-sticker-green",
   };
-</script>
 
-<script lang="ts">
-  import { prefersReducedMotion } from "svelte/motion";
-
-  const colors: Sticker[] = ["white", "yellow", "red", "orange", "blue", "green"];
-  const solved: Sticker = "green";
+  const solved = solvedCube();
 
   // A fixed scramble so the prerendered page matches the first client render.
-  // Index 4 is the center, which never moves on a real cube.
-  let stickers = $state<Sticker[]>([
-    "red",
-    "white",
-    "blue",
-    "yellow",
-    solved,
-    "orange",
-    "blue",
-    "red",
-    "yellow",
-  ]);
-  let solving = $state(true);
+  let scramble = $state<Move[]>(
+    parseMoves("D2 F' R2 U B2 L2 U' F2 R' D B' L U2 R F' D' L2 B U' R2"),
+  );
+  // How many scramble moves are currently applied. Solving undoes them in
+  // reverse, one face turn at a time, so every frame is a real cube state.
+  let applied = $state(scramble.length);
+  let busy = $state(false);
 
-  // Layer by layer, bottom row first — the way a beginner solves.
-  const layers = [
-    [6, 7, 8],
-    [3, 5],
-    [0, 1, 2],
-  ];
-  const layerDelay = 420;
-  let timers: ReturnType<typeof setTimeout>[] = [];
+  const front = $derived(faceColorsOf(applyMoves(solved, scramble.slice(0, applied)), "F"));
+  const isSolved = $derived(applied === 0);
 
-  function clearTimers() {
-    timers.forEach(clearTimeout);
-    timers = [];
-  }
+  const scrambleInterval = 70;
+  const solveInterval = 160;
+  let timer: ReturnType<typeof setTimeout> | undefined;
 
-  function solve(startDelay: number) {
-    clearTimers();
-    solving = true;
-    if (prefersReducedMotion.current) {
-      stickers = stickers.map(() => solved);
-      solving = false;
+  /** Step `applied` toward `target`, one move per `interval`. */
+  function step(target: number, interval: number, then?: () => void) {
+    clearTimeout(timer);
+    if (applied === target) {
+      then?.();
       return;
     }
-    layers.forEach((layer, i) => {
-      timers.push(
-        setTimeout(
-          () => {
-            for (const index of layer) stickers[index] = solved;
-            if (i === layers.length - 1) solving = false;
-          },
-          startDelay + i * layerDelay,
-        ),
-      );
-    });
+    timer = setTimeout(() => {
+      applied += applied < target ? 1 : -1;
+      step(target, interval, then);
+    }, interval);
   }
 
-  function scramble() {
-    if (solving) return;
-    const random = () => colors[Math.floor(Math.random() * colors.length)];
-    stickers = stickers.map((_, i) => (i === 4 ? solved : random()));
-    // Guarantee at least one sticker is visibly out of place.
-    if (stickers.every((s) => s === solved)) stickers[0] = "orange";
-    solve(900);
+  function solve(delay: number) {
+    busy = true;
+    if (prefersReducedMotion.current) {
+      applied = 0;
+      busy = false;
+      return;
+    }
+    timer = setTimeout(() => step(0, solveInterval, () => (busy = false)), delay);
+  }
+
+  function onpress() {
+    if (busy) return;
+    if (prefersReducedMotion.current) {
+      // No animation: one press scrambles, the next solves.
+      if (isSolved) scramble = randomScramble();
+      applied = isSolved ? scramble.length : 0;
+      return;
+    }
+    scramble = randomScramble();
+    busy = true;
+    applied = 0;
+    step(scramble.length, scrambleInterval, () => solve(700));
   }
 
   $effect(() => {
-    solve(700);
-    return clearTimers;
+    solve(900);
+    return () => clearTimeout(timer);
   });
 
   // Flip a sticker in when its color changes, like a layer turning past.
-  function turn(node: HTMLElement, color: Sticker) {
+  function turn(node: HTMLElement, color: Color) {
     let shown = color;
     return {
-      update(next: Sticker) {
+      update(next: Color) {
         if (next === shown) return;
         shown = next;
         if (prefersReducedMotion.current) return;
@@ -95,31 +93,38 @@
             { transform: "perspective(300px) rotateX(-90deg)", filter: "brightness(0.6)" },
             { transform: "none", filter: "none" },
           ],
-          { duration: 360, easing: "cubic-bezier(0.22, 1, 0.36, 1)" },
+          { duration: 150, easing: "cubic-bezier(0.22, 1, 0.36, 1)" },
         );
       },
     };
   }
-
-  const isSolved = $derived(stickers.every((s) => s === solved));
 </script>
 
 <button
   type="button"
-  onclick={scramble}
-  class="group block w-full -rotate-3 cursor-pointer rounded-[9%] bg-plastic p-[4%] shadow-[0_24px_48px_-20px_rgb(0_0_0/0.45)] transition-transform duration-500 ease-[var(--ease-out-quint)] hover:-rotate-1 focus-visible:-rotate-1"
+  onclick={onpress}
+  class="@container block aspect-square w-full -rotate-3 cursor-pointer rounded-[9%] bg-plastic p-[4.5%] shadow-[0_24px_48px_-20px_rgb(0_0_0/0.45)] transition-transform duration-500 ease-[var(--ease-out-quint)] hover:-rotate-1 focus-visible:-rotate-1"
   aria-label={isSolved
     ? "A solved Rubik's Cube face. Press to scramble it."
-    : "A Rubik's Cube face, being solved."}
+    : "A scrambled Rubik's Cube face, being solved."}
 >
-  <span class="grid grid-cols-3 gap-[3%]">
-    {#each stickers as color, i (i)}
+  <!-- cqw keeps row and column gaps equal; a % row gap would overflow the body. -->
+  <span class="grid h-full grid-cols-3 grid-rows-3 gap-[3cqw]">
+    {#each front as color, i (i)}
       <span
         use:turn={color}
-        class="aspect-square rounded-[9%] shadow-[inset_0_-0.3rem_0_rgb(0_0_0/0.12),inset_0_0.15rem_0_rgb(255_255_255/0.25)] {stickerClass[
+        class="rounded-[9%] shadow-[inset_0_-0.3rem_0_rgb(0_0_0/0.12),inset_0_0.15rem_0_rgb(255_255_255/0.25)] {stickerClass[
           color
         ]}"
       ></span>
     {/each}
   </span>
 </button>
+
+<p class="mt-8 flex flex-wrap gap-x-[0.75ch] text-sm leading-relaxed text-muted">
+  {#each scramble as move, i (i)}
+    <span class="transition-opacity duration-150 {i < applied ? 'text-ink' : 'opacity-35'}"
+      >{move}</span
+    >
+  {/each}
+</p>
