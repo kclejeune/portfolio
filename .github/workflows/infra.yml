@@ -1,0 +1,30 @@
+name: Infra
+
+# Deploys the Cloudflare zones, DNS, redirects, and settings (sst.config.ts,
+# infra/) when they change on master. The site itself deploys through
+# Cloudflare's Git integration.
+on:
+  push:
+    branches: [master]
+    paths: [infra/**, sst.config.ts]
+  workflow_dispatch:
+
+# Never run two deploys at once.
+concurrency: infra
+
+jobs:
+  deploy:
+    # A manual run can target any branch; only master deploys.
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+      - name: Deploy
+        run: pnpm infra:deploy
