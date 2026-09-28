@@ -4,16 +4,22 @@
   /**
    * Which prerendered scramble to show. On a fresh page load it's the one the
    * inline script below picked before first paint; on later visits within the
-   * same session, a new pick, made before the page is inserted.
+   * same session, a new pick (never the one just shown), made before the page
+   * is inserted.
    */
   export function pickScramble(size: number): number {
     const root = document.documentElement;
-    let index = Number(root.dataset.cube);
-    if (!firstMount || !Number.isInteger(index) || index < 0 || index >= size) {
-      index = Math.floor(Math.random() * size);
-      root.dataset.cube = String(index);
+    const current = Number(root.dataset.cube);
+    const valid = Number.isInteger(current) && current >= 0 && current < size;
+    if (firstMount && valid) {
+      firstMount = false;
+      return current;
     }
     firstMount = false;
+    let index = Math.floor(Math.random() * size);
+    // Skip over the scramble just shown, so a return visit always changes.
+    if (valid && size > 1 && index === current) index = (index + 1) % size;
+    root.dataset.cube = String(index);
     return index;
   }
 </script>

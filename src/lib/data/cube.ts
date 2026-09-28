@@ -3,7 +3,7 @@
  * first paint on each visit (see `CubePicker`), drawn statically, then solved
  * by the 3D player once it loads; later scrambles come from the player.
  */
-export const scramblePoolSize = 12;
+export const scramblePoolSize = 5;
 
 /** The 3D player's camera, shared with the static drawing so they line up. */
 export const camera = { latitude: 28, longitude: 32, distance: 5.2 } as const;
