@@ -59,7 +59,7 @@
     {/each}
   </ol>
 
-  <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
+  <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted">
     <span class="flex items-center gap-2">
       <span class="h-2.5 w-5 rounded-[2px] bg-accent-sticker"></span>
       Last 12 months
@@ -68,6 +68,6 @@
       <span class="h-3.5 w-0.5 rounded-full bg-ink"></span>
       Long-term
     </span>
-    <span>Numbers: change from long-term share, in points</span>
+    <span>± change from long-term share, in points</span>
   </div>
 </div>
