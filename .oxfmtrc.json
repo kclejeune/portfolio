@@ -6,6 +6,7 @@
     ".svelte-kit/**",
     "dist/**",
     ".wrangler/**",
+    ".sst/**",
     "pnpm-lock.yaml",
     "static/assets/fontawesome/**"
   ]

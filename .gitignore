@@ -8,9 +8,9 @@ node_modules
 .env.*
 !.env.example
 
-*.tfstate*
-*.tfstate.backup
-.terraform/
 # env files
 .envrc
 *.local
+# sst
+.sst
+sst-env.d.ts

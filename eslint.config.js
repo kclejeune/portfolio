@@ -35,6 +35,6 @@ export default ts.config(
     },
   },
   {
-    ignores: ["build/", ".svelte-kit/", "dist/", ".wrangler/", "node_modules/"],
+    ignores: ["build/", ".svelte-kit/", ".sst/", "dist/", ".wrangler/", "node_modules/"],
   },
 );
