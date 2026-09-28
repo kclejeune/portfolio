@@ -91,39 +91,41 @@
   </dl>
 </div>
 
-<section
-  class="container-page mt-20 grid items-center gap-10 sm:mt-28 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] md:gap-14"
-  aria-labelledby="cubing"
->
-  <figure>
-    <img
-      src="/assets/images/cube.webp"
-      alt="Kennan, in a plaid shirt, mid-solve at a speedcubing competition"
-      width="1236"
-      height="695"
-      loading="lazy"
-      class="aspect-[4/3] w-full rounded-xl object-cover object-[70%_center]"
-    />
-    <figcaption class="mt-3 text-sm text-muted">
-      Mid-solve at a World Cube Association competition.
-    </figcaption>
-  </figure>
+<section class="container-page mt-20 sm:mt-28" aria-labelledby="cubing">
+  <h2 id="cubing" class="display text-4xl sm:text-5xl">Speedcubing</h2>
+  <p class="mt-3 text-lg leading-relaxed text-muted">
+    Highlights from my former speedcubing career.
+  </p>
 
-  <div>
-    <h2 id="cubing" class="display text-4xl sm:text-5xl">Speedcubing</h2>
-    <p class="mt-5 text-lg leading-relaxed">Highlights from my former speedcubing career.</p>
-    <dl class="mt-7 divide-y divide-line border-y border-line">
-      {#each cubing as stat (stat.label)}
-        <div class="flex items-baseline gap-5 py-3">
-          <dt class="order-2 text-muted">{stat.label}</dt>
-          <dd class="display w-20 shrink-0 text-3xl text-accent">{stat.value}</dd>
-        </div>
-      {/each}
-    </dl>
-    <p class="mt-6">
-      <a href="https://www.worldcubeassociation.org/persons/2013LEJE03" class="link">
-        My results on the WCA site
-      </a>
-    </p>
+  <div class="mt-8 grid items-center gap-10 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] md:gap-14">
+    <figure>
+      <img
+        src="/assets/images/cube.webp"
+        alt="Kennan, in a plaid shirt, mid-solve at a speedcubing competition"
+        width="1236"
+        height="695"
+        loading="lazy"
+        class="aspect-[4/3] w-full rounded-xl object-cover object-[70%_center]"
+      />
+      <figcaption class="mt-3 text-sm text-muted">
+        Mid-solve at a World Cube Association competition.
+      </figcaption>
+    </figure>
+
+    <div>
+      <dl class="divide-y divide-line border-y border-line">
+        {#each cubing as stat (stat.label)}
+          <div class="flex items-baseline gap-5 py-3">
+            <dt class="order-2 text-muted">{stat.label}</dt>
+            <dd class="display w-20 shrink-0 text-3xl text-accent">{stat.value}</dd>
+          </div>
+        {/each}
+      </dl>
+      <p class="mt-6">
+        <a href="https://www.worldcubeassociation.org/persons/2013LEJE03" class="link">
+          My results on the WCA site
+        </a>
+      </p>
+    </div>
   </div>
 </section>
