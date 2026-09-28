@@ -5,6 +5,19 @@
    the no-flash script in app.html) instead of the OS preference alone. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Tablet-and-up screens too short for the home page to fit in one screen at
+   full size; `shorter` trims further for laptop browsers (~650px tall). */
+@custom-variant short {
+  @media (min-width: 48rem) and (max-height: 860px) {
+    @slot;
+  }
+}
+@custom-variant shorter {
+  @media (min-width: 48rem) and (max-height: 700px) {
+    @slot;
+  }
+}
+
 /* `.no-js` is on <html> until the inline script in app.html removes it. */
 @custom-variant no-js (&:where(.no-js, .no-js *));
 
@@ -102,11 +115,12 @@
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
 
-    /* Scale the whole rem-based layout up on large monitors. */
-    @media (min-width: 1920px) {
+    /* Scale the whole rem-based layout up on large monitors that are also
+       tall enough for the home page to still fit in one screen. */
+    @media (min-width: 1920px) and (min-height: 1000px) {
       font-size: 112.5%;
     }
-    @media (min-width: 2400px) {
+    @media (min-width: 2400px) and (min-height: 1300px) {
       font-size: 125%;
     }
   }
