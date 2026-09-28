@@ -23,15 +23,26 @@ interface Slot {
   color: StickerColor;
 }
 
-let slots: Promise<Slot[]> | undefined;
+interface Model {
+  kpuzzle: Awaited<ReturnType<typeof cube3x3x3.kpuzzle>>;
+  /** Orientations per orbit (e.g. 3 for corners). */
+  orientations: Record<string, number>;
+  /** Solved color of every slot, keyed `orbit-location-orientation`. */
+  solved: Map<string, StickerColor>;
+  /** The slots on the U, F, and R faces. */
+  visible: Slot[];
+}
+
+let model: Promise<Model> | undefined;
 
 /**
- * Every sticker slot in cubing.js's 3x3 diagram: which piece location and
- * orientation it shows, where it sits on the net, and its solved color.
+ * Everything that depends only on the puzzle, computed once: cubing.js's 3x3
+ * definition and every sticker slot in its diagram (which piece location and
+ * orientation it shows, where it sits on the net, and its solved color).
  */
-function loadSlots(): Promise<Slot[]> {
-  slots ??= cube3x3x3.svg().then((svg) =>
-    [
+function loadModel(): Promise<Model> {
+  model ??= Promise.all([cube3x3x3.kpuzzle(), cube3x3x3.svg()]).then(([kpuzzle, svg]) => {
+    const slots: Slot[] = [
       ...svg.matchAll(
         /<use\s+id="([A-Z]+)-l(\d+)-o(\d+)"\s+href="#sticker"\s+transform="translate\(([\d.]+),\s*([\d.]+)\)"\s+style="fill:\s*([^"]+)"/g,
       ),
@@ -47,30 +58,31 @@ function loadSlots(): Promise<Slot[]> {
         index: row * 3 + col,
         color: fillColors[fill.trim()],
       };
-    }),
-  );
-  return slots;
+    });
+    return {
+      kpuzzle,
+      orientations: Object.fromEntries(
+        kpuzzle.definition.orbits.map((o) => [o.orbitName, o.numOrientations]),
+      ),
+      solved: new Map(slots.map((s) => [`${s.orbit}-${s.location}-${s.orientation}`, s.color])),
+      visible: slots.filter((s) => s.face),
+    };
+  });
+  return model;
 }
 
 /** The U, F, and R faces after applying `scramble` to a solved cube. */
 export async function visibleFaces(scramble: string): Promise<VisibleFaces> {
-  const [kpuzzle, allSlots] = await Promise.all([cube3x3x3.kpuzzle(), loadSlots()]);
+  const { kpuzzle, orientations, solved, visible } = await loadModel();
   const pattern = kpuzzle.defaultPattern().applyAlg(scramble).patternData;
-  const orientations = Object.fromEntries(
-    kpuzzle.definition.orbits.map((o) => [o.orbitName, o.numOrientations]),
-  );
-  const solved = new Map(
-    allSlots.map((s) => [`${s.orbit}-${s.location}-${s.orientation}`, s.color]),
-  );
 
   const faces: VisibleFaces = { U: [], F: [], R: [] };
-  for (const slot of allSlots) {
-    if (!slot.face) continue;
+  for (const slot of visible) {
     const { pieces, orientation } = pattern[slot.orbit];
     const n = orientations[slot.orbit];
     // The piece now in this slot, turned by its orientation offset.
     const shown = (((slot.orientation - orientation[slot.location]) % n) + n) % n;
-    faces[slot.face][slot.index] = solved.get(`${slot.orbit}-${pieces[slot.location]}-${shown}`)!;
+    faces[slot.face!][slot.index] = solved.get(`${slot.orbit}-${pieces[slot.location]}-${shown}`)!;
   }
   return faces;
 }
@@ -82,10 +94,10 @@ export async function scramblePool(size: number): Promise<ScrambledCube[]> {
     import("cubing/search"),
   ]);
   setSearchDebug({ logPerf: false });
-  const pool: ScrambledCube[] = [];
-  for (let i = 0; i < size; i++) {
-    const scramble = (await randomScrambleForEvent("333")).toString();
-    pool.push({ scramble, faces: await visibleFaces(scramble) });
-  }
-  return pool;
+  return Promise.all(
+    Array.from({ length: size }, async () => {
+      const scramble = (await randomScrambleForEvent("333")).toString();
+      return { scramble, faces: await visibleFaces(scramble) };
+    }),
+  );
 }

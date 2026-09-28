@@ -1,28 +1,11 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import TwistyCube from "$lib/components/TwistyCube.svelte";
-  import { GitHubIcon, LinkedInIcon, EmailIcon, ResumeIcon } from "$lib/components/icons";
-  import { jobs, isCurrentJob } from "$lib/data/jobs";
-  import { links, sections, siteConfig } from "$lib/config.svelte";
+  import { currentJob as current } from "$lib/data/jobs";
+  import { contacts, sections, siteConfig } from "$lib/config.svelte";
   import SEO from "svelte-seo";
 
   let { data }: { data: PageData } = $props();
-
-  const current = jobs.find(isCurrentJob) ?? jobs[0];
-
-  const contacts = [
-    { href: links.github, label: "GitHub", icon: GitHubIcon },
-    { href: links.linkedin, label: "LinkedIn", icon: LinkedInIcon },
-    { href: links.email, label: "Email", icon: EmailIcon },
-    { href: links.resume, label: "Resume", icon: ResumeIcon },
-  ];
-
-  // Full class strings so Tailwind picks them up during scanning.
-  const faceBorder = {
-    green: "border-sticker-green",
-    orange: "border-sticker-orange",
-    blue: "border-sticker-blue",
-  } as const;
 </script>
 
 <SEO
@@ -32,8 +15,8 @@
 />
 
 <!-- From tablet width up, the hero and section links fill exactly one screen
-     below the header (h-20), with the links pinned to the bottom edge. -->
-<div class="md:flex md:min-h-[calc(100svh-5rem)] md:flex-col">
+     below the header, with the links pinned to the bottom edge. -->
+<div class="md:flex md:min-h-[calc(100svh-var(--header-h))] md:flex-col">
   <section
     class="container-page grid items-center gap-14 pt-8 pb-20 md:flex-1 md:grid-cols-[minmax(0,1fr)_19rem] md:py-8 short:py-4 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-20"
   >
@@ -60,10 +43,7 @@
       <ul class="mt-9 flex flex-wrap gap-2.5 short:mt-6">
         {#each contacts as contact (contact.label)}
           <li>
-            <a
-              href={contact.href}
-              class="inline-flex items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 font-medium transition-colors hover:border-ink"
-            >
+            <a href={contact.href} class="button">
               <contact.icon class="h-4.5 w-4.5 text-muted" />
               {contact.label}
             </a>
@@ -88,7 +68,8 @@
           <a
             href={section.path}
             data-sveltekit-preload-data
-            class="group block border-t-[5px] pt-5 short:pt-3 {faceBorder[section.face]}"
+            data-face={section.face}
+            class="group block border-t-[5px] border-accent-sticker pt-5 short:pt-3"
           >
             <span
               class="display block text-4xl transition-transform duration-300 group-hover:translate-x-1 short:text-3xl"

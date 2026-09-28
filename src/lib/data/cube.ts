@@ -13,6 +13,16 @@ export type VisibleFace = "U" | "F" | "R";
 /** Sticker colors, row by row as seen looking straight at each face. */
 export type VisibleFaces = Record<VisibleFace, StickerColor[]>;
 
+/** The flat sticker colors cubing.js's 3D player renders. */
+export const playerColors: Record<StickerColor, string> = {
+  white: "#fff",
+  yellow: "#ff0",
+  red: "#f00",
+  orange: "#f90",
+  blue: "#26f",
+  green: "#0f0",
+};
+
 /** A scramble and the faces it leaves showing, for drawing without JavaScript. */
 export interface ScrambledCube {
   scramble: string;

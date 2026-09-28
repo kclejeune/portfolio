@@ -4,7 +4,7 @@
   import ContributionHeatmap from "$lib/components/ContributionHeatmap.svelte";
   import SkillsRadar from "$lib/components/SkillsRadar.svelte";
   import LanguageFrecency from "$lib/components/LanguageFrecency.svelte";
-  import { skillCategories, skillDomains, skillTerms } from "$lib/data/skills";
+  import { skillCategories, skillDomains, skillTerms, skills } from "$lib/data/skills";
   import { ArrowUpRightIcon, StarIcon, ForkIcon } from "$lib/components/icons";
   import SEO from "svelte-seo";
   import { links, siteConfig } from "$lib/config.svelte";
@@ -42,8 +42,7 @@
 
   // Skills that appear in at least one pinned repository, for filtering.
   const filterSkills = $derived(
-    skillCategories
-      .flatMap((c) => c.skills)
+    skills
       .map((skill) => ({ skill, count: matchingRepos(skill).length }))
       .filter((s) => s.count > 0),
   );
@@ -129,6 +128,7 @@
 
         <ul class="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
           {#each profile.repos as repo (repo.url)}
+            {@const tags = repoTags(repo)}
             <li class="transition-opacity duration-200 {isDimmed(repo) ? 'opacity-35' : ''}">
               <a
                 href={repo.url}
@@ -145,14 +145,14 @@
                   {repo.description || "No description yet."}
                 </p>
 
-                {#if repoTags(repo).length > 0}
+                {#if tags.length > 0}
                   <div class="mb-4 flex flex-wrap gap-1.5">
-                    {#each repoTags(repo).slice(0, 4) as tag (tag)}
+                    {#each tags.slice(0, 4) as tag (tag)}
                       <span class="chip">{tag}</span>
                     {/each}
-                    {#if repoTags(repo).length > 4}
+                    {#if tags.length > 4}
                       <span class="self-center text-sm text-faint">
-                        +{repoTags(repo).length - 4}
+                        +{tags.length - 4}
                       </span>
                     {/if}
                   </div>

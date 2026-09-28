@@ -18,10 +18,10 @@ function apply(theme: Theme) {
   if (!browser) return;
   const dark = theme === "dark" || (theme === "system" && systemPrefersDark());
   document.documentElement.classList.toggle("dark", dark);
-  // Keep the browser chrome (mobile address bar, etc.) matching the theme.
+  // Keep the browser chrome (mobile address bar, etc.) matching the page.
   document
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute("content", dark ? "#16181b" : "#f1f2ee");
+    ?.setAttribute("content", getComputedStyle(document.body).backgroundColor);
 }
 
 class ThemeStore {

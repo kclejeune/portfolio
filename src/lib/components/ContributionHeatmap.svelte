@@ -70,40 +70,44 @@
   );
 </script>
 
-<!-- A fluid grid: one column per week, sized to the available width, with each
-     day placed in its weekday's row (so partial first and last weeks line up).
-     Below 32rem of container width, older weeks drop out and columns shift. -->
+<!-- Fluid grids: one column per week, sized to the available width. Days flow
+     down each week's column on their own; only the first day is placed, so a
+     partial first week lines up by weekday. Below 32rem of container width,
+     older weeks drop out and the columns shrink to match. -->
 <div class="@container">
   <div
-    class="grid gap-[2px] [--cols:var(--all)] [--skip:0] @max-lg:[--cols:var(--recent)] @max-lg:[--skip:var(--older)]"
-    style="--all: {total}; --recent: {total -
-      skip}; --older: {skip}; grid-template-columns: repeat(var(--cols), minmax(0, 1fr));"
+    class="[--cols:var(--all)] [--skip:0] @max-lg:[--cols:var(--recent)] @max-lg:[--skip:var(--older)] *:grid *:grid-cols-[repeat(var(--cols),minmax(0,1fr))] *:gap-[2px]"
+    style="--all: {total}; --recent: {total - skip}; --older: {skip};"
     role="img"
     aria-label="GitHub contribution activity over the last year"
   >
-    {#each monthLabels as label, w (w)}
-      {#if label}
-        <span
-          class="mb-1 text-[10px] leading-none whitespace-nowrap text-faint {w < skip
-            ? '@max-lg:hidden'
-            : ''}"
-          style="grid-row: 1; grid-column: calc({w + 1} - var(--skip)) / span 3;"
-          aria-hidden="true">{label}</span
-        >
-      {/if}
-    {/each}
-    {#each calendar.weeks as week, w (w)}
-      {#each week.days as day (day.date)}
-        <span
-          class="aspect-square rounded-[2px] {levelClass[day.level]} {w < skip
-            ? '@max-lg:hidden'
-            : ''}"
-          style="grid-row: {new Date(day.date).getUTCDay() + 2}; grid-column: calc({w +
-            1} - var(--skip));"
-          title={tooltip(day.date, day.count)}
-        ></span>
+    <div class="mb-1" aria-hidden="true">
+      {#each monthLabels as label, w (w)}
+        {#if label}
+          <span
+            class="row-start-1 text-[10px] leading-none whitespace-nowrap text-faint {w < skip
+              ? '@max-lg:hidden'
+              : ''}"
+            style="grid-column: calc({w + 1} - var(--skip)) / span 3;">{label}</span
+          >
+        {/if}
       {/each}
-    {/each}
+    </div>
+    <div class="grid-flow-col grid-rows-7">
+      {#each calendar.weeks as week, w (w)}
+        {#each week.days as day, d (day.date)}
+          <span
+            class="aspect-square rounded-[2px] {levelClass[day.level]} {w < skip
+              ? '@max-lg:hidden'
+              : ''}"
+            style={w === 0 && d === 0
+              ? `grid-row-start: ${new Date(day.date).getUTCDay() + 1}`
+              : undefined}
+            title={tooltip(day.date, day.count)}
+          ></span>
+        {/each}
+      {/each}
+    </div>
   </div>
 
   <div

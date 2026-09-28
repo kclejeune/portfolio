@@ -5,10 +5,6 @@
    the no-flash script in app.html) instead of the OS preference alone. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* The logo reads sticker colors as CSS variables (see FaceGlyph), so keep
-   them in the build even if no utility happens to use one. */
-@source inline("bg-sticker-{white,yellow,red,orange,blue,green}");
-
 /* Tablet-and-up screens too short for the home page to fit in one screen at
    full size; `shorter` trims further for laptop browsers (~650px tall). */
 @custom-variant short {
@@ -31,29 +27,23 @@
   --font-sans: "Mona Sans Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Monaspace Neon", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Neutrals — a cool, faintly green-gray paper rather than warm cream. */
-  --color-paper: #f1f2ee;
-  --color-surface: #f9faf7;
-  --color-sunken: #e5e7e2;
-  --color-ink: #1b1d22;
-  --color-muted: #595e68;
-  --color-faint: #80858d;
-  --color-line: #d6d9d3;
+  /* Neutrals — a cool, faintly green-gray paper rather than warm cream.
+     Each theme token is `light-dark(light, dark)`; see `color-scheme` below. */
+  --color-paper: light-dark(#f1f2ee, #16181b);
+  --color-surface: light-dark(#f9faf7, #1d1f23);
+  --color-sunken: light-dark(#e5e7e2, #25282d);
+  --color-ink: light-dark(#1b1d22, #ebece7);
+  --color-muted: light-dark(#595e68, #a2a7ae);
+  --color-faint: light-dark(#80858d, #767b83);
+  --color-line: light-dark(#d6d9d3, #2e3137);
 
-  /* The cube itself: black plastic body and the six standard sticker colors.
-     These are fixed across themes — they're a physical object. */
-  --color-plastic: #17181b;
-  --color-sticker-white: #f3f3ee;
-  --color-sticker-yellow: #ffd500;
-  --color-sticker-red: #c41e3a;
-  --color-sticker-orange: #ff5800;
-  --color-sticker-blue: #0051ba;
-  --color-sticker-green: #009e60;
+  /* The cube's black plastic body. */
+  --color-plastic: light-dark(#17181b, #0b0c0d);
 
   /* Text-safe versions of each section's sticker color. */
-  --color-face-green: #00724a;
-  --color-face-orange: #b23c00;
-  --color-face-blue: #0048a6;
+  --color-face-green: light-dark(#00724a, #3ccf8e);
+  --color-face-orange: light-dark(#b23c00, #ff8a4c);
+  --color-face-blue: light-dark(#0048a6, #7fa9ff);
 
   /* The current section's colors; set per page via [data-face]. */
   --color-accent: var(--color-face-green);
@@ -64,41 +54,33 @@
   --text-display--line-height: 0.95;
   --text-title: clamp(3rem, 7vw, 4.5rem);
   --text-title--line-height: 0.95;
+}
 
-  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+/* The six standard sticker colors, fixed across themes (they're a physical
+   object). Static so they're always emitted: the logo's colors are generated
+   at runtime (see CubePicker) and may reference any of them. */
+@theme static {
+  --color-sticker-white: #f3f3ee;
+  --color-sticker-yellow: #ffd500;
+  --color-sticker-red: #c41e3a;
+  --color-sticker-orange: #ff5800;
+  --color-sticker-blue: #0051ba;
+  --color-sticker-green: #009e60;
 }
 
 @layer base {
-  .dark {
-    --color-paper: #16181b;
-    --color-surface: #1d1f23;
-    --color-sunken: #25282d;
-    --color-ink: #ebece7;
-    --color-muted: #a2a7ae;
-    --color-faint: #767b83;
-    --color-line: #2e3137;
-    --color-plastic: #0b0c0d;
-
-    --color-face-green: #3ccf8e;
-    --color-face-orange: #ff8a4c;
-    --color-face-blue: #7fa9ff;
+  /* Theme tokens are `light-dark()` pairs, so the color scheme picks them:
+     the `.dark` class (set by the theme toggle), or the OS preference when
+     JavaScript can't run the toggle. */
+  :root {
+    color-scheme: light;
   }
-
-  /* Without JavaScript the theme toggle can't run, so follow the OS. */
+  .dark {
+    color-scheme: dark;
+  }
   @media (prefers-color-scheme: dark) {
     .no-js {
-      --color-paper: #16181b;
-      --color-surface: #1d1f23;
-      --color-sunken: #25282d;
-      --color-ink: #ebece7;
-      --color-muted: #a2a7ae;
-      --color-faint: #767b83;
-      --color-line: #2e3137;
-      --color-plastic: #0b0c0d;
-
-      --color-face-green: #3ccf8e;
-      --color-face-orange: #ff8a4c;
-      --color-face-blue: #7fa9ff;
+      color-scheme: dark;
     }
   }
 
@@ -113,6 +95,14 @@
   [data-face="blue"] {
     --color-accent: var(--color-face-blue);
     --color-accent-sticker: var(--color-sticker-blue);
+  }
+
+  :root {
+    /* The site header's height; the home page fills the screen below it. */
+    --header-h: 4rem;
+    @media (width >= 40rem) {
+      --header-h: 5rem;
+    }
   }
 
   html {
@@ -182,6 +172,11 @@
   /* Outlined panel, for things you can click through to */
   .panel {
     @apply rounded-xl border border-line bg-surface;
+  }
+
+  /* Outlined button, for links and controls alike */
+  .button {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 font-medium transition-colors hover:border-ink disabled:pointer-events-none disabled:text-muted;
   }
 
   /* Small label for a group of content */

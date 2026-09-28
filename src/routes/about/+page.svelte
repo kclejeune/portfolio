@@ -1,10 +1,8 @@
 <script lang="ts">
   import PageHeader from "$lib/components/PageHeader.svelte";
-  import { jobs, isCurrentJob, formatMonthYear } from "$lib/data/jobs";
+  import { currentJob as current, formatMonthYear } from "$lib/data/jobs";
   import SEO from "svelte-seo";
   import { siteConfig } from "$lib/config.svelte";
-
-  const current = jobs.find(isCurrentJob) ?? jobs[0];
 
   const focusAreas = [
     "Distributed systems",

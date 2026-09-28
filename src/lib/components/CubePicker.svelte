@@ -25,29 +25,44 @@
 </script>
 
 <script lang="ts">
-  // Picks one of `size` prerendered scrambles before first paint, and shows
-  // it through CSS alone: elements marked `cube-pick` carry a `--cube-N` value
-  // per scramble and use `var(--pick)`; `cube-option` elements are one variant
-  // per scramble. Without JavaScript nothing is picked and the first shows.
-  let { size }: { size: number } = $props();
+  import { playerColors, type ScrambledCube } from "$lib/data/cube";
+
+  // Picks one of the prerendered scrambles before first paint and shows it
+  // through CSS alone. For the picked scramble it defines `--cube-U0` …
+  // `--cube-R8` (the drawing's stickers, in the 3D player's colors) and
+  // `--logo-0` … `--logo-8` (the logo's front face, in the site's colors), and
+  // hides every `.cube-option` but its own. Without JavaScript nothing is
+  // picked and the first scramble shows.
+  let { pool }: { pool: ScrambledCube[] } = $props();
 
   const pickScript = $derived(
-    `document.documentElement.dataset.cube=String(Math.floor(Math.random()*${size}))`,
+    `document.documentElement.dataset.cube=String(Math.floor(Math.random()*${pool.length}))`,
   );
   // Split so no closing script tag appears in this file's own script block.
   const closeScript = "</" + "script>";
+
   const rules = $derived(
-    Array.from(
-      { length: size },
-      (_, i) =>
-        `:root[data-cube="${i}"] .cube-pick{--pick:var(--cube-${i})}` +
-        `:root[data-cube="${i}"] .cube-option:not([data-option="${i}"]){display:none}`,
-    ).join("") + `:root:not([data-cube]) .cube-option:not([data-option="0"]){display:none}`,
+    pool
+      .map(({ faces }, i) => {
+        const stickers = (["U", "F", "R"] as const)
+          .flatMap((face) => faces[face].map((c, n) => `--cube-${face}${n}:${playerColors[c]}`))
+          .join(";");
+        const logo = faces.F.map((c, n) => `--logo-${n}:var(--color-sticker-${c})`).join(";");
+        // The first scramble also covers the no-JavaScript case.
+        const root =
+          i === 0 ? `:root:not([data-cube]),:root[data-cube="0"]` : `:root[data-cube="${i}"]`;
+        const others = i === 0 ? `:root:not([data-cube]) .cube-option:not([data-option="0"]),` : "";
+        return (
+          `${root}{${stickers};${logo}}` +
+          `${others}:root[data-cube="${i}"] .cube-option:not([data-option="${i}"]){display:none}`
+        );
+      })
+      .join(""),
   );
 </script>
 
 <svelte:head>
-  <!-- Generated from a number, not user input. -->
+  <!-- Generated from prerendered cube data, not user input. -->
   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
   {@html `<script>${pickScript}${closeScript}<style>${rules}</style>`}
 </svelte:head>

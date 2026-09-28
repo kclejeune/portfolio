@@ -1,22 +1,8 @@
 <script lang="ts">
-  import type { StickerColor } from "$lib/data/cube";
-
-  // The site's logo: a tiny cube face. Solved in the current section's color,
-  // or, when a page provides `pool` (one front face per prerendered scramble),
-  // showing whichever scramble CubePicker picked.
-  let { pool, class: className = "h-6 w-6" }: { pool?: StickerColor[][]; class?: string } =
-    $props();
-
-  const color = (c: StickerColor) => `var(--color-sticker-${c})`;
-
-  function stickerStyle(i: number): string | undefined {
-    if (!pool?.length) return undefined;
-    const colors = pool.map((face) => color(face[i]));
-    return (
-      colors.map((c, n) => `--cube-${n}:${c};`).join("") +
-      `background-color:var(--pick,${colors[0]})`
-    );
-  }
+  // The site's logo: a tiny cube face, solved in the current section's color.
+  // On the home page, CubePicker defines `--logo-0` … `--logo-8` so it shows
+  // the front face of the cube's picked scramble instead.
+  let { class: className = "h-6 w-6" }: { class?: string } = $props();
 </script>
 
 <span
@@ -25,10 +11,8 @@
 >
   {#each { length: 9 }, i (i)}
     <span
-      class="rounded-[1.5px] transition-colors duration-300 {pool?.length
-        ? 'cube-pick'
-        : 'bg-accent-sticker'}"
-      style={stickerStyle(i)}
+      class="rounded-[1.5px] transition-colors duration-300"
+      style="background-color: var(--logo-{i}, var(--color-accent-sticker))"
     ></span>
   {/each}
 </span>

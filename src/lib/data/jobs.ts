@@ -5,7 +5,6 @@ export interface Job {
   location?: string;
   startDate: Date;
   endDate: Date;
-  description?: string;
   tasks: string[];
   tags?: string[];
 }
@@ -42,26 +41,6 @@ export const jobs: Job[] = [
   },
 ];
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-export function formatDateRange(start: Date, end: Date): string {
-  const formatDate = (date: Date) => `${months[date.getMonth()]} ${date.getFullYear()}`;
-  return `${formatDate(start)} - ${formatDate(end)}`;
-}
-
 export function formatMonthYear(date: Date): string {
   return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
 }
@@ -88,3 +67,6 @@ export function isCurrentJob(job: Job): boolean {
     job.endDate.getFullYear() === now.getFullYear() && job.endDate.getMonth() === now.getMonth()
   );
 }
+
+/** The current role, or the most recent one if none is ongoing. */
+export const currentJob = jobs.find(isCurrentJob) ?? jobs[0];

@@ -1,15 +1,14 @@
+import { EmailIcon, GitHubIcon, LinkedInIcon, ResumeIcon } from "$lib/components/icons";
+
 // Site configuration
 const baseUrl = "https://www.kclj.io";
 
 const name = "Kennan LeJeune";
 const description = "Full-stack Software Engineer";
 
-/**
- * Each section of the site is a face of the cube: its sticker color is the
- * accent for that page, the nav marker, and the mini-cube logo.
- */
-export type Face = "green" | "orange" | "blue";
-
+// Each section of the site is a face of the cube: its `face` sticker color is
+// the accent for that page (see `[data-face]` in app.css), its nav marker, and
+// the mini-cube logo's color.
 export const siteConfig = {
   baseUrl,
   name,
@@ -48,19 +47,17 @@ export const links = {
   source: "https://github.com/kclejeune/portfolio",
 } as const;
 
+// Contact links, in display order. The footer shows all but the resume.
+export const contacts = [
+  { href: links.github, label: "GitHub", icon: GitHubIcon },
+  { href: links.linkedin, label: "LinkedIn", icon: LinkedInIcon },
+  { href: links.email, label: "Email", icon: EmailIcon },
+  { href: links.resume, label: "Resume", icon: ResumeIcon },
+];
+
 // Ordered section list for navigation (the logo links home).
 export const sections = [
   siteConfig.routes.about,
   siteConfig.routes.work,
   siteConfig.routes.projects,
 ];
-
-export function faceFor(path: string): Face {
-  return sections.find((s) => path.startsWith(s.path))?.face ?? siteConfig.routes.home.face;
-}
-
-/** The section after this one, wrapping back to the first. */
-export function nextSection(path: string) {
-  const index = sections.findIndex((s) => path.startsWith(s.path));
-  return index === -1 ? null : sections[(index + 1) % sections.length];
-}

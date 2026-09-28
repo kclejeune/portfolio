@@ -5,25 +5,16 @@
   import { page } from "$app/state";
   import FaceGlyph from "$lib/components/FaceGlyph.svelte";
   import ThemeToggle from "$lib/components/ThemeToggle.svelte";
-  import { GitHubIcon, LinkedInIcon, EmailIcon } from "$lib/components/icons";
-  import { faceFor, links, nextSection, sections, siteConfig } from "$lib/config.svelte";
+  import { contacts, links, sections, siteConfig } from "$lib/config.svelte";
   import SEO from "svelte-seo";
   import "../app.css";
 
   let { children } = $props();
 
-  // Full class strings so Tailwind picks them up during scanning.
-  const markerClass = {
-    green: "bg-sticker-green",
-    orange: "bg-sticker-orange",
-    blue: "bg-sticker-blue",
-  } as const;
-
-  const currentPath = $derived(page.url.pathname);
-  const face = $derived(faceFor(currentPath));
-  const next = $derived(nextSection(currentPath));
-
-  const isActive = (path: string) => currentPath.startsWith(path);
+  const current = $derived(sections.findIndex((s) => page.url.pathname.startsWith(s.path)));
+  const face = $derived(sections[current]?.face ?? siteConfig.routes.home.face);
+  // The section after this one, wrapping back to the first.
+  const next = $derived(current === -1 ? null : sections[(current + 1) % sections.length]);
 
   const currentYear = new Date().getFullYear();
 </script>
@@ -35,19 +26,19 @@
 />
 
 <div data-face={face} class="flex min-h-[100dvh] flex-col">
-  <header class="container-page flex h-16 items-center justify-between gap-4 sm:h-20">
+  <header class="container-page flex h-(--header-h) items-center justify-between gap-4">
     <a
       href="/"
       class="flex items-center gap-2.5 text-[1.0625rem] font-semibold tracking-tight"
       aria-label="Kennan LeJeune, home"
     >
-      <FaceGlyph pool={page.data.cube?.pool.map((c) => c.faces.F)} class="h-6 w-6" />
+      <FaceGlyph class="h-6 w-6" />
       <span class="hidden sm:inline">Kennan LeJeune</span>
     </a>
 
     <nav class="flex items-center gap-1 sm:gap-2" aria-label="Main">
-      {#each sections as section (section.path)}
-        {@const active = isActive(section.path)}
+      {#each sections as section, i (section.path)}
+        {@const active = i === current}
         <a
           href={section.path}
           data-sveltekit-preload-data
@@ -57,9 +48,10 @@
             : 'text-muted hover:text-ink'}"
         >
           <span
-            class="h-2.5 w-2.5 rounded-[2.5px] transition-opacity max-[359px]:hidden {markerClass[
-              section.face
-            ]} {active ? 'opacity-100' : 'opacity-40 dark:opacity-60'}"
+            data-face={section.face}
+            class="h-2.5 w-2.5 rounded-[2.5px] bg-accent-sticker transition-opacity max-[359px]:hidden {active
+              ? 'opacity-100'
+              : 'opacity-40 dark:opacity-60'}"
             aria-hidden="true"
           ></span>
           {section.title}
@@ -87,9 +79,8 @@
           <span class="mt-2 block text-muted">{next.blurb}</span>
         </span>
         <span
-          class="h-10 w-10 shrink-0 rounded-[7px] transition-transform duration-300 group-hover:rotate-90 {markerClass[
-            next.face
-          ]}"
+          data-face={next.face}
+          class="h-10 w-10 shrink-0 rounded-[7px] bg-accent-sticker transition-transform duration-300 group-hover:rotate-90"
           aria-hidden="true"
         ></span>
       </a>
@@ -107,15 +98,15 @@
         >.
       </p>
       <div class="flex items-center gap-4">
-        <a href={links.github} class="transition-colors hover:text-ink" aria-label="GitHub">
-          <GitHubIcon class="h-5 w-5" />
-        </a>
-        <a href={links.linkedin} class="transition-colors hover:text-ink" aria-label="LinkedIn">
-          <LinkedInIcon class="h-5 w-5" />
-        </a>
-        <a href={links.email} class="transition-colors hover:text-ink" aria-label="Email">
-          <EmailIcon class="h-5 w-5" />
-        </a>
+        {#each contacts.filter((c) => c.href !== links.resume) as contact (contact.label)}
+          <a
+            href={contact.href}
+            class="transition-colors hover:text-ink"
+            aria-label={contact.label}
+          >
+            <contact.icon class="h-5 w-5" />
+          </a>
+        {/each}
       </div>
     </div>
   </footer>
