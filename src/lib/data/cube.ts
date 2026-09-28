@@ -5,6 +5,7 @@
  */
 export const initialScramble = "D2 F' R2 U B2 L2 U' F2 R' D B' L U2 R F' D' L2 B U' R2";
 
+export type StickerColor = "white" | "yellow" | "red" | "orange" | "blue" | "green";
 export type VisibleFace = "U" | "F" | "R";
 /** Sticker colors, row by row as seen looking straight at each face. */
-export type VisibleFaces = Record<VisibleFace, string[]>;
+export type VisibleFaces = Record<VisibleFace, StickerColor[]>;

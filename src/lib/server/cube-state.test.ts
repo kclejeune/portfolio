@@ -1,7 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { visibleFaces } from "./cube-state";
 
-const [white, yellow, red, orange, blue, green] = ["#fff", "#ff0", "#f00", "#f90", "#26f", "#0f0"];
+const [white, yellow, red, orange, blue, green] = [
+  "white",
+  "yellow",
+  "red",
+  "orange",
+  "blue",
+  "green",
+] as const;
 
 describe("visibleFaces", () => {
   it("shows a solved cube in the standard color scheme", async () => {

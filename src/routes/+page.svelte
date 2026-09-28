@@ -95,7 +95,7 @@
             >
               {section.title}
             </span>
-            <span class="mt-2 block max-w-[28ch] text-muted shorter:hidden">{section.blurb}</span>
+            <span class="mt-2 block text-muted shorter:hidden">{section.blurb}</span>
           </a>
         </li>
       {/each}

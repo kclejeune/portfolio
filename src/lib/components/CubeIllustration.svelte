@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { VisibleFace, VisibleFaces } from "$lib/data/cube";
+  import type { StickerColor, VisibleFace, VisibleFaces } from "$lib/data/cube";
 
   // A flat-shaded drawing of the cube from the 3D player's camera angle, so
   // it can stand in for the player without JavaScript or while it loads.
@@ -11,6 +11,16 @@
   }: { faces: VisibleFaces; latitude?: number; longitude?: number; class?: string } = $props();
 
   type Vec = [number, number, number];
+
+  // The flat colors cubing.js's 3D player renders, so the swap is seamless.
+  const playerColors: Record<StickerColor, string> = {
+    white: "#fff",
+    yellow: "#ff0",
+    red: "#f00",
+    orange: "#f90",
+    blue: "#26f",
+    green: "#0f0",
+  };
 
   const polygons = $derived.by(() => {
     const [th, ph] = [(longitude * Math.PI) / 180, (latitude * Math.PI) / 180];
@@ -36,9 +46,9 @@
     const shapes: { fill: string; points: [number, number][] }[] = [];
     for (const face of ["U", "F", "R"] as const) {
       shapes.push({ fill: "#111", points: square(face, 0, 0, 1.5) });
-      faces[face].forEach((fill, i) => {
+      faces[face].forEach((color, i) => {
         const [row, col] = [Math.floor(i / 3), i % 3];
-        shapes.push({ fill, points: square(face, col - 1, 1 - row, 0.43) });
+        shapes.push({ fill: playerColors[color], points: square(face, col - 1, 1 - row, 0.43) });
       });
     }
     return shapes;

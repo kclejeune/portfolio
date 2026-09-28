@@ -1,14 +1,14 @@
 import { cube3x3x3 } from "cubing/puzzles";
-import type { VisibleFace, VisibleFaces } from "$lib/data/cube";
+import type { StickerColor, VisibleFace, VisibleFaces } from "$lib/data/cube";
 
-// cubing.js's net-diagram colors, mapped to the ones its 3D player renders.
-const playerColors: Record<string, string> = {
-  white: "#fff",
-  yellow: "#ff0",
-  red: "#f00",
-  orange: "#f90",
-  limegreen: "#0f0",
-  "#26f": "#26f",
+// cubing.js's net-diagram fills, by color name.
+const fillColors: Record<string, StickerColor> = {
+  white: "white",
+  yellow: "yellow",
+  red: "red",
+  orange: "orange",
+  limegreen: "green",
+  "#26f": "blue",
 };
 
 // Faces on cubing.js's 3x3 net, keyed by [column, row] of 3.2-unit blocks.
@@ -20,7 +20,7 @@ interface Slot {
   orientation: number;
   face: VisibleFace | undefined;
   index: number;
-  color: string;
+  color: StickerColor;
 }
 
 let slots: Promise<Slot[]> | undefined;
@@ -45,7 +45,7 @@ function loadSlots(): Promise<Slot[]> {
         orientation: +orientation,
         face: netFaces[`${bx},${by}`],
         index: row * 3 + col,
-        color: playerColors[fill.trim()] ?? fill.trim(),
+        color: fillColors[fill.trim()],
       };
     }),
   );
