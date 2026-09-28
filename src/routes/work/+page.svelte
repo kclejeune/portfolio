@@ -11,7 +11,7 @@
   canonical={siteConfig.routes.work.canonicalUrl}
 />
 
-<PageHeader title="Work">
+<PageHeader title={siteConfig.routes.work.title}>
   More detail is on my
   <a href={links.resume} class="link">resume</a> and
   <a href={links.linkedin} class="link">LinkedIn</a>.
