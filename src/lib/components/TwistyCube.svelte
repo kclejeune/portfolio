@@ -159,14 +159,20 @@
     };
   });
 
-  const buttonLabel = $derived(
-    {
-      loading: "Loading…",
-      scrambled: "Solve it",
-      solving: "Solving…",
-      solved: "Scramble it",
-    }[phase],
-  );
+  const buttonLabels = {
+    loading: "Loading…",
+    scrambled: "Solve it",
+    solving: "Solving…",
+    solved: "Scramble it",
+  } as const;
+
+  const scrambleMoves = $derived(scramble.split(" ").filter(Boolean));
+
+  // Random-state 3x3 scrambles and solutions top out at 21 moves. Every
+  // move is at most two monospace characters, so an invisible row of the
+  // longest case reserves the most lines a real one can wrap to, keeping the
+  // layout still while scrambles and solutions change length.
+  const longest = Array.from({ length: 21 }, () => "R2");
 </script>
 
 <div bind:this={frame} class="relative aspect-square w-full">
@@ -184,21 +190,34 @@
 </div>
 
 <div class="mt-4 space-y-2 font-mono text-[0.8rem] leading-relaxed">
-  <p class="flex flex-wrap gap-x-[1ch]">
+  <p class="flex gap-x-[1ch]">
     <span class="w-[9ch] shrink-0 text-muted">Scramble</span>
-    <span class="min-w-0 flex-1">{scramble}</span>
+    <span class="grid min-w-0 flex-1">
+      <span class="invisible col-start-1 row-start-1 flex flex-wrap gap-x-[1ch]" aria-hidden="true">
+        {#each longest as move, i (i)}<span>{move}</span>{/each}
+      </span>
+      <span class="col-start-1 row-start-1 flex flex-wrap gap-x-[1ch]">
+        {#each scrambleMoves as move, i (i)}<span>{move}</span>{/each}
+      </span>
+    </span>
   </p>
-  <p class="flex flex-wrap gap-x-[1ch] no-js:hidden" aria-live="polite">
+  <p class="flex gap-x-[1ch] no-js:hidden" aria-live="polite">
     <span class="w-[9ch] shrink-0 text-muted">Solution</span>
-    <span class="flex min-w-0 flex-1 flex-wrap gap-x-[1ch]">
-      {#if solution.length === 0}
-        <span class="text-faint">Searching…</span>
-      {:else}
-        {#each solution as move, i (i)}
-          <span class="transition-colors {i < played ? 'text-accent' : ''}">{move}</span>
-        {/each}
-        <span class="text-faint">({solution.length})</span>
-      {/if}
+    <span class="grid min-w-0 flex-1">
+      <span class="invisible col-start-1 row-start-1 flex flex-wrap gap-x-[1ch]" aria-hidden="true">
+        {#each longest as move, i (i)}<span>{move}</span>{/each}
+        <span>({longest.length})</span>
+      </span>
+      <span class="col-start-1 row-start-1 flex flex-wrap content-start gap-x-[1ch]">
+        {#if solution.length === 0}
+          <span class="text-faint">Searching…</span>
+        {:else}
+          {#each solution as move, i (i)}
+            <span class="transition-colors {i < played ? 'text-accent' : ''}">{move}</span>
+          {/each}
+          <span class="text-faint">({solution.length})</span>
+        {/if}
+      </span>
     </span>
   </p>
 </div>
@@ -207,7 +226,15 @@
   type="button"
   onclick={onpress}
   disabled={phase === "loading" || phase === "solving"}
-  class="mt-5 inline-flex items-center no-js:hidden gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 font-medium transition-colors enabled:hover:border-ink disabled:text-muted"
+  class="mt-5 no-js:hidden rounded-lg border border-line bg-surface px-3.5 py-2 font-medium transition-colors enabled:hover:border-ink disabled:text-muted"
 >
-  {buttonLabel}
+  <!-- Every label shares one grid cell, so the button keeps the widest one's size. -->
+  <span class="grid justify-items-start">
+    {#each Object.entries(buttonLabels) as [key, label] (key)}
+      <span
+        class="col-start-1 row-start-1 {key === phase ? '' : 'invisible'}"
+        aria-hidden={key !== phase}>{label}</span
+      >
+    {/each}
+  </span>
 </button>
