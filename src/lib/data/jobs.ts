@@ -21,8 +21,8 @@ export const jobs: Job[] = [
     startDate: new Date(2025, 0),
     endDate: new Date(currentDate.getFullYear(), currentDate.getMonth()),
     tasks: [
-      "Building scalable infrastructure for Lattice Mission Autonomy",
-      "Developing tooling for highly representative autonomous vehicle simulations",
+      "Building infrastructure for Lattice Mission Autonomy",
+      "Developing tooling for high-fidelity autonomous vehicle simulation",
     ],
     tags: ["NixOS", "Kubernetes", "AWS"],
   },
@@ -34,11 +34,11 @@ export const jobs: Job[] = [
     startDate: new Date(2021, 5),
     endDate: new Date(2024, 11),
     tasks: [
-      "Applied NLP and semantic knowledge representation methods to detect early stage biothreats from large-scale public data sources",
-      "Built DevOps tooling to improve software quality and optimize developer workflows",
-      "Designed machine learning models for viral and bacterial threat classification using Scikit-Learn, Tensorflow, and Keras",
+      "Applied NLP and knowledge representation methods to detect early-stage biothreats in large public datasets",
+      "Built DevOps tooling to improve software quality and developer workflows",
+      "Designed machine learning models to classify viral and bacterial threats, using scikit-learn, TensorFlow, and Keras",
     ],
-    tags: ["Python", "Machine Learning", "NLP", "DevOps", "Tensorflow"],
+    tags: ["Python", "Machine Learning", "NLP", "DevOps", "TensorFlow"],
   },
 ];
 

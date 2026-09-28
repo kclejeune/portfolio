@@ -7,12 +7,12 @@
 
 <SEO
   title="{siteConfig.routes.work.title} | {siteConfig.name}"
-  description="Professional experience of {siteConfig.name} — software engineering roles at Anduril Industries and JHU APL."
+  description="Where {siteConfig.name} has worked: Anduril Industries and the Johns Hopkins Applied Physics Laboratory."
   canonical={siteConfig.routes.work.canonicalUrl}
 />
 
 <PageHeader title="Work">
-  Infrastructure, autonomy, and applied machine learning. The full history is on my
+  More detail is on my
   <a href={links.resume} class="link">resume</a> and
   <a href={links.linkedin} class="link">LinkedIn</a>.
 </PageHeader>

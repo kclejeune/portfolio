@@ -27,7 +27,7 @@
 
 <SEO
   title="{siteConfig.name} | Software Engineer"
-  description="Hi, I'm {siteConfig.name} — a full-stack software engineer specializing in distributed systems, infrastructure, and robotics software."
+  description="{siteConfig.name} is a software engineer building infrastructure for distributed systems and robotics."
   canonical={siteConfig.routes.home.canonicalUrl}
 />
 
@@ -38,11 +38,11 @@
     <h1 class="display text-display">Hi, I'm<br />Kennan.</h1>
 
     <p class="mt-8 max-w-[30ch] text-2xl leading-snug font-medium text-pretty sm:text-[1.75rem]">
-      I build infrastructure for distributed systems, autonomy, and robotics software at scale.
+      I'm a software engineer building infrastructure for distributed systems and robotics.
     </p>
 
     <p class="mt-5 max-w-[52ch] text-lg leading-relaxed text-muted">
-      Right now that's at
+      Currently at
       <a href={current.employerUrl} class="link">{current.employer}</a>{current.location
         ? ` in ${current.location}`
         : ""}, working on Lattice Mission Autonomy.
@@ -65,8 +65,8 @@
 
   <figure class="mx-auto w-full max-w-xs md:max-w-none">
     <figcaption class="mb-2 text-[0.95rem] leading-snug text-muted">
-      Before infrastructure, I solved these competitively.
-      <span class="block no-js:hidden">Drag the cube to look around.</span>
+      I used to solve these competitively.
+      <span class="block no-js:hidden">Drag to rotate.</span>
     </figcaption>
     <TwistyCube initial={data.cube} />
   </figure>

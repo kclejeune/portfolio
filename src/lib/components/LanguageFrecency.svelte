@@ -68,6 +68,6 @@
       <span class="h-3.5 w-0.5 rounded-full bg-ink"></span>
       Long-term
     </span>
-    <span>Right column: change in percentage points</span>
+    <span>Numbers: change from long-term share, in points</span>
   </div>
 </div>

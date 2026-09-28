@@ -12,17 +12,17 @@
   let { data }: { data: { profile: GithubProfile } } = $props();
 
   const profile = $derived(data.profile);
-  const hasStats = $derived(profile.stats.publicRepos > 0 || profile.contributions.total > 0);
+  const hasStats = $derived(profile.stats.publicRepos > 0);
   const hasHeatmap = $derived(profile.contributions.weeks.length > 0);
 
   // --- Language trajectory, from recent commits + long-term repository breadth ---
   const hasLanguageData = $derived(profile.languages.filter((l) => l.name !== "Other").length >= 3);
 
+  // Shown inline beside the contribution graph, which reports its own total.
   const stats = $derived([
-    { value: profile.stats.totalStars, label: "Stars earned" },
-    { value: profile.stats.publicRepos, label: "Public repositories" },
-    { value: profile.stats.followers, label: "Followers" },
-    { value: profile.contributions.total, label: "Contributions this year" },
+    { value: profile.stats.totalStars, label: "stars" },
+    { value: profile.stats.publicRepos, label: "public repositories" },
+    { value: profile.stats.followers, label: "followers" },
   ]);
 
   // --- Skill ↔ repository matching ---
@@ -76,28 +76,16 @@
 </script>
 
 <SEO
-  title="Projects &amp; Skills | {siteConfig.name}"
-  description="Projects, open source work, and technical skills of {siteConfig.name} — with each skill traced to the repositories that use it."
+  title="Projects | {siteConfig.name}"
+  description="Open source projects, languages, and tools of {siteConfig.name}, pulled from GitHub."
   canonical={siteConfig.routes.projects.canonicalUrl}
 />
 
 <PageHeader title="Projects">
-  Things I've built, mostly in the open. Everything here is pulled live from
-  <a href={links.github} class="link">my GitHub</a>.
+  Open source work, pulled from <a href={links.github} class="link">my GitHub</a>.
 </PageHeader>
 
-<div class="container-page">
-  {#if hasStats}
-    <dl class="mb-16 grid grid-cols-2 gap-y-6 border-y border-line py-6 lg:grid-cols-4">
-      {#each stats as stat (stat.label)}
-        <div class="flex flex-col-reverse">
-          <dt class="mt-1 text-sm text-muted">{stat.label}</dt>
-          <dd class="display text-4xl tabular-nums sm:text-5xl">{stat.value.toLocaleString()}</dd>
-        </div>
-      {/each}
-    </dl>
-  {/if}
-
+<div class="container-page space-y-16 md:space-y-20">
   {#if profile.repos.length > 0}
     <section aria-labelledby="repos">
       <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
@@ -197,56 +185,65 @@
     </section>
   {:else}
     <div class="panel p-8">
-      <p class="text-lg">GitHub didn't respond, so repositories can't be shown right now.</p>
-      <a href={links.github} class="link mt-3 inline-block">Browse them on GitHub instead</a>
+      <p class="text-lg">Repositories couldn't be loaded from GitHub right now.</p>
+      <a href={links.github} class="link mt-3 inline-block">View them on GitHub</a>
     </div>
   {/if}
 
-  <section
-    class="mt-20 grid gap-10 border-t border-line pt-10 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-14"
-    aria-labelledby="languages"
-  >
-    {#if hasLanguageData}
-      <div>
-        <h2 id="languages" class="text-2xl font-semibold tracking-tight">What I reach for now</h2>
-        <p class="mt-3 max-w-[44ch] leading-relaxed text-muted">
-          Languages ranked by my public commits over the last year (70% of the weight), with my
-          longer project history keeping a vote (30%).
-        </p>
-      </div>
-      <LanguageFrecency languages={profile.languages} />
-    {:else}
-      <div>
-        <h2 id="languages" class="text-2xl font-semibold tracking-tight">Where I spend my time</h2>
-        <p class="mt-3 max-w-[44ch] leading-relaxed text-muted">
-          A rough map of my focus across distributed systems, infrastructure, backend, and applied
-          machine learning.
-        </p>
-      </div>
-      <SkillsRadar data={skillDomains} label="Radar chart of focus across engineering domains" />
-    {/if}
-  </section>
-
-  <section class="mt-20 border-t border-line pt-10" aria-labelledby="toolbox">
-    <h2 id="toolbox" class="text-2xl font-semibold tracking-tight">Toolbox</h2>
-    <div class="mt-6 grid gap-8 sm:grid-cols-3">
-      {#each skillCategories as category (category.name)}
-        <div>
-          <h3 class="label">{category.name}</h3>
-          <ul class="mt-3 flex flex-wrap gap-1.5">
-            {#each category.skills as skill (skill)}
-              <li class="chip text-ink">{skill}</li>
+  {#if hasStats || hasHeatmap}
+    <section class="border-t border-line pt-10" aria-labelledby="activity">
+      <div class="mb-6 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+        <h2 id="activity" class="text-2xl font-semibold tracking-tight">Activity</h2>
+        {#if hasStats}
+          <dl class="flex flex-wrap gap-x-5 gap-y-1 text-muted">
+            {#each stats as stat (stat.label)}
+              <div class="flex items-baseline gap-1.5">
+                <dt class="order-2">{stat.label}</dt>
+                <dd class="order-1 font-semibold text-ink tabular-nums">
+                  {stat.value.toLocaleString()}
+                </dd>
+              </div>
             {/each}
-          </ul>
-        </div>
-      {/each}
-    </div>
-  </section>
-
-  {#if hasHeatmap}
-    <section class="mt-20 border-t border-line pt-10" aria-labelledby="activity">
-      <h2 id="activity" class="mb-6 text-2xl font-semibold tracking-tight">The last year</h2>
-      <ContributionHeatmap calendar={profile.contributions} />
+          </dl>
+        {/if}
+      </div>
+      {#if hasHeatmap}
+        <ContributionHeatmap calendar={profile.contributions} />
+      {/if}
     </section>
   {/if}
+
+  <div class="grid gap-14 border-t border-line pt-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+    <section aria-labelledby="languages">
+      <h2 id="languages" class="text-2xl font-semibold tracking-tight">Languages</h2>
+      {#if hasLanguageData}
+        <p class="mt-2 mb-6 max-w-[48ch] text-muted">
+          Ranked by public commits over the last year (70%) and overall repository history (30%).
+        </p>
+        <LanguageFrecency languages={profile.languages} />
+      {:else}
+        <p class="mt-2 mb-6 max-w-[48ch] text-muted">
+          Roughly where my time goes across distributed systems, infrastructure, backend, and
+          machine learning.
+        </p>
+        <SkillsRadar data={skillDomains} label="Radar chart of focus across engineering domains" />
+      {/if}
+    </section>
+
+    <section aria-labelledby="toolbox">
+      <h2 id="toolbox" class="text-2xl font-semibold tracking-tight">Toolbox</h2>
+      <div class="mt-6 space-y-6">
+        {#each skillCategories as category (category.name)}
+          <div>
+            <h3 class="label">{category.name}</h3>
+            <ul class="mt-2.5 flex flex-wrap gap-1.5">
+              {#each category.skills as skill (skill)}
+                <li class="chip text-ink">{skill}</li>
+              {/each}
+            </ul>
+          </div>
+        {/each}
+      </div>
+    </section>
+  </div>
 </div>
