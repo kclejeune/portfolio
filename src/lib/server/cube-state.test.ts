@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { visibleFaces } from "./cube-state";
+import { scramblePool, visibleFaces } from "./cube-state";
 
 const [white, yellow, red, orange, blue, green] = [
   "white",
@@ -40,4 +40,17 @@ describe("visibleFaces", () => {
     expect(faces.U).toEqual([yellow, yellow, orange, blue, white, red, blue, green, orange]);
     expect(faces.R).toEqual([blue, white, green, blue, red, red, green, yellow, green]);
   });
+
+  it("builds a pool of distinct random-state scrambles", async () => {
+    const pool = await scramblePool(4);
+    expect(pool).toHaveLength(4);
+    expect(new Set(pool.map((p) => p.scramble)).size).toBe(4);
+    for (const { scramble, faces } of pool) {
+      expect(scramble.split(" ").length).toBeLessThanOrEqual(21);
+      expect(faces.U[4]).toBe(white);
+      expect(faces.F[4]).toBe(green);
+      expect(faces.R[4]).toBe(red);
+      expect(Object.values(faces).every((f) => f.length === 9)).toBe(true);
+    }
+  }, 30_000);
 });

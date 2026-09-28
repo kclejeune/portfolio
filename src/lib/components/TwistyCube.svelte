@@ -1,16 +1,23 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { prefersReducedMotion } from "svelte/motion";
   import type { TwistyPlayer } from "cubing/twisty";
+  import { browser } from "$app/environment";
   import CubeIllustration from "$lib/components/CubeIllustration.svelte";
-  import { camera, type VisibleFaces } from "$lib/data/cube";
+  import CubePicker, { pickScramble } from "$lib/components/CubePicker.svelte";
+  import { camera, type ScrambledCube } from "$lib/data/cube";
 
-  // The server renders `initial` as a static drawing (shown without JavaScript
-  // and while the player loads); the player then picks up from that state.
-  let { initial }: { initial: { scramble: string; faces: VisibleFaces } } = $props();
+  // The server prerenders a pool of scrambles as a static drawing (shown
+  // without JavaScript and while the player loads); one is picked per visit,
+  // and the player then picks up from that state.
+  let { pool }: { pool: ScrambledCube[] } = $props();
 
-  // Seeded once from the prerendered state; later scrambles replace it.
+  // Seeded once from the picked scramble; later scrambles replace it.
   // svelte-ignore state_referenced_locally
-  let scramble = $state(initial.scramble);
+  let scramble = $state(pool[browser ? pickScramble(pool.length) : 0].scramble);
+  // Until mounted, render every pooled scramble's text so the markup matches
+  // the server's; CubePicker's CSS shows the picked one.
+  let mounted = $state(false);
   let solution = $state<string[]>([]);
   // Number of solution moves already played.
   let played = $state(0);
@@ -121,6 +128,8 @@
     }
   }
 
+  onMount(() => (mounted = true));
+
   $effect(() => {
     const controller = new AbortController();
     const cancelled = () => controller.signal.aborted;
@@ -210,7 +219,7 @@
 >
   {#if showDrawing}
     <!-- Same camera and geometry as the player, filling the frame like its canvas. -->
-    <CubeIllustration faces={initial.faces} class="absolute inset-0 h-full w-full" />
+    <CubeIllustration pool={pool.map((c) => c.faces)} class="absolute inset-0 h-full w-full" />
   {/if}
   <!-- No Svelte-managed children: cubing.js owns this subtree. -->
   <div
@@ -231,7 +240,15 @@
         {#each longest as move, i (i)}<span>{move}</span>{/each}
       </span>
       <span class="col-start-1 row-start-1 flex flex-wrap content-start gap-x-[1ch]">
-        {#each scrambleMoves as move, i (i)}<span>{move}</span>{/each}
+        {#if mounted}
+          {#each scrambleMoves as move, i (i)}<span>{move}</span>{/each}
+        {:else}
+          {#each pool as option, n (n)}
+            <span class="cube-option contents" data-option={n}>
+              {#each option.scramble.split(" ") as move, i (i)}<span>{move}</span>{/each}
+            </span>
+          {/each}
+        {/if}
       </span>
     </span>
   </p>
@@ -272,3 +289,5 @@
     {/each}
   </span>
 </button>
+
+<CubePicker size={pool.length} />

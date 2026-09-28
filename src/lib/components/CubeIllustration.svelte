@@ -6,14 +6,17 @@
   // geometry as cubing.js's 3D player, so it can stand in for the player
   // (without JavaScript, or while it loads) and line up with it exactly.
   // The drawing fills a square box the same way the player's canvas does.
+  //
+  // It takes every prerendered scramble in `pool`; each sticker carries one
+  // color per scramble, and CubePicker's CSS shows the picked one.
   let {
-    faces,
+    pool,
     latitude = defaultCamera.latitude,
     longitude = defaultCamera.longitude,
     distance = defaultCamera.distance,
     class: className = "",
   }: {
-    faces: VisibleFaces;
+    pool: VisibleFaces[];
     latitude?: number;
     longitude?: number;
     distance?: number;
@@ -90,7 +93,12 @@
         [cx - r, cy + r],
       ].map(([a, b]) => project(onFace[face](a, b)));
 
-    const shapes: { fill: string; opacity?: number; points: [number, number][] }[] = [];
+    const shapes: {
+      fill?: string;
+      opacity?: number;
+      style?: string;
+      points: [number, number][];
+    }[] = [];
 
     // Translucent cubie bodies, farthest first (as three.js sorts transparent
     // objects), drawing only the faces that point toward the camera.
@@ -128,22 +136,26 @@
     }
 
     for (const face of ["U", "F", "R"] as const) {
-      faces[face].forEach((color, i) => {
+      for (let i = 0; i < 9; i++) {
         const [row, col] = [Math.floor(i / 3), i % 3];
+        const colors = pool.map((faces) => playerColors[faces[face][i]]);
         shapes.push({
-          fill: playerColors[color],
+          style:
+            colors.map((c, n) => `--cube-${n}:${c};`).join("") + `fill:var(--pick,${colors[0]})`,
           points: square(face, (col - 1) * cubie, (1 - row) * cubie, stickerHalf),
         });
-      });
+      }
     }
     return shapes;
   });
 </script>
 
 <svg viewBox="0 0 1 1" class={className} aria-hidden="true">
-  {#each polygons as { fill, opacity, points }, i (i)}
+  {#each polygons as { fill, opacity, style, points }, i (i)}
     <polygon
+      class={style ? "cube-pick" : undefined}
       {fill}
+      {style}
       fill-opacity={opacity}
       points={points.map(([x, y]) => `${x.toFixed(4)},${y.toFixed(4)}`).join(" ")}
     />

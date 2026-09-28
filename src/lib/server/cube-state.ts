@@ -1,5 +1,5 @@
 import { cube3x3x3 } from "cubing/puzzles";
-import type { StickerColor, VisibleFace, VisibleFaces } from "$lib/data/cube";
+import type { ScrambledCube, StickerColor, VisibleFace, VisibleFaces } from "$lib/data/cube";
 
 // cubing.js's net-diagram fills, by color name.
 const fillColors: Record<string, StickerColor> = {
@@ -73,4 +73,19 @@ export async function visibleFaces(scramble: string): Promise<VisibleFaces> {
     faces[slot.face][slot.index] = solved.get(`${slot.orbit}-${pieces[slot.location]}-${shown}`)!;
   }
   return faces;
+}
+
+/** `size` official WCA random-state 3x3 scrambles, with the faces each shows. */
+export async function scramblePool(size: number): Promise<ScrambledCube[]> {
+  const [{ randomScrambleForEvent }, { setSearchDebug }] = await Promise.all([
+    import("cubing/scramble"),
+    import("cubing/search"),
+  ]);
+  setSearchDebug({ logPerf: false });
+  const pool: ScrambledCube[] = [];
+  for (let i = 0; i < size; i++) {
+    const scramble = (await randomScrambleForEvent("333")).toString();
+    pool.push({ scramble, faces: await visibleFaces(scramble) });
+  }
+  return pool;
 }

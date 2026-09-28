@@ -41,7 +41,7 @@
       class="flex items-center gap-2.5 text-[1.0625rem] font-semibold tracking-tight"
       aria-label="Kennan LeJeune, home"
     >
-      <FaceGlyph stickers={page.data.cube?.faces.F} class="h-6 w-6" />
+      <FaceGlyph pool={page.data.cube?.pool.map((c) => c.faces.F)} class="h-6 w-6" />
       <span class="hidden sm:inline">Kennan LeJeune</span>
     </a>
 

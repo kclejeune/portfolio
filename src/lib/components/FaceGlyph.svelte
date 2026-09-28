@@ -2,19 +2,21 @@
   import type { StickerColor } from "$lib/data/cube";
 
   // The site's logo: a tiny cube face. Solved in the current section's color,
-  // or showing `stickers` (row by row) when a page provides them.
-  let { stickers, class: className = "h-6 w-6" }: { stickers?: StickerColor[]; class?: string } =
+  // or, when a page provides `pool` (one front face per prerendered scramble),
+  // showing whichever scramble CubePicker picked.
+  let { pool, class: className = "h-6 w-6" }: { pool?: StickerColor[][]; class?: string } =
     $props();
 
-  // Full class strings so Tailwind picks them up during scanning.
-  const stickerClass: Record<StickerColor, string> = {
-    white: "bg-sticker-white",
-    yellow: "bg-sticker-yellow",
-    red: "bg-sticker-red",
-    orange: "bg-sticker-orange",
-    blue: "bg-sticker-blue",
-    green: "bg-sticker-green",
-  };
+  const color = (c: StickerColor) => `var(--color-sticker-${c})`;
+
+  function stickerStyle(i: number): string | undefined {
+    if (!pool?.length) return undefined;
+    const colors = pool.map((face) => color(face[i]));
+    return (
+      colors.map((c, n) => `--cube-${n}:${c};`).join("") +
+      `background-color:var(--pick,${colors[0]})`
+    );
+  }
 </script>
 
 <span
@@ -23,9 +25,10 @@
 >
   {#each { length: 9 }, i (i)}
     <span
-      class="rounded-[1.5px] transition-colors duration-300 {stickers
-        ? stickerClass[stickers[i]]
+      class="rounded-[1.5px] transition-colors duration-300 {pool?.length
+        ? 'cube-pick'
         : 'bg-accent-sticker'}"
+      style={stickerStyle(i)}
     ></span>
   {/each}
 </span>

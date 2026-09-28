@@ -77,7 +77,7 @@
         I used to solve these competitively.
         <span class="block no-js:hidden">Drag to rotate.</span>
       </figcaption>
-      <TwistyCube initial={data.cube} />
+      <TwistyCube pool={data.cube.pool} />
     </figure>
   </section>
 

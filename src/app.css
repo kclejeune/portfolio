@@ -5,6 +5,10 @@
    the no-flash script in app.html) instead of the OS preference alone. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* The logo reads sticker colors as CSS variables (see FaceGlyph), so keep
+   them in the build even if no utility happens to use one. */
+@source inline("bg-sticker-{white,yellow,red,orange,blue,green}");
+
 /* Tablet-and-up screens too short for the home page to fit in one screen at
    full size; `shorter` trims further for laptop browsers (~650px tall). */
 @custom-variant short {
