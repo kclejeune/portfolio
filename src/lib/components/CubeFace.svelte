@@ -23,12 +23,11 @@
   const solved = solvedCube();
 
   // A fixed scramble so the prerendered page matches the first client render.
-  let scramble = $state<Move[]>(
-    parseMoves("D2 F' R2 U B2 L2 U' F2 R' D B' L U2 R F' D' L2 B U' R2"),
-  );
+  const initialScramble = parseMoves("D2 F' R2 U B2 L2 U' F2 R' D B' L U2 R F' D' L2 B U' R2");
+  let scramble = $state<Move[]>(initialScramble);
   // How many scramble moves are currently applied. Solving undoes them in
   // reverse, one face turn at a time, so every frame is a real cube state.
-  let applied = $state(scramble.length);
+  let applied = $state(initialScramble.length);
   let busy = $state(false);
 
   const front = $derived(faceColorsOf(applyMoves(solved, scramble.slice(0, applied)), "F"));
