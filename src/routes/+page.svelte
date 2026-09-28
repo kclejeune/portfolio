@@ -3,7 +3,7 @@
   import PageHeader from "$lib/components/PageHeader.svelte";
   import TwistyCube from "$lib/components/TwistyCube.svelte";
   import { currentJob as current } from "$lib/data/jobs";
-  import { contacts, sections, siteConfig } from "$lib/config.svelte";
+  import { contacts, links, sections, siteConfig } from "$lib/config.svelte";
   import SEO from "svelte-seo";
 
   let { data }: { data: PageData } = $props();
@@ -11,7 +11,7 @@
 
 <SEO
   title="{siteConfig.name} | Software Engineer"
-  description="{siteConfig.name} is a software engineer building infrastructure for distributed systems and robotics."
+  description="{siteConfig.name} is a full-stack software engineer building platform infrastructure, networking, and hardware integration for distributed robotic systems."
   canonical={siteConfig.routes.home.canonicalUrl}
 />
 
@@ -19,18 +19,20 @@
      below the header, with the links pinned to the bottom edge. -->
 <div class="md:flex md:min-h-[calc(100svh-var(--header-h))] md:flex-col">
   <section
-    class="container-page grid items-start gap-x-14 pb-20 md:flex-1 md:grid-cols-[minmax(0,1fr)_19rem] md:pb-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-x-20"
+    class="container-page grid items-start gap-x-14 pb-20 md:flex-1 md:grid-cols-[minmax(0,1fr)_19rem] md:pb-8 shorter:pb-2 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-x-20"
   >
     <div>
       <PageHeader title="Hi, I'm Kennan." marker={false} contained={false}>
-        I'm a software engineer building infrastructure for distributed systems and robotics.
+        I'm a full-stack software engineer building platform infrastructure, networking, and
+        hardware integration for distributed robotic systems.
       </PageHeader>
 
       <p class="max-w-[52ch] text-lg leading-relaxed text-muted">
         Currently at
         <a href={current.employerUrl} class="link">{current.employer}</a>{current.location
           ? ` in ${current.location}`
-          : ""}, working on Lattice Mission Autonomy.
+          : ""}, working on
+        <a href={links.lattice} class="link">Lattice Mission Autonomy</a>.
       </p>
 
       <ul class="mt-7 flex flex-wrap gap-2.5 short:mt-5">

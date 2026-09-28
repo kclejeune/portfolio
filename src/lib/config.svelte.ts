@@ -44,6 +44,7 @@ export const links = {
   linkedin: "https://linkedin.com/in/kclejeune",
   email: "mailto:contact@kclj.io",
   resume: "https://assets.kclj.io/resume.pdf",
+  lattice: "https://www.anduril.com/lattice/mission-autonomy",
   source: "https://github.com/kclejeune/portfolio",
 } as const;
 

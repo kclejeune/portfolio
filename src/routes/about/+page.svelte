@@ -2,7 +2,7 @@
   import PageHeader from "$lib/components/PageHeader.svelte";
   import { currentJob as current, formatMonthYear } from "$lib/data/jobs";
   import SEO from "svelte-seo";
-  import { siteConfig } from "$lib/config.svelte";
+  import { links, siteConfig } from "$lib/config.svelte";
 
   const focusAreas = [
     "Distributed systems",
@@ -32,9 +32,8 @@
       I'm a software engineer at
       <a href={current.employerUrl} class="link">{current.employer}</a>, where I work on
       infrastructure for
-      <a href="https://www.anduril.com/lattice/mission-autonomy" class="link"
-        >Lattice Mission Autonomy</a
-      >, including distributed mesh networking and the systems robotics software runs on.
+      <a href={links.lattice} class="link">Lattice Mission Autonomy</a>, including distributed mesh
+      networking and the systems robotics software runs on.
     </p>
     <p>
       I started programming by writing TI-BASIC games on a graphing calculator in high school. Since
