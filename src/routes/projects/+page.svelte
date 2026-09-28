@@ -104,7 +104,7 @@
         <h2 id="repos" class="text-2xl font-semibold tracking-tight">Pinned repositories</h2>
         {#if filterSkills.length > 0}
           <div
-            class="flex flex-wrap items-center gap-1.5"
+            class="flex flex-wrap items-center gap-1.5 no-js:hidden"
             role="group"
             aria-label="Filter by skill"
           >

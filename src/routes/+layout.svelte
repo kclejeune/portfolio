@@ -57,7 +57,7 @@
             : 'text-muted hover:text-ink'}"
         >
           <span
-            class="h-2.5 w-2.5 rounded-[2.5px] transition-opacity {markerClass[
+            class="h-2.5 w-2.5 rounded-[2.5px] transition-opacity max-[359px]:hidden {markerClass[
               section.face
             ]} {active ? 'opacity-100' : 'opacity-40 dark:opacity-60'}"
             aria-hidden="true"
@@ -65,8 +65,8 @@
           {section.title}
         </a>
       {/each}
-      <span class="mx-1 h-5 w-px bg-line" aria-hidden="true"></span>
-      <ThemeToggle />
+      <span class="mx-1 h-5 w-px bg-line no-js:hidden" aria-hidden="true"></span>
+      <div class="no-js:hidden"><ThemeToggle /></div>
     </nav>
   </header>
 

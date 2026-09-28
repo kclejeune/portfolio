@@ -1,9 +1,12 @@
 <script lang="ts">
+  import type { PageData } from "./$types";
   import TwistyCube from "$lib/components/TwistyCube.svelte";
   import { GitHubIcon, LinkedInIcon, EmailIcon, ResumeIcon } from "$lib/components/icons";
   import { jobs, isCurrentJob } from "$lib/data/jobs";
   import { links, sections, siteConfig } from "$lib/config.svelte";
   import SEO from "svelte-seo";
+
+  let { data }: { data: PageData } = $props();
 
   const current = jobs.find(isCurrentJob) ?? jobs[0];
 
@@ -62,13 +65,14 @@
 
   <figure class="mx-auto w-full max-w-xs md:max-w-none">
     <figcaption class="mb-2 text-[0.95rem] leading-snug text-muted">
-      Before infrastructure, I solved these competitively. Drag the cube to look around.
+      Before infrastructure, I solved these competitively.
+      <span class="block no-js:hidden">Drag the cube to look around.</span>
     </figcaption>
-    <TwistyCube />
+    <TwistyCube initial={data.cube} />
   </figure>
 </section>
 
-<nav class="container-page" aria-label="Sections">
+<nav class="container-page mb-20 sm:mb-28" aria-label="Sections">
   <ul class="grid gap-10 sm:grid-cols-3 sm:gap-6">
     {#each sections as section (section.path)}
       <li>

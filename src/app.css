@@ -5,6 +5,9 @@
    the no-flash script in app.html) instead of the OS preference alone. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* `.no-js` is on <html> until the inline script in app.html removes it. */
+@custom-variant no-js (&:where(.no-js, .no-js *));
+
 @theme {
   /* GitHub's open-source superfamily: Mona Sans (condensed and heavy for
      display, normal width for body) with Monaspace Neon for notation and code. */
@@ -64,6 +67,24 @@
     --color-face-blue: #7fa9ff;
   }
 
+  /* Without JavaScript the theme toggle can't run, so follow the OS. */
+  @media (prefers-color-scheme: dark) {
+    .no-js {
+      --color-paper: #16181b;
+      --color-surface: #1d1f23;
+      --color-sunken: #25282d;
+      --color-ink: #ebece7;
+      --color-muted: #a2a7ae;
+      --color-faint: #767b83;
+      --color-line: #2e3137;
+      --color-plastic: #0b0c0d;
+
+      --color-face-green: #3ccf8e;
+      --color-face-orange: #ff8a4c;
+      --color-face-blue: #7fa9ff;
+    }
+  }
+
   [data-face="green"] {
     --color-accent: var(--color-face-green);
     --color-accent-sticker: var(--color-sticker-green);
@@ -80,6 +101,14 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+
+    /* Scale the whole rem-based layout up on large monitors. */
+    @media (min-width: 1920px) {
+      font-size: 112.5%;
+    }
+    @media (min-width: 2400px) {
+      font-size: 125%;
+    }
   }
 
   body {

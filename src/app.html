@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full no-js">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -9,6 +9,7 @@
     <script>
       // Apply the saved theme before first paint to avoid a flash.
       (() => {
+        document.documentElement.classList.remove("no-js");
         try {
           const stored = localStorage.getItem("theme");
           const dark =
