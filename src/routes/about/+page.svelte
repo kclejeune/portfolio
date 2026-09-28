@@ -130,7 +130,7 @@
 
     <p class="-mt-4 text-sm md:col-start-2 md:row-start-2 md:mt-0">
       <a href="https://www.worldcubeassociation.org/persons/2013LEJE03" class="link">
-        My results on the WCA site
+        Official WCA Results
       </a>
     </p>
   </div>
