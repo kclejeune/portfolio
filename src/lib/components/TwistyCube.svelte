@@ -2,7 +2,7 @@
   import { prefersReducedMotion } from "svelte/motion";
   import type { TwistyPlayer } from "cubing/twisty";
   import CubeIllustration from "$lib/components/CubeIllustration.svelte";
-  import type { VisibleFaces } from "$lib/data/cube";
+  import { camera, type VisibleFaces } from "$lib/data/cube";
 
   // The server renders `initial` as a static drawing (shown without JavaScript
   // and while the player loads); the player then picks up from that state.
@@ -15,7 +15,10 @@
   // Number of solution moves already played.
   let played = $state(0);
   let phase = $state<"loading" | "scrambled" | "solving" | "solved">("loading");
-  let playerReady = $state(false);
+  // The server-rendered drawing shows until the 3D cube has fully rendered
+  // (off-screen, behind it); then the two swap in a single frame, so they're
+  // never visible at the same time and there's no blank gap between them.
+  let showDrawing = $state(true);
 
   let container: HTMLDivElement;
   // Observed for visibility; the player container stays hidden until ready.
@@ -92,6 +95,32 @@
     );
   }
 
+  /**
+   * Resolve once the 3D cube is actually on screen: its puzzle has loaded, its
+   * canvas is in the page, and cubing.js's own canvas fade-in has finished.
+   */
+  async function revealed(player: TwistyPlayer) {
+    await player.experimentalCurrentThreeJSPuzzleObject();
+    const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+    const deadline = performance.now() + 3000;
+    while (performance.now() < deadline) {
+      await nextFrame();
+      // Asked each frame: early on, before the view exists, this is empty.
+      const canvases = await player.experimentalCurrentCanvases();
+      const attached = canvases.filter((c) => c.isConnected);
+      if (attached.length === 0) continue;
+      // Reading computed style starts any pending CSS animation, so the fade
+      // is visible to getAnimations() even on the frame the canvas attaches.
+      const opacities = attached.map((c) => getComputedStyle(c).opacity);
+      const fades = attached.flatMap((c) => c.getAnimations());
+      if (fades.length > 0) {
+        await Promise.allSettled(fades.map((f) => f.finished));
+        return;
+      }
+      if (opacities.every((o) => o === "1")) return;
+    }
+  }
+
   $effect(() => {
     const controller = new AbortController();
     const cancelled = () => controller.signal.aborted;
@@ -130,10 +159,9 @@
         backView: "none",
         experimentalDragInput: "auto",
         tempoScale: 6,
-        cameraDistance: 5.2,
-        // Keep in sync with CubeIllustration's defaults.
-        cameraLatitude: 28,
-        cameraLongitude: 32,
+        cameraDistance: camera.distance,
+        cameraLatitude: camera.latitude,
+        cameraLongitude: camera.longitude,
       });
       player.style.width = "100%";
       player.style.height = "100%";
@@ -148,9 +176,10 @@
         if (timeline.atEnd && phase !== "loading") phase = "solved";
       });
 
-      await setUp(scramble);
-      playerReady = true;
-      if (!cancelled() && !prefersReducedMotion.current) setTimeout(solve, 900);
+      await Promise.all([setUp(scramble), revealed(player)]);
+      if (cancelled()) return;
+      showDrawing = false;
+      if (!prefersReducedMotion.current) setTimeout(solve, 600);
     })();
 
     return () => {
@@ -161,9 +190,9 @@
 
   const buttonLabels = {
     loading: "Loading…",
-    scrambled: "Solve it",
+    scrambled: "Solve",
     solving: "Solving…",
-    solved: "Scramble it",
+    solved: "Scramble",
   } as const;
 
   const scrambleMoves = $derived(scramble.split(" ").filter(Boolean));
@@ -179,16 +208,18 @@
   bind:this={frame}
   class="relative mx-auto aspect-square w-full short:max-w-[36svh] shorter:max-w-[32svh]"
 >
-  {#if !playerReady}
-    <CubeIllustration faces={initial.faces} class="absolute inset-0 m-auto h-[82%] w-auto" />
+  {#if showDrawing}
+    <!-- Same camera and geometry as the player, filling the frame like its canvas. -->
+    <CubeIllustration faces={initial.faces} class="absolute inset-0 h-full w-full" />
   {/if}
   <!-- No Svelte-managed children: cubing.js owns this subtree. -->
   <div
     bind:this={container}
-    class="absolute inset-0 cursor-grab active:cursor-grabbing"
+    class="absolute inset-0 cursor-grab active:cursor-grabbing {showDrawing
+      ? 'pointer-events-none opacity-0'
+      : ''}"
     role="img"
     aria-label="A 3D Rubik's Cube. Drag to turn it around."
-    hidden={!playerReady}
   ></div>
 </div>
 
@@ -232,7 +263,7 @@
   class="mt-5 no-js:hidden short:mt-3 rounded-lg border border-line bg-surface px-3.5 py-2 font-medium transition-colors enabled:hover:border-ink disabled:text-muted"
 >
   <!-- Every label shares one grid cell, so the button keeps the widest one's size. -->
-  <span class="grid justify-items-start">
+  <span class="grid justify-items-center">
     {#each Object.entries(buttonLabels) as [key, label] (key)}
       <span
         class="col-start-1 row-start-1 {key === phase ? '' : 'invisible'}"
