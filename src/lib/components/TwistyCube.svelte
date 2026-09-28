@@ -19,7 +19,7 @@
   // the server's; CubePicker's CSS shows the picked one.
   let mounted = $state(false);
   let solution = $state<string[]>([]);
-  // Number of solution moves already played.
+  // Number of solution moves played or playing, for highlighting.
   let played = $state(0);
   let phase = $state<"loading" | "scrambled" | "solving" | "solved">("loading");
   // The server-rendered drawing shows until the 3D cube has fully rendered
@@ -185,10 +185,17 @@
 
       const model = player.experimentalModel;
       model.currentMoveInfo.addFreshListener((info) => {
-        played = info.patternIndex;
+        // `patternIndex` counts only the moves before the current one; include
+        // the move animating now and one just finishing (the last move ends
+        // that way), so the highlight keeps pace with the cube.
+        const count = info.patternIndex + info.currentMoves.length + info.movesFinishing.length;
+        played = Math.min(count, solution.length);
       });
       model.coarseTimelineInfo.addFreshListener((timeline) => {
-        if (timeline.atEnd && phase !== "loading") phase = "solved";
+        if (timeline.atEnd && phase !== "loading") {
+          phase = "solved";
+          played = solution.length;
+        }
       });
 
       await Promise.all([setUp(scramble), revealed(player)]);
