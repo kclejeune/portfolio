@@ -96,35 +96,42 @@
     Highlights from my former speedcubing career.
   </p>
 
-  <div class="mt-8 grid items-center gap-10 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] md:gap-14">
-    <figure>
+  <!-- From tablet width up: photo beside the highlights (stretched to the
+       photo's height), caption beside the results link. -->
+  <div
+    class="mt-8 grid gap-y-10 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] md:gap-x-14 md:gap-y-3"
+  >
+    <figure class="md:contents">
       <img
         src="/assets/images/cube.webp"
         alt="Kennan, in a plaid shirt, mid-solve at a speedcubing competition"
         width="1236"
         height="695"
         loading="lazy"
-        class="aspect-[4/3] w-full rounded-xl object-cover object-[70%_center]"
+        class="aspect-[4/3] w-full rounded-xl object-cover object-[70%_center] md:col-start-1 md:row-start-1"
       />
-      <figcaption class="mt-3 text-sm text-muted">
-        Mid-solve at a World Cube Association competition.
+      <figcaption class="mt-3 text-sm text-muted md:col-start-1 md:row-start-2 md:mt-0">
+        Mid-solve at a
+        <a href="https://www.worldcubeassociation.org/" class="link font-normal">WCA</a>
+        competition.
       </figcaption>
     </figure>
 
-    <div>
-      <dl class="divide-y divide-line border-y border-line">
-        {#each cubing as stat (stat.label)}
-          <div class="flex items-baseline gap-5 py-3">
-            <dt class="order-2 text-muted">{stat.label}</dt>
-            <dd class="display w-20 shrink-0 text-3xl text-accent">{stat.value}</dd>
-          </div>
-        {/each}
-      </dl>
-      <p class="mt-6">
-        <a href="https://www.worldcubeassociation.org/persons/2013LEJE03" class="link">
-          My results on the WCA site
-        </a>
-      </p>
-    </div>
+    <dl
+      class="divide-y divide-line border-y border-line md:col-start-2 md:row-start-1 md:grid md:grid-rows-3"
+    >
+      {#each cubing as stat (stat.label)}
+        <div class="flex flex-wrap content-center items-baseline gap-5 py-3">
+          <dt class="order-2 text-muted">{stat.label}</dt>
+          <dd class="display w-20 shrink-0 text-3xl text-accent">{stat.value}</dd>
+        </div>
+      {/each}
+    </dl>
+
+    <p class="-mt-4 text-sm md:col-start-2 md:row-start-2 md:mt-0">
+      <a href="https://www.worldcubeassociation.org/persons/2013LEJE03" class="link">
+        My results on the WCA site
+      </a>
+    </p>
   </div>
 </section>
