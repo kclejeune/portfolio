@@ -1,60 +1,60 @@
 import { browser } from "$app/environment";
+import { MediaQuery } from "svelte/reactivity";
 
 export type Theme = "light" | "dark" | "system";
 
 const STORAGE_KEY = "theme";
+const prefersDark = new MediaQuery("(prefers-color-scheme: dark)");
 
-function systemPrefersDark(): boolean {
-  return browser && window.matchMedia("(prefers-color-scheme: dark)").matches;
-}
-
+// localStorage throws when storage is blocked (e.g. some private modes).
 function readStored(): Theme {
-  if (!browser) return "system";
-  const value = localStorage.getItem(STORAGE_KEY);
-  return value === "light" || value === "dark" ? value : "system";
+  try {
+    const value = localStorage.getItem(STORAGE_KEY);
+    return value === "light" || value === "dark" ? value : "system";
+  } catch {
+    return "system";
+  }
 }
 
-function apply(theme: Theme) {
-  if (!browser) return;
-  const dark = theme === "dark" || (theme === "system" && systemPrefersDark());
+function writeStored(theme: Theme) {
+  try {
+    if (theme === "system") localStorage.removeItem(STORAGE_KEY);
+    else localStorage.setItem(STORAGE_KEY, theme);
+  } catch {
+    // Not persisted; still applied for this page.
+  }
+}
+
+function apply(dark: boolean) {
   document.documentElement.classList.toggle("dark", dark);
-  // Keep the browser chrome (mobile address bar, etc.) matching the page.
+  // Match the browser chrome (e.g. mobile address bar) to the page.
   document
     .querySelector('meta[name="theme-color"]')
     ?.setAttribute("content", getComputedStyle(document.body).backgroundColor);
 }
 
 class ThemeStore {
-  current = $state<Theme>("system");
+  current = $state<Theme>(browser ? readStored() : "system");
 
   constructor() {
     if (browser) {
-      this.current = readStored();
-      // Keep the document in sync with the OS while in "system" mode.
-      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-        if (this.current === "system") apply("system");
+      $effect.root(() => {
+        $effect(() => apply(this.resolved === "dark"));
       });
     }
   }
 
-  /** The theme actually shown on screen (resolves "system"). */
+  /** The theme on screen, with "system" resolved. */
   get resolved(): "light" | "dark" {
-    if (this.current === "system") {
-      return systemPrefersDark() ? "dark" : "light";
-    }
-    return this.current;
+    if (this.current !== "system") return this.current;
+    return prefersDark.current ? "dark" : "light";
   }
 
   set(theme: Theme) {
     this.current = theme;
-    if (browser) {
-      if (theme === "system") localStorage.removeItem(STORAGE_KEY);
-      else localStorage.setItem(STORAGE_KEY, theme);
-      apply(theme);
-    }
+    if (browser) writeStored(theme);
   }
 
-  /** Flip between light and dark based on what's currently shown. */
   toggle() {
     this.set(this.resolved === "dark" ? "light" : "dark");
   }
