@@ -3,7 +3,7 @@
 [![CI](https://github.com/kclejeune/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/kclejeune/portfolio/actions/workflows/ci.yml)
 
 Personal site built with SvelteKit, deployed to Cloudflare Workers. The
-Projects and Skills pages pull live data from the GitHub GraphQL API
+Projects page pulls live data from the GitHub GraphQL API
 (pinned repos, language footprint, contribution activity) with KV caching.
 
 ## Stack
@@ -11,7 +11,7 @@ Projects and Skills pages pull live data from the GitHub GraphQL API
 - **Framework:** SvelteKit 2 + Svelte 5 (runes)
 - **Build:** Vite 8 (Rolldown bundler)
 - **Styling:** Tailwind CSS 4 via `@tailwindcss/vite`
-- **Linting:** ESLint 9 (flat config) + `eslint-plugin-svelte`
+- **Linting:** ESLint 10 (flat config) + `eslint-plugin-svelte`
 - **Formatting:** [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html)
 - **Tests:** Vitest
 - **Deploy:** `@sveltejs/adapter-cloudflare`
@@ -27,12 +27,18 @@ pnpm dev
 pnpm dev --open
 ```
 
-The GitHub-backed pages need a token to fetch live data. Provide a
-`GITHUB_API_KEY` with `read:user`/`public_repo` scope via the environment
-(the rest of the GitHub config lives in `.env`):
+The Projects page needs a GitHub token to fetch live data. It's read at
+runtime, so provide a `GITHUB_API_KEY` with `read:user`/`public_repo` scope via
+the environment (the rest of the GitHub config lives in `.env`):
 
 ```bash
 GITHUB_API_KEY="<token>" pnpm dev
+```
+
+In production it's a Worker secret:
+
+```bash
+pnpm wrangler secret put GITHUB_API_KEY
 ```
 
 ## Scripts

@@ -25,4 +25,4 @@ jobs:
       - name: Test
         run: pnpm test
       - name: Build Project
-        run: GITHUB_API_KEY="fake" pnpm build
+        run: pnpm build

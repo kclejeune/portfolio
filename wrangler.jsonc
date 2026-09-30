@@ -16,4 +16,6 @@
   // The last successful GitHub profile (see src/lib/server/github.ts). No id:
   // `wrangler deploy` creates the namespace on first deploy and binds it.
   "kv_namespaces": [{ "binding": "GITHUB_CACHE" }],
+  // Names only; values are set with `wrangler secret put`.
+  "secrets": { "required": ["GITHUB_API_KEY"] },
 }

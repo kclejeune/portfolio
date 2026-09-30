@@ -1,4 +1,5 @@
-import { GITHUB_API_KEY, GITHUB_API_URL, GITHUB_USERNAME } from "$env/static/private";
+import { env } from "$env/dynamic/private";
+import { GITHUB_API_URL, GITHUB_USERNAME } from "$env/static/private";
 import { buildProfile, getProfileQuery, type GithubProfile } from "$lib/utils";
 
 const EMPTY_PROFILE: GithubProfile = {
@@ -30,10 +31,11 @@ export interface LoadedProfile {
  * calendar, and aggregate stats), throwing on HTTP, GraphQL, or timeout errors.
  */
 async function fetchProfile(fetch: typeof globalThis.fetch): Promise<GithubProfile> {
+  if (!env.GITHUB_API_KEY) throw new Error("GITHUB_API_KEY is not set");
   const res = await fetch(GITHUB_API_URL, {
     method: "POST",
     headers: {
-      Authorization: `bearer ${GITHUB_API_KEY}`,
+      Authorization: `bearer ${env.GITHUB_API_KEY}`,
       "User-Agent": GITHUB_USERNAME,
     },
     body: JSON.stringify({ query: getProfileQuery(GITHUB_USERNAME) }),

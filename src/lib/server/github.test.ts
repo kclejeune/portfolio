@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { loadGithubProfile } from "./github";
 
+vi.mock("$env/dynamic/private", () => ({ env: { GITHUB_API_KEY: "test" } }));
 vi.mock("$env/static/private", () => ({
-  GITHUB_API_KEY: "test",
   GITHUB_API_URL: "https://api.github.test/graphql",
   GITHUB_USERNAME: "kclejeune",
 }));
