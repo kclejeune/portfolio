@@ -1,14 +1,9 @@
 <script lang="ts" module>
   import { camera, type VisibleFace } from "$lib/data/cube";
 
-  // A flat-shaded drawing of the cube through the same perspective camera and
-  // geometry as cubing.js's 3D player, so it can stand in for the player
-  // (without JavaScript, or while it loads) and line up with it exactly. It
-  // fills a square box the same way the player's canvas does.
-  //
-  // The geometry never changes, so it's computed once here. Sticker colors
-  // come from CubePicker's CSS: `--cube-U0` … `--cube-R8` for the picked
-  // scramble.
+  // Flat drawing of the cube through cubing.js's camera and geometry, so it
+  // lines up exactly with the 3D player it stands in for. Computed once per
+  // module; sticker colors come from CubePicker's `--cube-*` variables.
 
   type Vec = [number, number, number];
 

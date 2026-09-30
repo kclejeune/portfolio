@@ -7,31 +7,26 @@
   import CubePicker, { pickScramble } from "$lib/components/CubePicker.svelte";
   import { camera, scrambleFeed, type ScrambledCube, type SolvedScramble } from "$lib/data/cube";
 
-  // The server prerenders a pool of scrambles as a static drawing (shown
-  // without JavaScript and while the player loads); one is picked per visit,
-  // and the player then picks up from that state.
+  // A prerendered pool of scrambles, drawn statically until the 3D player
+  // loads and continues from the one picked for this visit.
   let { pool }: { pool: ScrambledCube[] } = $props();
 
   // svelte-ignore state_referenced_locally
   const picked = browser ? pickScramble(pool.length) : 0;
-  // The scramble in the player, once it's loaded.
   let current = $state<SolvedScramble>();
-  // The other prerendered scrambles play next, then the prerendered feed's
-  // (fetched as the last of these is taken), all solved at build time.
+  // The rest of the pool plays next, then the prerendered feed.
   // svelte-ignore state_referenced_locally
   const upcoming: SolvedScramble[] = pool.filter((_, i) => i !== picked);
   let feed: Promise<SolvedScramble[]> | undefined;
-  // Until mounted, render every pooled scramble's text so the markup matches
-  // the server's; CubePicker's CSS shows the picked one.
+  // Until mounted, every pooled scramble renders (matching SSR); CubePicker's CSS shows one.
   let mounted = $state(false);
-  // Number of solution moves played or playing, for highlighting.
+  // Solution moves played or playing, for highlighting.
   let played = $state(0);
   let phase = $state<"scrambled" | "solving" | "solved">("scrambled");
   let busy = $state(false);
   let loadError = $state(false);
-  // The server-rendered drawing shows until the 3D cube has fully rendered
-  // (off-screen, behind it); then the two swap in a single frame, so they're
-  // never visible at the same time and there's no blank gap between them.
+  // The drawing covers the player until it has fully rendered, then they swap
+  // in one frame: no overlap, no blank gap.
   let showDrawing = $state(true);
 
   let container: HTMLDivElement;
@@ -63,9 +58,8 @@
   }
 
   /**
-   * The next scramble. The feed starts downloading as the home page's last
-   * one is taken, and is replayed from a random point each time it runs out,
-   * so visitors don't all see the same sequence.
+   * The next scramble. The feed is fetched as the pool's last one is taken and
+   * replayed from a random offset, so visitors don't all see the same sequence.
    */
   async function nextCube(): Promise<SolvedScramble> {
     if (upcoming.length === 0) {
@@ -108,30 +102,23 @@
     }
   }
 
-  // Warm the renderer, including its nested 3D imports, on pointer intent or
-  // keyboard focus. Playback is exclusively triggered by the Solve button.
+  // Warms the player on hover/focus; a failure here is retried on press.
   function prefetch() {
-    void ensurePlayer().catch(() => {
-      // A speculative failure can be retried by the button.
-    });
+    ensurePlayer().catch(() => {});
   }
 
-  /**
-   * Resolve once the 3D cube is actually on screen: its puzzle has loaded, its
-   * canvas is in the page, and cubing.js's own canvas fade-in has finished.
-   */
+  /** Resolves once the puzzle is loaded, its canvas attached, and cubing.js's fade-in done. */
   async function revealed(player: TwistyPlayer) {
     await player.experimentalCurrentThreeJSPuzzleObject();
     const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
     const deadline = performance.now() + 3000;
     while (!disposed && performance.now() < deadline) {
       await nextFrame();
-      // Asked each frame: early on, before the view exists, this is empty.
+      // Empty until the view exists.
       const canvases = await player.experimentalCurrentCanvases();
       const attached = canvases.filter((c) => c.isConnected);
       if (attached.length === 0) continue;
-      // Reading computed style starts any pending CSS animation, so the fade
-      // is visible to getAnimations() even on the frame the canvas attaches.
+      // Reading computed style starts pending animations, so getAnimations() sees the fade.
       const opacities = attached.map((c) => getComputedStyle(c).opacity);
       const fades = attached.flatMap((c) => c.getAnimations());
       if (fades.length > 0) {
@@ -162,7 +149,7 @@
   }
 
   async function initializePlayer() {
-    // Only the renderer: the picked scramble's solution was prerendered.
+    // Renderer only; solutions were prerendered, so no solver.
     const { TwistyPlayer } = await import("cubing/twisty");
     if (disposed) return;
 
@@ -186,9 +173,8 @@
 
     const model = player.experimentalModel;
     model.currentMoveInfo.addFreshListener((info) => {
-      // `patternIndex` counts only the moves before the current one; include
-      // the move animating now and one just finishing (the last move ends
-      // that way), so the highlight keeps pace with the cube.
+      // `patternIndex` excludes moves animating or finishing (the last move
+      // only ever finishes); count them so the highlight keeps pace.
       const count = info.patternIndex + info.currentMoves.length + info.movesFinishing.length;
       played = Math.min(count, solution.length);
     });
@@ -216,10 +202,8 @@
   const scrambleMoves = $derived((current ?? pool[picked]).scramble.split(" ").filter(Boolean));
   const solution = $derived(current?.solution.split(" ").filter(Boolean) ?? []);
 
-  // Random-state 3x3 scrambles and solutions top out at 21 moves. Every
-  // move is at most two monospace characters, so an invisible row of the
-  // longest case reserves the most lines a real one can wrap to, keeping the
-  // layout still while scrambles and solutions change length.
+  // Scrambles and solutions are at most 21 moves of at most 2 chars; rendering
+  // that invisibly reserves the max wrapped height so the layout never shifts.
   const longest = Array.from({ length: 21 }, () => "R2");
 </script>
 
@@ -231,7 +215,6 @@
   class="relative mx-auto aspect-square w-full short:max-w-[36svh] shorter:max-w-[32svh]"
 >
   {#if showDrawing}
-    <!-- Same camera and geometry as the player, filling the frame like its canvas. -->
     <CubeIllustration class="absolute inset-0 h-full w-full" />
   {/if}
   <!-- No Svelte-managed children: cubing.js owns this subtree. -->
@@ -243,8 +226,7 @@
   ></div>
 </div>
 
-<!-- An invisible row of the longest case, sharing a grid cell with the real
-     text so the row always reserves the most lines it can wrap to. -->
+<!-- Shares a grid cell with the real text (see `longest`). -->
 {#snippet reserve(suffix?: string)}
   <span class="invisible col-start-1 row-start-1 flex flex-wrap gap-x-[1ch]" aria-hidden="true">
     {#each longest as move, i (i)}<span>{move}</span>{/each}
@@ -298,7 +280,7 @@
   disabled={busy || phase === "solving"}
   class="button mt-5 no-js:hidden short:mt-3"
 >
-  <!-- Every label shares one grid cell, so the button keeps the widest one's size. -->
+  <!-- Labels share one grid cell, so the button keeps the widest one's width. -->
   <span class="grid justify-items-center">
     {#each Object.entries(buttonLabels) as [key, label] (key)}
       <span

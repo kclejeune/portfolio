@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 
 /* Toggle dark mode via a `.dark` class on <html> (set by the theme store /
    the no-flash script in app.html) instead of the OS preference alone. */
@@ -224,6 +223,11 @@
   /* Outlined button, for links and controls alike */
   .button {
     @apply inline-flex items-center justify-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 font-medium transition-colors hover:border-ink disabled:pointer-events-none disabled:text-muted;
+  }
+
+  /* Filter chip; `aria-pressed` marks the active one */
+  .toggle {
+    @apply rounded-md border border-line px-2.5 py-1 text-sm font-medium text-muted transition-colors hover:border-ink hover:text-ink aria-pressed:border-accent aria-pressed:bg-accent aria-pressed:text-paper;
   }
 
   /* Small label for a group of content */

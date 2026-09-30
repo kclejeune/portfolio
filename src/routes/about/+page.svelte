@@ -2,8 +2,7 @@
   import { dev } from "$app/environment";
   import PageHeader from "$lib/components/PageHeader.svelte";
   import { currentJob as current, formatMonthYear } from "$lib/data/jobs";
-  import SEO from "svelte-seo";
-  import { links, siteConfig } from "$lib/config.svelte";
+  import { links } from "$lib/config";
 
   const focusAreas = [
     "Distributed systems",
@@ -18,18 +17,12 @@
     { value: "12th", label: "Highest global rank for 3x3x3 average" },
   ];
 
-  // Cloudflare Images resizes the photo per screen (and serves AVIF where
-  // supported) at the edge; `vite dev` has no /cdn-cgi, so it gets the original.
+  // Cloudflare Images resizes at the edge. Where /cdn-cgi is missing (`vite dev`,
+  // `vite preview`), dev skips the srcset and onerror drops it.
   const photo = "/assets/images/cube.webp";
   const resized = (width: number) => `/cdn-cgi/image/width=${width},format=auto${photo} ${width}w`;
   const photoSrcset = dev ? undefined : [480, 800, 1236].map(resized).join(", ");
 </script>
-
-<SEO
-  title="{siteConfig.routes.about.title} | {siteConfig.name}"
-  description="About {siteConfig.name}, a software engineer at Anduril Industries working on infrastructure for distributed systems and robotics."
-  canonical={siteConfig.routes.about.canonicalUrl}
-/>
 
 <PageHeader title="About">Software engineer, cyclist, skier, and former speedcuber.</PageHeader>
 
@@ -103,14 +96,11 @@
     Highlights from my former speedcubing career.
   </p>
 
-  <!-- From tablet width up: photo beside the highlights (stretched to the
-       photo's height), caption beside the results link. -->
+  <!-- Tablet up: photo beside highlights, caption beside the results link. -->
   <div
     class="mt-8 grid gap-y-10 md:grid-cols-2 md:gap-x-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] md:gap-y-3"
   >
     <figure class="md:contents">
-      <!-- Where resizing isn't available (e.g. `vite preview`), dropping the
-           srcset falls back to the original. -->
       <img
         src={photo}
         srcset={photoSrcset}

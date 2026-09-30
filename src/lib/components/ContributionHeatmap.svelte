@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ContributionCalendar, ContributionLevel } from "$lib/utils";
+  import type { ContributionCalendar, ContributionLevel } from "$lib/github";
 
   let { calendar }: { calendar: ContributionCalendar } = $props();
 
@@ -49,7 +49,7 @@
     return labels;
   });
 
-  // One formatter for every day; toLocaleDateString builds a new one per call.
+  // Shared: toLocaleDateString builds a formatter per call.
   const dateFormat = new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
@@ -63,8 +63,7 @@
     return `${label} on ${dateFormat.format(new Date(date))}`;
   }
 
-  // In narrow containers (a sidebar, a phone) the full year shrinks to
-  // unreadable specks, so show only the most recent weeks there.
+  // Narrow containers show only recent weeks; a full year would be specks.
   const recentWeeks = 26;
   const total = $derived(calendar.weeks.length);
   const skip = $derived(Math.max(0, total - recentWeeks));
@@ -73,10 +72,8 @@
   );
 </script>
 
-<!-- Fluid grids: one column per week, sized to the available width. Days flow
-     down each week's column on their own; only the first day is placed, so a
-     partial first week lines up by weekday. Below 32rem of container width,
-     older weeks drop out and the columns shrink to match. -->
+<!-- One column per week; days flow down it, with only the first placed so a
+     partial first week aligns by weekday. Below 32rem, older weeks drop out. -->
 <div class="@container">
   <div
     class="[--cols:var(--all)] [--skip:0] @max-lg:[--cols:var(--recent)] @max-lg:[--skip:var(--older)] *:grid *:grid-cols-[repeat(var(--cols),minmax(0,1fr))] *:gap-[2px]"

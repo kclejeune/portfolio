@@ -1,6 +1,5 @@
-// ---------------------------------------------------------------------------
-// Public, view-friendly shapes
-// ---------------------------------------------------------------------------
+/** For languages GitHub has no color for, and for "Other". */
+const FALLBACK_COLOR = "#94a3b8";
 
 export interface Repository {
   name: string;
@@ -58,10 +57,6 @@ export interface GithubProfile {
   stats: ProfileStats;
 }
 
-// ---------------------------------------------------------------------------
-// Sorting
-// ---------------------------------------------------------------------------
-
 export function compare(a: Repository, b: Repository) {
   const starDiff = b.stargazerCount - a.stargazerCount;
   const forkDiff = b.forkCount - a.forkCount;
@@ -71,10 +66,7 @@ export function compare(a: Repository, b: Repository) {
   return starDiff || forkDiff || tagDiff || nameDiff;
 }
 
-// ---------------------------------------------------------------------------
-// Parsers — map GitHub's deeply nested GraphQL response into the shapes above.
-// Inputs are typed loosely because the raw response is untrusted/variable.
-// ---------------------------------------------------------------------------
+// Parsers from GitHub's GraphQL response, typed loosely since fields may be missing.
 
 export function parseRepositories(nodes: any[]): Repository[] {
   const repos: Repository[] = (nodes ?? []).filter(Boolean).map((node: any) => {
@@ -91,7 +83,9 @@ export function parseRepositories(nodes: any[]): Repository[] {
         .map((t: any) => t?.topic?.name)
         .filter(Boolean),
       languages: languageNodes.map((l: any) => l.name),
-      primaryLanguage: primary ? { name: primary.name, color: primary.color ?? "#94a3b8" } : null,
+      primaryLanguage: primary
+        ? { name: primary.name, color: primary.color ?? FALLBACK_COLOR }
+        : null,
     };
   });
   return repos.sort(compare);
@@ -105,7 +99,7 @@ function languageShares(node: any): { name: string; color: string; size: number;
   if (total === 0) return [];
   return edges.map((edge: any) => ({
     name: edge.node.name,
-    color: edge.node.color ?? "#94a3b8",
+    color: edge.node.color ?? FALLBACK_COLOR,
     size: edge.size,
     share: edge.size / total,
   }));
@@ -120,6 +114,11 @@ export function aggregateLanguages(
     string,
     { color: string; size: number; historical: number; recent: number }
   >();
+  const entry = (name: string, color: string) => {
+    let e = totals.get(name);
+    if (!e) totals.set(name, (e = { color, size: 0, historical: 0, recent: 0 }));
+    return e;
+  };
   let historicalRepos = 0;
 
   for (const node of nodes ?? []) {
@@ -127,15 +126,9 @@ export function aggregateLanguages(
     if (shares.length === 0) continue;
     historicalRepos += 1;
     for (const language of shares) {
-      const entry = totals.get(language.name) ?? {
-        color: language.color,
-        size: 0,
-        historical: 0,
-        recent: 0,
-      };
-      entry.size += language.size;
-      entry.historical += language.share;
-      totals.set(language.name, entry);
+      const e = entry(language.name, language.color);
+      e.size += language.size;
+      e.historical += language.share;
     }
   }
 
@@ -146,19 +139,11 @@ export function aggregateLanguages(
     const shares = languageShares(contribution?.repository);
     if (commits <= 0 || shares.length === 0) continue;
 
-    // Commit frequency is useful, but raw counts mostly measure commit style.
-    // A logarithm lets sustained work rise without one noisy repo taking over.
+    // Log-scaled so commit style (many small vs. few large) matters less.
     const weight = Math.log2(commits + 1);
     recentWeight += weight;
     for (const language of shares) {
-      const entry = totals.get(language.name) ?? {
-        color: language.color,
-        size: 0,
-        historical: 0,
-        recent: 0,
-      };
-      entry.recent += language.share * weight;
-      totals.set(language.name, entry);
+      entry(language.name, language.color).recent += language.share * weight;
     }
   }
 
@@ -187,7 +172,7 @@ export function aggregateLanguages(
   if (tail.length > 0) {
     head.push({
       name: "Other",
-      color: "#94a3b8",
+      color: FALLBACK_COLOR,
       size: tail.reduce((s, l) => s + l.size, 0),
       percent: tail.reduce((s, l) => s + l.percent, 0),
       recentPercent: tail.reduce((s, l) => s + l.recentPercent, 0),
@@ -231,8 +216,7 @@ export function parseStats(user: any): ProfileStats {
   const repoNodes: any[] = user?.repositories?.nodes ?? [];
   return {
     followers: user?.followers?.totalCount ?? 0,
-    // Use the unfiltered public count so forks aren't dropped from the stat.
-    // (`repositories` above is filtered to non-forks for language/star totals.)
+    // Includes forks, unlike `repositories`.
     publicRepos: user?.publicRepoCount?.totalCount ?? user?.repositories?.totalCount ?? 0,
     totalStars: repoNodes.reduce((sum: number, r: any) => sum + (r?.stargazerCount ?? 0), 0),
   };
@@ -252,19 +236,9 @@ export function buildProfile(json: any): GithubProfile {
   };
 }
 
-// ---------------------------------------------------------------------------
-// Query
-// ---------------------------------------------------------------------------
-
-export function getProfileQuery(
-  username = "kclejeune",
-  maxNumRepos = 12,
-  maxNumTopics = 15,
-  maxNumLanguages = 10,
-) {
-  return `
-query {
-  user(login: "${username}") {
+export const PROFILE_QUERY = `
+query Profile($login: String!) {
+  user(login: $login) {
     login
     name
     followers {
@@ -282,7 +256,7 @@ query {
       totalCount
       nodes {
         stargazerCount
-        languages(first: ${maxNumLanguages}, orderBy: { field: SIZE, direction: DESC }) {
+        languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
           edges {
             size
             node {
@@ -300,7 +274,7 @@ query {
         }
         repository {
           isPrivate
-          languages(first: ${maxNumLanguages}, orderBy: { field: SIZE, direction: DESC }) {
+          languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
             edges {
               size
               node {
@@ -322,7 +296,7 @@ query {
       }
     }
     itemShowcase {
-      items(first: ${maxNumRepos}) {
+      items(first: 12) {
         nodes {
           ... on Repository {
             name
@@ -330,14 +304,14 @@ query {
             forkCount
             url
             description
-            repositoryTopics(first: ${maxNumTopics}) {
+            repositoryTopics(first: 15) {
               nodes {
                 topic {
                   name
                 }
               }
             }
-            languages(first: ${maxNumLanguages}, orderBy: { field: SIZE, direction: DESC }) {
+            languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
               nodes {
                 name
                 color
@@ -350,4 +324,3 @@ query {
   }
 }
 `;
-}

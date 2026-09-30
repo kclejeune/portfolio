@@ -4,22 +4,18 @@
 
   let {
     data,
-    max = 5,
-    label = "Radar chart of relative language usage across repositories",
-    showValues = false,
+    label,
   }: {
     data: { axis: string; level: number }[];
-    max?: number;
     /** Accessible description of what the chart shows. */
-    label?: string;
-    /** Render each axis value (rounded percent) next to its label. */
-    showValues?: boolean;
+    label: string;
   } = $props();
 
   const size = 280;
   const center = size / 2;
-  const radius = size / 2 - 56; // leave room for labels
+  const radius = size / 2 - 56; // room for axis labels
   const rings = 4;
+  const max = 5;
 
   // Vertex angle for axis i (starting at the top, clockwise).
   function angle(i: number): number {
@@ -34,14 +30,15 @@
     return values.map((v, i) => point(i, (v / max) * radius * scale).join(",")).join(" ");
   }
 
-  // Grid rings (as fractions of the radius).
-  const ringPolys = Array.from({ length: rings }, (_, r) =>
-    data.map((_, i) => point(i, (radius * (r + 1)) / rings).join(",")).join(" "),
+  const ringPolys = $derived(
+    Array.from({ length: rings }, (_, r) =>
+      data.map((_, i) => point(i, (radius * (r + 1)) / rings).join(",")).join(" "),
+    ),
   );
 
   const levels = $derived(data.map((d) => d.level));
 
-  // Animate the data polygon outward on mount.
+  // Grows the data polygon outward on mount.
   const grow = new Tween(0, { duration: 800, easing: cubicOut });
   $effect(() => {
     grow.set(1);
@@ -60,12 +57,10 @@
   role="img"
   aria-label={label}
 >
-  <!-- Grid rings -->
   {#each ringPolys as poly (poly)}
     <polygon points={poly} class="fill-none stroke-line" stroke-width="1" />
   {/each}
 
-  <!-- Axes + labels -->
   {#each data as d, i (d.axis)}
     {@const outer = point(i, radius)}
     {@const lp = point(i, radius + 16)}
@@ -84,11 +79,10 @@
       dominant-baseline="middle"
       class="fill-muted text-[10px] font-medium"
     >
-      {d.axis}{#if showValues}<tspan class="fill-faint" dx="3">{Math.round(d.level)}%</tspan>{/if}
+      {d.axis}
     </text>
   {/each}
 
-  <!-- Data polygon -->
   <polygon
     points={polygon(levels, grow.current)}
     class="fill-accent-sticker/20 stroke-accent"
@@ -96,11 +90,10 @@
     stroke-linejoin="round"
   />
 
-  <!-- Vertices -->
   {#each levels as level, i (data[i].axis)}
     {@const p = point(i, (level / max) * radius * grow.current)}
     <circle cx={p[0]} cy={p[1]} r="3" class="fill-accent">
-      <title>{data[i].axis}: {Math.round(level)}{showValues ? "%" : ""}</title>
+      <title>{data[i].axis}: {Math.round(level)}</title>
     </circle>
   {/each}
 </svg>

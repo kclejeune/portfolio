@@ -1,15 +1,8 @@
 <script lang="ts">
-  import { jobs, formatMonthYear, formatDuration, isCurrentJob } from "$lib/data/jobs";
+  import { jobs, formatMonthYear, formatDuration } from "$lib/data/jobs";
   import PageHeader from "$lib/components/PageHeader.svelte";
-  import SEO from "svelte-seo";
-  import { links, siteConfig } from "$lib/config.svelte";
+  import { links, siteConfig } from "$lib/config";
 </script>
-
-<SEO
-  title="{siteConfig.routes.work.title} | {siteConfig.name}"
-  description="Where {siteConfig.name} has worked: Anduril Industries and the Johns Hopkins Applied Physics Laboratory."
-  canonical={siteConfig.routes.work.canonicalUrl}
-/>
 
 <PageHeader title={siteConfig.routes.work.title}>
   More detail is on my
@@ -19,16 +12,17 @@
 
 <ol class="container-page">
   {#each jobs as job (job.employer)}
-    {@const current = isCurrentJob(job)}
     <li
       class="grid gap-4 border-t border-line py-10 md:grid-cols-[13rem_minmax(0,1fr)] md:gap-10 md:py-12"
     >
       <div>
-        <p class="display text-4xl tabular-nums {current ? 'text-accent' : ''}">
-          {job.startDate.getFullYear()}–{current ? "now" : job.endDate.getFullYear()}
+        <p class="display text-4xl tabular-nums {job.endDate ? '' : 'text-accent'}">
+          {job.startDate.getFullYear()}–{job.endDate?.getFullYear() ?? "now"}
         </p>
         <p class="mt-2 text-sm text-muted">
-          {formatMonthYear(job.startDate)} to {current ? "present" : formatMonthYear(job.endDate)}
+          {formatMonthYear(job.startDate)} to {job.endDate
+            ? formatMonthYear(job.endDate)
+            : "present"}
           <br />
           {formatDuration(job.startDate, job.endDate)}
         </p>

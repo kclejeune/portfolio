@@ -1,7 +1,6 @@
 <script lang="ts">
-  // The site's logo: a tiny cube face, solved in the current section's color.
-  // On the home page, CubePicker defines `--logo-0` … `--logo-8` so it shows
-  // the front face of the cube's picked scramble instead.
+  // Logo: a cube face in the section's color, or on the home page the picked
+  // scramble's front face (CubePicker's `--logo-*`).
   let { class: className = "h-6 w-6" }: { class?: string } = $props();
 </script>
 

@@ -1,12 +1,12 @@
 <script lang="ts">
   import "@fontsource-variable/mona-sans/standard.css";
-  // Only 500: body text's 440 weight resolves to it, and nothing sets lighter mono text.
+  // Only 500: nothing sets mono text lighter, and body's 440 resolves to it.
   import "@fontsource/monaspace-neon/500.css";
   import { page } from "$app/state";
   import FaceGlyph from "$lib/components/FaceGlyph.svelte";
   import NavProgress from "$lib/components/NavProgress.svelte";
   import ThemeToggle from "$lib/components/ThemeToggle.svelte";
-  import { contacts, links, sections, siteConfig } from "$lib/config.svelte";
+  import { contacts, links, sections, siteConfig } from "$lib/config";
   import SEO from "svelte-seo";
   import "../app.css";
 
@@ -14,22 +14,27 @@
 
   const current = $derived(sections.findIndex((s) => page.url.pathname.startsWith(s.path)));
   const face = $derived(sections[current]?.face ?? siteConfig.routes.home.face);
-  // The section after this one, wrapping back to the first.
   const next = $derived(current === -1 ? null : sections[(current + 1) % sections.length]);
+
+  const route = $derived(
+    page.error
+      ? undefined
+      : Object.values(siteConfig.routes).find((r) => r.path === page.url.pathname),
+  );
 
   const currentYear = new Date().getFullYear();
 </script>
 
 <SEO
-  title="{siteConfig.name} | {siteConfig.description}"
-  description="{siteConfig.name} | {siteConfig.description}"
-  canonical={siteConfig.routes.home.canonicalUrl}
+  title={route?.head.title ?? `${page.status} | ${siteConfig.name}`}
+  description={route?.head.description}
+  canonical={route?.canonicalUrl}
 />
 
 <NavProgress />
 
 <div data-face={face} class="flex min-h-[100dvh] flex-col">
-  <!-- Visible links fetch their route's code early; data still waits for hover. -->
+  <!-- Visible links preload code; data still waits for hover. -->
   <header
     data-sveltekit-preload-code="viewport"
     class="container-page flex h-(--header-h) items-center justify-between gap-4"

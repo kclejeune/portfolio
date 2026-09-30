@@ -1,6 +1,6 @@
 import { env } from "$env/dynamic/private";
 import { GITHUB_API_URL, GITHUB_USERNAME } from "$env/static/private";
-import { buildProfile, getProfileQuery, type GithubProfile } from "$lib/utils";
+import { buildProfile, PROFILE_QUERY, type GithubProfile } from "$lib/github";
 
 const EMPTY_PROFILE: GithubProfile = {
   repos: [],
@@ -38,7 +38,7 @@ async function fetchProfile(fetch: typeof globalThis.fetch): Promise<GithubProfi
       Authorization: `bearer ${env.GITHUB_API_KEY}`,
       "User-Agent": GITHUB_USERNAME,
     },
-    body: JSON.stringify({ query: getProfileQuery(GITHUB_USERNAME) }),
+    body: JSON.stringify({ query: PROFILE_QUERY, variables: { login: GITHUB_USERNAME } }),
     signal: AbortSignal.timeout(TIMEOUT_MS),
   });
   if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${res.statusText}`);

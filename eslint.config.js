@@ -16,12 +16,14 @@ export default ts.config(
       globals: { ...globals.browser, ...globals.node },
     },
     rules: {
-      // Allow intentional `any` in the GraphQL flattening utility.
-      "@typescript-eslint/no-explicit-any": "off",
-      // The site deploys at the domain root (no base path), so wrapping
-      // internal hrefs in resolve() adds noise without benefit.
+      // No base path, so resolve() on internal hrefs is a no-op.
       "svelte/no-navigation-without-resolve": "off",
     },
+  },
+  {
+    // Parses GitHub's untyped GraphQL response.
+    files: ["src/lib/github.ts"],
+    rules: { "@typescript-eslint/no-explicit-any": "off" },
   },
   {
     files: ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],

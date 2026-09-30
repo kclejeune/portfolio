@@ -1,91 +1,58 @@
 <script lang="ts">
-  import type { GithubProfile, Repository } from "$lib/utils";
+  import type { Repository } from "$lib/github";
+  import type { PageProps } from "./$types";
   import PageHeader from "$lib/components/PageHeader.svelte";
   import ContributionHeatmap from "$lib/components/ContributionHeatmap.svelte";
   import SkillsRadar from "$lib/components/SkillsRadar.svelte";
   import LanguageFrecency from "$lib/components/LanguageFrecency.svelte";
   import { skillCategories, skillDomains, skillTerms, skills } from "$lib/data/skills";
   import { ArrowUpRightIcon, StarIcon, ForkIcon } from "$lib/components/icons";
-  import SEO from "svelte-seo";
-  import { links, siteConfig } from "$lib/config.svelte";
+  import { links } from "$lib/config";
 
-  let { data }: { data: { profile: GithubProfile } } = $props();
+  let { data }: PageProps = $props();
 
   const profile = $derived(data.profile);
   const hasStats = $derived(profile.stats.publicRepos > 0);
   const hasHeatmap = $derived(profile.contributions.weeks.length > 0);
-
-  // --- Language trajectory, from recent commits + long-term repository breadth ---
   const hasLanguageData = $derived(profile.languages.filter((l) => l.name !== "Other").length >= 3);
 
-  // Shown inline beside the contribution graph, which reports its own total.
+  // Shown beside the contribution graph, which reports its own total.
   const stats = $derived([
     { value: profile.stats.totalStars, label: "stars" },
     { value: profile.stats.publicRepos, label: "public repositories" },
     { value: profile.stats.followers, label: "followers" },
   ]);
 
-  // --- Skill ↔ repository matching ---
   function repoTerms(repo: Repository): Set<string> {
-    return new Set(
-      [...repo.languages, ...repo.repositoryTopics].filter(Boolean).map((t) => t.toLowerCase()),
+    return new Set([...repo.languages, ...repo.repositoryTopics].map((t) => t.toLowerCase()));
+  }
+
+  // Pinned repo URLs per skill, for skills that match at least one.
+  const reposBySkill = $derived.by(() => {
+    const terms = profile.repos.map((repo) => ({ url: repo.url, terms: repoTerms(repo) }));
+    return new Map(
+      skills.flatMap((skill) => {
+        const wanted = skillTerms(skill);
+        const urls = terms.filter((r) => wanted.some((t) => r.terms.has(t))).map((r) => r.url);
+        return urls.length > 0 ? [[skill, new Set(urls)] as const] : [];
+      }),
     );
-  }
-
-  function matchingRepos(skill: string): Repository[] {
-    const terms = skillTerms(skill);
-    return profile.repos.filter((repo) => {
-      const haystack = repoTerms(repo);
-      return terms.some((t) => haystack.has(t));
-    });
-  }
-
-  // Skills that appear in at least one pinned repository, for filtering.
-  const filterSkills = $derived(
-    skills
-      .map((skill) => ({ skill, count: matchingRepos(skill).length }))
-      .filter((s) => s.count > 0),
-  );
+  });
 
   let activeSkill = $state<string | null>(null);
+  const highlighted = $derived(activeSkill ? reposBySkill.get(activeSkill) : undefined);
 
-  function toggleSkill(skill: string) {
-    activeSkill = activeSkill === skill ? null : skill;
-  }
-
-  const highlightedUrls = $derived(
-    activeSkill ? new Set(matchingRepos(activeSkill).map((r) => r.url)) : null,
-  );
-
-  function isDimmed(repo: Repository): boolean {
-    return highlightedUrls !== null && !highlightedUrls.has(repo.url);
-  }
-
-  // Topics only — the primary language gets its own GitHub-style color dot.
+  // Topics only; the primary language gets its own color dot.
   function repoTags(repo: Repository): string[] {
-    return Array.from(
-      new Set<string>(repo.repositoryTopics.filter(Boolean).map((e) => e.toLowerCase().trim())),
-    ).sort();
+    return [...new Set(repo.repositoryTopics.map((t) => t.toLowerCase().trim()))].sort();
   }
-
-  const filterClass = (active: boolean) =>
-    active
-      ? "border-accent bg-accent text-paper"
-      : "border-line text-muted hover:border-ink hover:text-ink";
 </script>
-
-<SEO
-  title="Projects | {siteConfig.name}"
-  description="Open source projects, languages, and tools of {siteConfig.name}, pulled from GitHub."
-  canonical={siteConfig.routes.projects.canonicalUrl}
-/>
 
 <PageHeader title="Projects">
   Open source work, pulled from <a href={links.github} class="link">my GitHub</a>.
 </PageHeader>
 
-<!-- From desktop width up, repositories take the main column and everything
-     else sits in a sidebar beside them; narrower screens stack them. -->
+<!-- Repositories beside a sidebar on desktop; stacked below. -->
 <div
   class="container-page grid gap-16 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-10 xl:grid-cols-[minmax(0,1fr)_22rem] xl:gap-14"
 >
@@ -94,7 +61,7 @@
       <section aria-labelledby="repos">
         <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
           <h2 id="repos" class="text-2xl font-semibold tracking-tight">Pinned repositories</h2>
-          {#if filterSkills.length > 0}
+          {#if reposBySkill.size > 0}
             <div
               class="flex flex-wrap items-center gap-1.5 no-js:hidden"
               role="group"
@@ -104,22 +71,18 @@
                 type="button"
                 onclick={() => (activeSkill = null)}
                 aria-pressed={activeSkill === null}
-                class="rounded-md border px-2.5 py-1 text-sm font-medium transition-colors {filterClass(
-                  activeSkill === null,
-                )}"
+                class="toggle"
               >
                 All
               </button>
-              {#each filterSkills as { skill, count } (skill)}
+              {#each reposBySkill as [skill, urls] (skill)}
                 <button
                   type="button"
-                  onclick={() => toggleSkill(skill)}
+                  onclick={() => (activeSkill = activeSkill === skill ? null : skill)}
                   aria-pressed={activeSkill === skill}
-                  class="rounded-md border px-2.5 py-1 text-sm font-medium transition-colors {filterClass(
-                    activeSkill === skill,
-                  )}"
+                  class="toggle"
                 >
-                  {skill} <span class="tabular-nums opacity-60">{count}</span>
+                  {skill} <span class="tabular-nums opacity-60">{urls.size}</span>
                 </button>
               {/each}
             </div>
@@ -129,7 +92,11 @@
         <ul class="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
           {#each profile.repos as repo (repo.url)}
             {@const tags = repoTags(repo)}
-            <li class="transition-opacity duration-200 {isDimmed(repo) ? 'opacity-35' : ''}">
+            <li
+              class="transition-opacity duration-200 {highlighted && !highlighted.has(repo.url)
+                ? 'opacity-35'
+                : ''}"
+            >
               <a
                 href={repo.url}
                 class="group panel flex h-full flex-col p-5 transition-colors hover:border-accent sm:p-6"

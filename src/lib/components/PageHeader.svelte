@@ -1,8 +1,7 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
 
-  // Every page's title and intro, in the same place and style, so switching
-  // pages swaps the text without the layout jumping.
+  // Shared so switching pages doesn't shift the layout.
   let {
     title,
     marker = true,

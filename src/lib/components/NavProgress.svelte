@@ -1,11 +1,9 @@
 <script lang="ts">
   import { navigating } from "$app/state";
-  import { sections, siteConfig } from "$lib/config.svelte";
+  import { sections, siteConfig } from "$lib/config";
 
-  // Loads block navigation until their data arrives (the projects page waits
-  // on GitHub), so a slow one would otherwise leave the old page up with no
-  // sign anything is happening. Shown only past a short delay, so fast and
-  // preloaded navigations don't flash it.
+  // Slow loads (e.g. /projects waiting on GitHub) keep the old page up; show
+  // progress after a delay so fast navigations don't flash it.
   let visible = $state(false);
   $effect(() => {
     if (!navigating.to) {

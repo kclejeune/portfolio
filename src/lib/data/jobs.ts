@@ -4,12 +4,11 @@ export interface Job {
   title: string;
   location?: string;
   startDate: Date;
-  endDate: Date;
+  /** Omitted for the current role. */
+  endDate?: Date;
   tasks: string[];
   tags?: string[];
 }
-
-const currentDate = new Date();
 
 export const jobs: Job[] = [
   {
@@ -18,7 +17,6 @@ export const jobs: Job[] = [
     title: "Software Engineer",
     location: "Washington, DC",
     startDate: new Date(2025, 0),
-    endDate: new Date(currentDate.getFullYear(), currentDate.getMonth()),
     tasks: [
       "Building infrastructure for Lattice Mission Autonomy",
       "Developing tooling for high-fidelity autonomous vehicle simulation",
@@ -45,14 +43,10 @@ export function formatMonthYear(date: Date): string {
   return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
 }
 
-/** Whole months between two dates (inclusive of the start month). */
-export function durationMonths(start: Date, end: Date): number {
-  return (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth()) + 1;
-}
-
-/** Human-friendly duration like "2 yrs 3 mos". */
-export function formatDuration(start: Date, end: Date): string {
-  const total = durationMonths(start, end);
+/** Duration like "2 yrs 3 mos", counting both end months. */
+export function formatDuration(start: Date, end = new Date()): string {
+  const total =
+    (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth()) + 1;
   const years = Math.floor(total / 12);
   const remMonths = total % 12;
   const parts: string[] = [];
@@ -61,12 +55,5 @@ export function formatDuration(start: Date, end: Date): string {
   return parts.join(" ") || "1 mo";
 }
 
-export function isCurrentJob(job: Job): boolean {
-  const now = new Date();
-  return (
-    job.endDate.getFullYear() === now.getFullYear() && job.endDate.getMonth() === now.getMonth()
-  );
-}
-
 /** The current role, or the most recent one if none is ongoing. */
-export const currentJob = jobs.find(isCurrentJob) ?? jobs[0];
+export const currentJob = jobs.find((job) => !job.endDate) ?? jobs[0];

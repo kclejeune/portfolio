@@ -8,7 +8,7 @@ import {
   parseRepositories,
   parseStats,
   type Repository,
-} from "./index";
+} from "./github";
 
 const sampleResponse = {
   data: {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { LanguageStat } from "$lib/utils";
+  import type { LanguageStat } from "$lib/github";
 
   let { languages }: { languages: LanguageStat[] } = $props();
 
@@ -21,14 +21,14 @@
 </script>
 
 <div>
-  <ol class="space-y-3.5" aria-label="Languages ranked by recent and historical usage">
+  <ol class="space-y-3.5" aria-label="Languages ranked by weighted share">
     {#each visibleLanguages as language (language.name)}
       {@const change = delta(language)}
       <li
         class="grid grid-cols-[minmax(5.5rem,7.5rem)_1fr_3.25rem] items-center gap-3"
         aria-label="{language.name}: {language.percent.toFixed(
           1,
-        )}% of recent work, {language.historicalPercent.toFixed(1)}% long-term"
+        )}% weighted, {language.historicalPercent.toFixed(1)}% long-term"
       >
         <span class="flex min-w-0 items-center gap-2 font-medium">
           <span
@@ -62,11 +62,11 @@
   <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted">
     <span class="flex items-center gap-2">
       <span class="h-2.5 w-5 rounded-[2px] bg-accent-sticker"></span>
-      Last 12 months
+      Weighted share
     </span>
     <span class="flex items-center gap-2">
       <span class="h-3.5 w-0.5 rounded-full bg-ink"></span>
-      Long-term
+      Long-term share
     </span>
     <span>± change from long-term share, in points</span>
   </div>

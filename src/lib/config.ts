@@ -1,6 +1,5 @@
 import { EmailIcon, GitHubIcon, LinkedInIcon, ResumeIcon } from "$lib/components/icons";
 
-// Site configuration
 const baseUrl = "https://www.kclj.io";
 
 const name = "Kennan LeJeune";
@@ -14,13 +13,26 @@ export const siteConfig = {
   name,
   description,
   routes: {
-    home: { path: "/", canonicalUrl: baseUrl, title: "Home", face: "green" },
+    home: {
+      path: "/",
+      canonicalUrl: baseUrl,
+      title: "Home",
+      face: "green",
+      head: {
+        title: `${name} | Software Engineer`,
+        description: `${name} is a full-stack software engineer building platform infrastructure, networking, and hardware integration for distributed robotic systems.`,
+      },
+    },
     about: {
       path: "/about",
       canonicalUrl: `${baseUrl}/about`,
       title: "About",
       face: "orange",
       blurb: "Background and speedcubing",
+      head: {
+        title: `About | ${name}`,
+        description: `About ${name}, a software engineer at Anduril Industries working on infrastructure for distributed systems and robotics.`,
+      },
     },
     work: {
       path: "/work",
@@ -28,6 +40,10 @@ export const siteConfig = {
       title: "Work",
       face: "blue",
       blurb: "Currently at Anduril, formerly JHU APL",
+      head: {
+        title: `Work | ${name}`,
+        description: `Where ${name} has worked: Anduril Industries and the Johns Hopkins Applied Physics Laboratory.`,
+      },
     },
     projects: {
       path: "/projects",
@@ -35,6 +51,10 @@ export const siteConfig = {
       title: "Projects",
       face: "green",
       blurb: "Open source work from GitHub",
+      head: {
+        title: `Projects | ${name}`,
+        description: `Open source projects, languages, and tools of ${name}, pulled from GitHub.`,
+      },
     },
   },
 } as const;
