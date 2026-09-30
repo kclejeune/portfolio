@@ -2,6 +2,7 @@
   import "@fontsource-variable/mona-sans/standard.css";
   // Only 500: nothing sets mono text lighter, and body's 440 resolves to it.
   import "@fontsource/monaspace-neon/500.css";
+  import { onMount } from "svelte";
   import { page } from "$app/state";
   import FaceGlyph from "$lib/components/FaceGlyph.svelte";
   import NavProgress from "$lib/components/NavProgress.svelte";
@@ -22,7 +23,11 @@
       : Object.values(siteConfig.routes).find((r) => r.path === page.url.pathname),
   );
 
-  const currentYear = new Date().getFullYear();
+  // Prerendered with the build year; updated after hydration.
+  let currentYear = $state(new Date().getFullYear());
+  onMount(() => {
+    currentYear = new Date().getFullYear();
+  });
 </script>
 
 <SEO
