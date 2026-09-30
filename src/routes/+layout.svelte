@@ -4,6 +4,7 @@
   import "@fontsource/monaspace-neon/500.css";
   import { page } from "$app/state";
   import FaceGlyph from "$lib/components/FaceGlyph.svelte";
+  import NavProgress from "$lib/components/NavProgress.svelte";
   import ThemeToggle from "$lib/components/ThemeToggle.svelte";
   import { contacts, links, sections, siteConfig } from "$lib/config.svelte";
   import SEO from "svelte-seo";
@@ -24,6 +25,8 @@
   description="{siteConfig.name} | {siteConfig.description}"
   canonical={siteConfig.routes.home.canonicalUrl}
 />
+
+<NavProgress />
 
 <div data-face={face} class="flex min-h-[100dvh] flex-col">
   <!-- Visible links fetch their route's code early; data still waits for hover. -->
